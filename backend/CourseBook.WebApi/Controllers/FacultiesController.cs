@@ -12,5 +12,20 @@ namespace CourseBook.WebApi.Controllers
     [ApiController]
     public class FacultiesController : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetFaculty() => Ok();
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFaculty() => Ok();
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateFaculty() => Ok();
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll() => Ok();
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFaculty() => Ok();
+
     }
 }
