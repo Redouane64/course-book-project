@@ -12,10 +12,11 @@ namespace CourseBook.WebApi.Faculties.Data
 
             builder.HasKey(e => e.Id);
 
+            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+
             builder.HasMany(e => e.Directions)
                 .WithOne(e => e.Faculty)
-                .HasForeignKey(e => e.Faculty)
-                .HasConstraintName("faculty");
+                .HasForeignKey("faculty_id");
 
             builder.Property(e => e.Name)
                 .HasColumnName("name")
