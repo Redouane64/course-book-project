@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,36 @@ namespace CourseBook.WebApi.Controllers
     [ApiController]
     public class DirectionsController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetDirection() => Ok();
 
-        [HttpPost]
-        public async Task<IActionResult> CreateDirection() => Ok();
+        [HttpGet(Name = nameof(GetDirection))]
+        public async Task<IActionResult> GetDirection(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateDirection() => Ok();
+        [HttpPost(Name = nameof(CreateDirection))]
+        public async Task<IActionResult> CreateDirection(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok();
+        [HttpPut(Name = nameof(UpdateDirection))]
+        public async Task<IActionResult> UpdateDirection(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteDirection() => Ok();
+        [HttpGet(Name = nameof(GetAll))]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
+
+        [HttpDelete(Name = nameof(DeleteDirection))]
+        public async Task<IActionResult> DeleteDirection(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
     }
 }
+

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -12,20 +13,34 @@ namespace CourseBook.WebApi.Controllers
     [ApiController]
     public class FacultiesController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetFaculty() => Ok();
+        [HttpGet(Name = nameof(GetFaculty))]
+        public async Task<IActionResult> GetFaculty(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateFaculty() => Ok();
+        [HttpPost(Name = nameof(CreateFaculty))]
+        public async Task<IActionResult> CreateFaculty(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateFaculty() => Ok();
+        [HttpPut(Name = nameof(UpdateFaculty))]
+        public async Task<IActionResult> UpdateFaculty(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok();
+        [HttpGet(Name = nameof(GetAll))]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteFaculty() => Ok();
-
+        [HttpDelete(Name = nameof(DeleteFaculty))]
+        public async Task<IActionResult> DeleteFaculty(CancellationToken cancellationToken = default)
+        {
+            return Ok();
+        }
     }
 }
