@@ -4,7 +4,7 @@ namespace CourseBook.WebApi.Profiles.Entities
 
     using CourseBook.WebApi.Common;
 
-    internal class ProfileEntity : Entity, IAggregateRoot
+    internal sealed class ProfileEntity : Entity, IAggregateRoot
     {
     }
 }
