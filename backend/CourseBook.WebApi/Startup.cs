@@ -13,6 +13,8 @@ namespace CourseBook.WebApi
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Data;
+    using Microsoft.EntityFrameworkCore;
 
     public class Startup
     {
@@ -31,6 +33,13 @@ namespace CourseBook.WebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course Book API", Version = "v1" });
+            });
+
+            services.AddDbContext<DataContext>(config =>
+            {
+                config.UseNpgsql(Configuration.GetConnectionString("localhost"));
+                config.EnableDetailedErrors();
+                config.EnableSensitiveDataLogging();
             });
         }
 
