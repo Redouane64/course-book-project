@@ -9,8 +9,10 @@ namespace CourseBook.WebApi.Faculties.Entities
     {
         public string Name { get; set; }
 
+        public Guid DirectionId { get; set; }
+
         public DirectionEntity Direction { get; set; }
 
-        public ICollection<GroupDisciplineEntity> Disciplines { get; set; }
+        // public ICollection<GroupDisciplineEntity> Disciplines { get; set; }
     }
 }

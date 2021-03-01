@@ -8,10 +8,11 @@ namespace CourseBook.WebApi.Faculties.Entities
     {
         public string Name { get; set; }
 
-        public ICollection<DirectionDisciplineEntity> Disciplines { get; set; }
+        // public ICollection<DirectionDisciplineEntity> Disciplines { get; set; }
 
         public ICollection<GroupEntity> Groups { get; set; }
 
+        public Guid FacultyId { get; set; }
         public FacultyEntity Faculty { get; set; }
     }
 }
