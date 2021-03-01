@@ -5,7 +5,7 @@ namespace CourseBook.WebApi.Faculties.Entities
 
     using CourseBook.WebApi.Common;
 
-    internal sealed class GroupEntity : Entity
+    public sealed class GroupEntity : Entity
     {
         public string Name { get; set; }
 

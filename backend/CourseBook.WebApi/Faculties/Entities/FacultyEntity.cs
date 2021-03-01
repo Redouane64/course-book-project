@@ -4,7 +4,7 @@ namespace CourseBook.WebApi.Faculties.Entities
     using System.Collections.Generic;
     using CourseBook.WebApi.Common;
 
-    internal sealed class FacultyEntity : Entity , IAggregateRoot
+    sealed public class FacultyEntity : Entity , IAggregateRoot
     {
         public string Name { get; set; }
 

@@ -1,6 +1,6 @@
 namespace CourseBook.WebApi.Faculties.Entities
 {
-    internal sealed class GroupDisciplineEntity
+    public sealed class GroupDisciplineEntity
     {
         public GroupEntity Group { get; set; }
 
