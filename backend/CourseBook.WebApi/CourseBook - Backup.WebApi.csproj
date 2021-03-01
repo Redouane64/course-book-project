@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Faculties\Data" />
     <Folder Include="Faculties\Repositories\" />
     <Folder Include="Profiles\Repositories\" />
   </ItemGroup>
