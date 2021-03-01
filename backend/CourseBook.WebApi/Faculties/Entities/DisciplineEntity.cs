@@ -4,10 +4,12 @@ namespace CourseBook.WebApi.Faculties.Entities
     using System.Collections.Generic;
     using CourseBook.WebApi.Common;
 
-    internal sealed class DirectionEntity : Entity
+    internal sealed class DisciplineEntity : Entity
     {
         public string Name { get; set; }
 
-        public ICollection<DisciplineEntity> Disciplines { get; set; }
+        public ICollection<DirectionEntity> Directions { get; set; }
+
+        public ICollection<GroupDisciplineEntity> Groups { get; set; }
     }
 }
