@@ -15,7 +15,7 @@ namespace CourseBook.WebApi.Models
 
         [Required]
         [PersonalData]
-        public string Phone{ get; set; }
+        public string Phone { get; set; }
 
         [Required]
         [PersonalData]
