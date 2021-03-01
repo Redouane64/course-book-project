@@ -12,10 +12,12 @@
 
             builder.HasKey(e => e.Id);
 
+            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+
             builder.HasMany(e => e.Groups)
                 .WithOne(e => e.Direction)
-                .IsRequired()
-                .HasForeignKey(e => e.Direction);
+                .HasForeignKey("direction_id");
+
         }
     }
 }

@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class GroupDisciplineEntityConfiguration : IEntityTypeConfiguration<GroupDisciplineEntity>
+    public class GroupDisciplineEntityConfiguration /* : IEntityTypeConfiguration<GroupDisciplineEntity> */
     {
         public void Configure(EntityTypeBuilder<GroupDisciplineEntity> builder)
         {
@@ -12,19 +12,22 @@
 
             builder.HasKey(e => new {e.Group, e.Discipline});
 
+            /*
             builder.HasOne(e => e.Group)
                 .WithMany(e => e.Disciplines)
-                .HasForeignKey("group_id");
+                .HasForeignKey(e => e.GroupId);
 
             builder.HasOne(e => e.Discipline)
                 .WithMany(e => e.Groups)
-                .HasForeignKey("discipline_id");
+                .HasForeignKey(e => e.DisciplineId);
+            */
 
             builder.Property(e => e.Year)
                 .IsRequired();
 
             builder.Property(e => e.Semester)
                 .IsRequired();
+
         }
     }
 }
