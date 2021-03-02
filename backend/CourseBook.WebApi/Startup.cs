@@ -14,6 +14,7 @@ namespace CourseBook.WebApi
     using System.Linq;
     using System.Threading.Tasks;
     using Data;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     public class Startup
@@ -41,6 +42,24 @@ namespace CourseBook.WebApi
                 config.EnableDetailedErrors();
                 config.EnableSensitiveDataLogging();
             });
+
+            services.AddIdentityCore<IdentityUser>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddUserManager<UserManager<IdentityUser>>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication();
+
+            services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
