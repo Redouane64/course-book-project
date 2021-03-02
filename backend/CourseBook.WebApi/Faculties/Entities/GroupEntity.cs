@@ -13,6 +13,6 @@ namespace CourseBook.WebApi.Faculties.Entities
 
         public DirectionEntity Direction { get; set; }
 
-        // public ICollection<GroupDisciplineEntity> Disciplines { get; set; }
+        public ICollection<GroupDisciplineEntity> Disciplines { get; set; }
     }
 }

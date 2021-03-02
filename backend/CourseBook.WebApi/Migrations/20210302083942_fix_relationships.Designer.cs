@@ -3,15 +3,17 @@ using System;
 using CourseBook.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CourseBook.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210302083942_fix_relationships")]
+    partial class fix_relationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,17 +29,9 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<Guid>("DisciplineId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("direction_id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("discipline_id")
-                        .HasColumnType("uuid");
-
                     b.HasKey("DirectionId", "DisciplineId");
 
-                    b.HasIndex("direction_id");
-
-                    b.HasIndex("discipline_id");
+                    b.HasIndex("DisciplineId");
 
                     b.ToTable("directions_disciplines");
                 });
@@ -112,17 +106,9 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("discipline_id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("group_id")
-                        .HasColumnType("uuid");
-
                     b.HasKey("GroupId", "DisciplineId");
 
-                    b.HasIndex("discipline_id");
-
-                    b.HasIndex("group_id");
+                    b.HasIndex("DisciplineId");
 
                     b.ToTable("groups_disciplines");
                 });
@@ -153,13 +139,13 @@ namespace CourseBook.WebApi.Migrations
                 {
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.DirectionEntity", "Direction")
                         .WithMany("Disciplines")
-                        .HasForeignKey("direction_id")
+                        .HasForeignKey("DirectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", "Discipline")
                         .WithMany("Directions")
-                        .HasForeignKey("discipline_id")
+                        .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -183,13 +169,13 @@ namespace CourseBook.WebApi.Migrations
                 {
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", "Discipline")
                         .WithMany("Groups")
-                        .HasForeignKey("discipline_id")
+                        .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.GroupEntity", "Group")
                         .WithMany("Disciplines")
-                        .HasForeignKey("group_id")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
