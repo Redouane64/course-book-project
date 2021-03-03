@@ -1,25 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+    using MediatR;
+
+    using CourseBook.WebApi.Models;
+
+    [Route("[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        [HttpPost(Name =nameof(Login))]
+        private readonly Mediator _mediator;
+
+        public AccountsController(Mediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost("login", Name =nameof(Login))]
         public async Task<IActionResult> Login(CancellationToken cancellationToken = default)
         {
             return Ok();
         }
 
-        [HttpPost(Name = nameof(Register))]
-        public async Task<IActionResult> Register(CancellationToken cancellationToken = default)
+        [HttpPost("register", Name = nameof(Register))]
+        public async Task<IActionResult> Register([FromBody] RegistrationForm form, CancellationToken cancellationToken = default)
         {
             return Ok();
         }
