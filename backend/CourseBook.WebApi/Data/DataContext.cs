@@ -19,7 +19,7 @@
             // This is important for Identity setup
             base.OnModelCreating(modelBuilder);
 
-            // Ignore unecessary auto-generated identity tables
+            // Ignore unnecessary auto-generated identity tables
             // Keep only necessary tables and columns for this project.
             modelBuilder
                 .Ignore<IdentityUserLogin<string>>()
