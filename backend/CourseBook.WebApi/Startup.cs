@@ -1,21 +1,24 @@
 namespace CourseBook.WebApi
 {
+    using System;
+    using System.Text;
+
+    using Data;
+
+    using Infrastructure;
+
+    using MediatR;
+
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Data;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
 
     public class Startup
     {
@@ -57,9 +60,35 @@ namespace CourseBook.WebApi
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                // Get token parameters from configuration.
+                var jwtOptions = Configuration.GetSection(nameof(JwtTokenParameters)).Get<JwtTokenParameters>();
+                options.RequireHttpsMetadata = false; // TODO: enable on production environment
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
+                    ValidAudience = jwtOptions.Audience,
+                    ValidIssuer = jwtOptions.Issuer,
+                };
+            });
+
+            services.Configure<JwtTokenParameters>(Configuration.GetSection(nameof(JwtTokenParameters)));
 
             services.AddAuthorization();
+
+            services.AddMediatR(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
