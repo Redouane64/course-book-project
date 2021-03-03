@@ -1,7 +1,7 @@
 ﻿namespace CourseBook.WebApi.Profiles.Repositories
 {
-    public interface IProfilesRepository
+    public class ProfilesRepository
     {
-
+        
     }
 }
