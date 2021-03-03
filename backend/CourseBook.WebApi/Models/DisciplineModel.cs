@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CourseBook.WebApi.Models
 {
-    public class Discipline
+    public class DisciplineModel
     {
         public string Name { get; set; }
 
