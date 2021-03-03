@@ -1,25 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-
 namespace CourseBook.WebApi.Models
 {
-    public class RegisterationForm
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
+    public class RegistrationForm
     {
         [Required]
-        [PersonalData]
         public string Name { get; set; }
 
         [Required]
-        [PersonalData]
-        public string Phone { get; set; }
+        public DateTime Birthday { get; set; }
 
         [Required]
-        [PersonalData]
-        public DateTime Birthday { get; set; }
+        [Display(Name = "Account Type", Description = "Allowed values 'Teacher' or 'Student' or 'Both'.")]
+        public string AccountType { get; set; }
 
         [Required]
         public string Faculty { get; set; }
@@ -31,7 +25,8 @@ namespace CourseBook.WebApi.Models
         public string Group { get; set; }
 
         [Required]
-        public DateTime Admission { get; set; }
+        [Display(Name = "Admission Year")]
+        public int AdmissionYear { get; set; }
 
         [Required]
         [EmailAddress]
@@ -43,7 +38,7 @@ namespace CourseBook.WebApi.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }
