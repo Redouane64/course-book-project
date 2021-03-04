@@ -42,6 +42,7 @@ namespace CourseBook.WebApi.Profiles.Commands
                 this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)
             );
 
-            return new TokenViewModel(Token, RefreshToken);        }
+            return new TokenViewModel(Token, RefreshToken);
+        }
     }
 }

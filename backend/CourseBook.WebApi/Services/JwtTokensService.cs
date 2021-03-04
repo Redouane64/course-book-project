@@ -6,7 +6,7 @@ namespace CourseBook.WebApi.Services
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Exceptions;
     using Infrastructure;
 
     using Microsoft.AspNetCore.Identity;
@@ -104,14 +104,14 @@ namespace CourseBook.WebApi.Services
 
             if (user is null)
             {
-                throw new InvalidOperationException("Invalid user.");
+                throw new InvalidOperationException("Incorrect or unauthorized user.");
             }
 
             var isValid = await this._jwtRefreshTokenProvider.ValidateAsync(JwtRefreshTokenProvider.Purpose, refreshToken, _userManager, user);
 
             if (!isValid)
             {
-                throw new Exception("Invalid refresh token.");
+                throw new InvalidRefreshTokenException("Invalid refresh token.");
             }
 
             await this._userManager.UpdateSecurityStampAsync(user);
