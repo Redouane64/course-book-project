@@ -79,6 +79,8 @@ namespace CourseBook.WebApi.Services
                 throw new Exception("Invalid refresh token.");
             }
 
+            await this._userManager.UpdateSecurityStampAsync(user);
+
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
             var claims = await this._userManager.GetClaimsAsync(user);
@@ -111,6 +113,8 @@ namespace CourseBook.WebApi.Services
             {
                 throw new Exception("Invalid refresh token.");
             }
+
+            await this._userManager.UpdateSecurityStampAsync(user);
 
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
