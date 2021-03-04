@@ -13,7 +13,7 @@ namespace CourseBook.WebApi.Controllers
     public class DirectionsController : ControllerBase
     {
 
-        [HttpGet(Name = nameof(GetDirection))]
+        [HttpGet("{id}",Name = nameof(GetDirection))]
         public async Task<IActionResult> GetDirection(CancellationToken cancellationToken = default)
         {
             return Ok();
@@ -31,8 +31,8 @@ namespace CourseBook.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet(Name = nameof(GetAll))]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        [HttpGet(Name = nameof(GetAllDirections))]
+        public async Task<IActionResult> GetAllDirections(CancellationToken cancellationToken = default)
         {
             return Ok();
         }

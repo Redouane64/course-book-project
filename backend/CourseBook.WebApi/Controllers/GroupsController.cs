@@ -13,7 +13,7 @@ namespace CourseBook.WebApi.Controllers
     public class GroupsController : ControllerBase
     {
 
-        [HttpGet(Name = nameof(GetGroup))]
+        [HttpGet("{id}", Name = nameof(GetGroup))]
         public async Task<IActionResult> GetGroup(CancellationToken cancellationToken = default)
         {
             return Ok();
@@ -31,8 +31,8 @@ namespace CourseBook.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet(Name = nameof(GetAll))]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        [HttpGet(Name = nameof(GetAllGroups))]
+        public async Task<IActionResult> GetAllGroups(CancellationToken cancellationToken = default)
         {
             return Ok();
         }

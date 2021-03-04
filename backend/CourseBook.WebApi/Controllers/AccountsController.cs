@@ -1,8 +1,9 @@
 namespace CourseBook.WebApi.Controllers
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Exceptions;
     using CourseBook.WebApi.Models;
 
     using MediatR;
@@ -32,26 +33,38 @@ namespace CourseBook.WebApi.Controllers
         [HttpPost("login", Name =nameof(Login))]
         public async Task<IActionResult> Login([FromBody]LoginCredentials credentials, CancellationToken cancellationToken = default)
         {
-            var token = await this._mediator.Send(new LoginRequest(credentials), cancellationToken);
-
-            return Ok(token);
+            try
+            {
+                return Ok(await this._mediator.Send(new LoginRequest(credentials), cancellationToken));
+            }
+            catch (InvalidCredentialsException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("register", Name = nameof(Register))]
         public async Task<IActionResult> Register([FromBody] RegistrationForm form, CancellationToken cancellationToken = default)
         {
-            var token = await this._mediator.Send(new RegisterAccountRequest(form), cancellationToken);
-
-            return Ok(token);
+            return Ok(await this._mediator.Send(new RegisterAccountRequest(form), cancellationToken));
         }
 
         [HttpPatch("refresh-token", Name = nameof(RefreshToken))]
         [Authorize]
         public async Task<IActionResult> RefreshToken([FromBody] TokenModel tokens, CancellationToken cancellationToken)
         {
-            var token = await this._mediator.Send(new RefreshTokenRequest(tokens));
-
-            return Ok(token);
+            try
+            {
+                return Ok(await this._mediator.Send(new RefreshTokenRequest(tokens)));
+            }
+            catch (InvalidRefreshTokenException)
+            {
+                return BadRequest();
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

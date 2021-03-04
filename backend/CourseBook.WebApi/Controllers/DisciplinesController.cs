@@ -13,7 +13,7 @@ namespace CourseBook.WebApi.Controllers
     public class DisciplinesController : ControllerBase
     {
 
-        [HttpGet(Name = nameof(GetDiscipline))]
+        [HttpGet("{id}", Name = nameof(GetDiscipline))]
         public async Task<IActionResult> GetDiscipline(CancellationToken cancellationToken = default)
         {
             return Ok();
@@ -31,8 +31,8 @@ namespace CourseBook.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet(Name = nameof(GetAll))]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        [HttpGet(Name = nameof(GetAllDiscipline))]
+        public async Task<IActionResult> GetAllDiscipline(CancellationToken cancellationToken = default)
         {
             return Ok();
         }
