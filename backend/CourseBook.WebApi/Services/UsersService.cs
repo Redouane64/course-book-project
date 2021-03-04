@@ -76,6 +76,12 @@ namespace CourseBook.WebApi.Profiles.Repositories
             }
 
             var profileEntity = await this._profilesRepository.GetProfileByUserId(user.Id);
+
+            if (profileEntity is null)
+            {
+                throw new InvalidCredentialException("Invalid user credentials.");
+            }
+
             profileEntity.User = user;
 
             return profileEntity;
