@@ -1,15 +1,17 @@
-﻿namespace CourseBook.WebApi.Profiles.Commands
+namespace CourseBook.WebApi.Profiles.Commands
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
+
     using Models;
-    using Repositories;
+
     using Services;
+
     using ViewModels;
 
     public class RefreshTokenRequest : IRequest<TokenViewModel>
