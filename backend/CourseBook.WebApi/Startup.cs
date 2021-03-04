@@ -19,6 +19,8 @@ namespace CourseBook.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
+    using Profiles.Repositories;
+    using Services;
 
     public class Startup
     {
@@ -53,12 +55,13 @@ namespace CourseBook.WebApi
                     options.SignIn.RequireConfirmedAccount = false;
                     options.SignIn.RequireConfirmedEmail = false;
                     options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
                 })
                 .AddRoles<IdentityRole>()
                 .AddUserManager<UserManager<IdentityUser>>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
+                .AddTokenProvider<JwtRefreshTokenProvider>(JwtRefreshTokenProvider.ProviderName);
 
             services.AddAuthentication(options =>
             {
@@ -86,9 +89,21 @@ namespace CourseBook.WebApi
 
             services.Configure<JwtTokenParameters>(Configuration.GetSection(nameof(JwtTokenParameters)));
 
+            services.Configure<JwtRefreshTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(Configuration.GetValue<double>("JwtTokenParameters:LifeTime") * 2);
+                options.Name = JwtRefreshTokenProvider.ProviderName;
+            });
+
+            services.AddScoped<ITokensService, JwtTokensService>();
+            services.AddScoped<IProfilesRepository, ProfilesRepository>();
+            services.AddScoped<UsersService>();
+
             services.AddAuthorization();
 
             services.AddMediatR(typeof(Startup));
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

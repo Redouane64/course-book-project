@@ -1,7 +1,12 @@
-﻿namespace CourseBook.WebApi.Profiles.Repositories
+namespace CourseBook.WebApi.Profiles.Repositories
 {
-    public interface IProfilesRepository
-    {
+    using System.Threading.Tasks;
 
+    using CourseBook.WebApi.Common;
+    using CourseBook.WebApi.Profiles.Entities;
+
+    public interface IProfilesRepository : IRepository<ProfileEntity>
+    {
+        Task<ProfileEntity> GetProfileByUserId(string userId);
     }
 }

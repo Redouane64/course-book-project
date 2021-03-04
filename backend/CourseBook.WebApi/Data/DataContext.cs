@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Profiles.Entities;
 
     public class DataContext : IdentityDbContext<IdentityUser>
     {
@@ -22,8 +23,7 @@
             // Ignore unnecessary auto-generated identity tables
             // Keep only necessary tables and columns for this project.
             modelBuilder
-                .Ignore<IdentityUserLogin<string>>()
-                .Ignore<IdentityUserToken<string>>();
+                .Ignore<IdentityUserLogin<string>>();
 
             modelBuilder.Entity<IdentityUser>()
                 .ToTable("users")
@@ -47,6 +47,9 @@
 
             modelBuilder.Entity<IdentityUserClaim<string>>()
                 .ToTable("user_claims");
+
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .ToTable("user_tokens");
         }
 
         public DbSet<FacultyEntity> Faculties { get; set; }
@@ -56,5 +59,7 @@
         public DbSet<DisciplineEntity> Disciplines { get; set; }
 
         public DbSet<GroupEntity> Groups { get; set; }
+
+        public DbSet<ProfileEntity> Profiles { get; set; }
     }
 }

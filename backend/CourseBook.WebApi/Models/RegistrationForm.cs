@@ -15,17 +15,13 @@ namespace CourseBook.WebApi.Models
         [Display(Name = "Account Type", Description = "Allowed values 'Teacher' or 'Student' or 'Both'.")]
         public string AccountType { get; set; }
 
-        [Required]
         public string Faculty { get; set; }
 
-        [Required]
         public string Direction { get; set; }
 
-        [Required]
         public string Group { get; set; }
 
         [Required]
-        [Display(Name = "Admission Year")]
         public int AdmissionYear { get; set; }
 
         [Required]
