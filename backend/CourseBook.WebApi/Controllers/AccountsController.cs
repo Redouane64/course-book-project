@@ -9,7 +9,7 @@ namespace CourseBook.WebApi.Controllers
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    
     using Profiles.Commands;
 
     [Route("[controller]")]
@@ -23,13 +23,6 @@ namespace CourseBook.WebApi.Controllers
         public AccountsController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet(Name = nameof(GetProfile))]
-        [Authorize]
-        public async Task<ActionResult> GetProfile(CancellationToken cancellationToken = default)
-        {
-            return Ok();
         }
 
         [HttpPost("login", Name =nameof(Login))]
