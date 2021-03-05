@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Profiles.Repositories
              * create user name from Name property, replace space with dot
              * example: John Doe => john.doe
              */
-            var username = form.Name.Replace(" ", ".");
+            var username = form.Name.Replace(" ", ".").ToLowerInvariant();
 
             var user = new IdentityUser(username) { Email = form.Email };
 
@@ -46,16 +46,23 @@ namespace CourseBook.WebApi.Profiles.Repositories
                 throw new Exception(message);
             }
 
-            var profileEntity = new ProfileEntity(user.Id, form.Name)
+            var profileEntity = new ProfileEntity()
             {
+                UserId = user.Id,
+                FullName = form.Name,
                 BirthDay = form.Birthday,
                 AdmissionYear = form.AdmissionYear,
-                User = user
+                Direction = form.Direction,
+                Faculty = form.Faculty,
+                Group = form.Group
             };
 
             // TODO: assign roles
 
-            return await this._profilesRepository.CreateAsync(profileEntity, cancellationToken);
+            var saved = await this._profilesRepository.CreateAsync(profileEntity, cancellationToken);
+            saved.User = user;
+
+            return saved;
         }
 
         public async Task<ProfileEntity> GetUserAsync(LoginCredentials credentials,

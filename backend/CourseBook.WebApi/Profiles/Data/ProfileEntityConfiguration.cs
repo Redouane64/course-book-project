@@ -13,13 +13,22 @@
             builder.Property(e => e.UserId)
                 .IsRequired();
 
-            builder.Property(e => e.Name)
+            builder.Property(e => e.FullName)
                 .IsRequired();
 
             builder.Property(e => e.AdmissionYear)
                 .IsRequired();
 
             builder.Property(e => e.BirthDay)
+                .IsRequired();
+
+            builder.Property(e => e.Faculty)
+                .IsRequired();
+
+            builder.Property(e => e.Direction)
+                .IsRequired();
+
+            builder.Property(e => e.Group)
                 .IsRequired();
 
             builder.Ignore(e => e.User);

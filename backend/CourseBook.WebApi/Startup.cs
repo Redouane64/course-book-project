@@ -98,6 +98,7 @@ namespace CourseBook.WebApi
             services.AddScoped<ITokensService, JwtTokensService>();
             services.AddScoped<IProfilesRepository, ProfilesRepository>();
             services.AddScoped<UsersService>();
+            services.AddScoped<IProfileService, ProfilesService>();
 
             services.AddAuthorization();
 
