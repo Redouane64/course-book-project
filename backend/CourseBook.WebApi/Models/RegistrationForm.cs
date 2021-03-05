@@ -13,7 +13,7 @@ namespace CourseBook.WebApi.Models
 
         [Required]
         [Display(Name = "Account Type", Description = "Allowed values 'Teacher' or 'Student' or 'Both'.")]
-        public string AccountType { get; set; }
+        public AccountType AccountType { get; set; }
 
         public string Faculty { get; set; }
 
