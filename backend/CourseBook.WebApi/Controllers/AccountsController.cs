@@ -14,6 +14,8 @@ namespace CourseBook.WebApi.Controllers
 
     [Route("[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     public class AccountsController : ControllerBase
     {
         private readonly IMediator _mediator;
