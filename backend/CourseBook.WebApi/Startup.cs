@@ -43,7 +43,7 @@ namespace CourseBook.WebApi
 
             services.AddDbContext<DataContext>(config =>
             {
-                config.UseNpgsql(Configuration.GetConnectionString("localhost"));
+                config.UseNpgsql(Configuration.GetConnectionString("default"));
                 config.EnableDetailedErrors();
                 config.EnableSensitiveDataLogging();
             });
