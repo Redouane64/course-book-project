@@ -3,13 +3,15 @@ namespace CourseBook.WebApi.Controllers
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Exceptions;
     using CourseBook.WebApi.Models;
 
     using MediatR;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    
+
     using Profiles.Commands;
 
     [Route("[controller]")]
