@@ -34,6 +34,7 @@
 
             return new ProfileViewModel()
             {
+                Id = profile.UserId,
                 Name = profile.FullName,
                 Email = profile.User.Email,
                 Birthday = profile.BirthDay,
