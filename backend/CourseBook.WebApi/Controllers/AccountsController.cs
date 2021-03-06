@@ -63,5 +63,12 @@ namespace CourseBook.WebApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("logout", Name = nameof(LogOut))]
+        [Authorize]
+        public async Task<IActionResult> LogOut(CancellationToken cancellationToken = default)
+        {
+            return Ok(await this._mediator.Send(new LogOutRequest(), cancellationToken));
+        }
     }
 }

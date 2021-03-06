@@ -124,5 +124,19 @@ namespace CourseBook.WebApi.Services
 
             return await this.GenerateToken(claims, user);
         }
+
+        public async Task Invalidate(string userId)
+        {
+            var user = await this._userManager.FindByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new InvalidOperationException("Incorrect or unauthorized user.");
+            }
+
+            await this._userManager.UpdateSecurityStampAsync(user);
+
+            /* in production, it is more complex than this. */
+        }
     }
 }
