@@ -33,14 +33,14 @@ namespace CourseBook.WebApi.Controllers
         public async Task<ActionResult> GetProfile(CancellationToken cancellationToken = default)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return Ok(await this._mediator.Send(new GetProfileRequest(userId)));
+            return Ok(await this._mediator.Send(new GetProfileRequest(userId), cancellationToken));
         }
 
-        [HttpPost]
+        [HttpPost("update", Name = nameof(UpdateProfile))]
         [Authorize]
         public async Task<ActionResult> UpdateProfile([FromBody] UpdateProfile profile, CancellationToken cancellationToken = default)
         {
-            return Ok(await this._mediator.Send(new UpdateProfileRequest(profile)));
+            return Ok(await this._mediator.Send(new UpdateProfileRequest(profile), cancellationToken));
         }
 
     }
