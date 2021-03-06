@@ -50,7 +50,7 @@ namespace CourseBook.WebApi.Profiles.Commands
 
             var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, profile.User);
 
-            return new TokenViewModel(Token, RefreshToken);
+            return new TokenViewModel(Token, RefreshToken, profile.UserId);
         }
     }
 }

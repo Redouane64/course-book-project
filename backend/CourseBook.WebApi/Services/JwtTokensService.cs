@@ -6,7 +6,9 @@ namespace CourseBook.WebApi.Services
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Exceptions;
+
     using Infrastructure;
 
     using Microsoft.AspNetCore.Identity;
