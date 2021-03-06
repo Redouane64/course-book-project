@@ -12,5 +12,7 @@
         Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, IdentityUser user);
 
         Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string userId);
+
+        Task Invalidate(string userId);
     }
 }
