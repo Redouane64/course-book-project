@@ -2,6 +2,7 @@ namespace CourseBook.WebApi.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Text.Json.Serialization;
 
     public class RegistrationForm
     {
@@ -11,7 +12,6 @@ namespace CourseBook.WebApi.Models
         [Required]
         public DateTime Birthday { get; set; }
 
-        [Required]
         [Display(Name = "Account Type", Description = "Allowed values 'Teacher' or 'Student' or 'Both'.")]
         public AccountType AccountType { get; set; }
 

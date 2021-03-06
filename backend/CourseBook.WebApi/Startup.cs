@@ -2,7 +2,7 @@ namespace CourseBook.WebApi
 {
     using System;
     using System.Text;
-
+    using System.Text.Json.Serialization;
     using Data;
 
     using Infrastructure;
@@ -36,7 +36,11 @@ namespace CourseBook.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course Book API", Version = "v1" });
