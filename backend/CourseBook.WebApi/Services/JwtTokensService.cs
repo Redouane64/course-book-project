@@ -85,7 +85,10 @@ namespace CourseBook.WebApi.Services
 
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
-            var claims = await this._userManager.GetClaimsAsync(user);
+            var claims = new List<Claim>(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+            });
 
             return await this.GenerateToken(claims, user);
         }
@@ -120,7 +123,10 @@ namespace CourseBook.WebApi.Services
 
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
-            var claims = await this._userManager.GetClaimsAsync(user);
+            var claims = new List<Claim>(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId),
+            });
 
             return await this.GenerateToken(claims, user);
         }
