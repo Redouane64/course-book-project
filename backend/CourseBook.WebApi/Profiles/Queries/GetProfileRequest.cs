@@ -4,7 +4,8 @@
     using System.Threading.Tasks;
 
     using MediatR;
-
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Services;
 
     using ViewModels;
@@ -22,6 +23,7 @@
     public class GetProfileRequestHandler : IRequestHandler<GetProfileRequest, ProfileViewModel>
     {
         private readonly IProfileService _profileService;
+        private readonly IUrlHelperFactory _urlHelperFactory;
 
         public GetProfileRequestHandler(IProfileService profileService)
         {

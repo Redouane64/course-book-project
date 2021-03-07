@@ -105,6 +105,7 @@ namespace CourseBook.WebApi
             services.AddScoped<IProfilesRepository, ProfilesRepository>();
             services.AddScoped<UsersService>();
             services.AddScoped<IProfileService, ProfilesService>();
+            services.AddScoped<IUserFileService, FilesService>();
 
             services.AddAuthorization();
 
