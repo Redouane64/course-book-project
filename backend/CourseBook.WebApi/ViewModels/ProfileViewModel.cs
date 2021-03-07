@@ -19,5 +19,7 @@
         public string Direction { get; set; }
 
         public string Group { get; set; }
+
+        public string Avatar { get; set; }
     }
 }
