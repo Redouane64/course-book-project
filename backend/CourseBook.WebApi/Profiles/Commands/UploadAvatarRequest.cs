@@ -26,9 +26,9 @@
     public class UploadAvatarRequestHandler : IRequestHandler<UploadAvatarRequest, Unit>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IFileService _fileService;
+        private readonly IUserFileService _fileService;
 
-        public UploadAvatarRequestHandler(IHttpContextAccessor httpContextAccessor, IFileService fileService)
+        public UploadAvatarRequestHandler(IHttpContextAccessor httpContextAccessor, IUserFileService fileService)
         {
             _httpContextAccessor = httpContextAccessor;
             _fileService = fileService;
