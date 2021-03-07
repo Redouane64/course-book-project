@@ -1,6 +1,7 @@
 
 namespace CourseBook.WebApi.Controllers
 {
+    using System.IO;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace CourseBook.WebApi.Controllers
     using MediatR;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     using Models;
@@ -43,5 +45,12 @@ namespace CourseBook.WebApi.Controllers
             return Ok(await this._mediator.Send(new UpdateProfileRequest(profile), cancellationToken));
         }
 
+        [HttpPost("upload-avatar", Name = nameof(UploadAvatar))]
+        [Authorize]
+        [Consumes("image/jpeg", "image/png")]
+        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile file)
+        {
+            return Ok(await this._mediator.Send(new UploadAvatarRequest(file.OpenReadStream(), file.ContentType)));
+        } 
     }
 }
