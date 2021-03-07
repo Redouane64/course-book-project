@@ -39,7 +39,7 @@ namespace CourseBook.WebApi
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            });
+            }).AddMvcOptions(options => options.Filters.Add<JsonExceptionFilter>());
 
             services.AddSwaggerGen(c =>
             {
@@ -53,6 +53,7 @@ namespace CourseBook.WebApi
                 config.EnableSensitiveDataLogging();
             });
 
+     
             services.AddIdentityCore<IdentityUser>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
