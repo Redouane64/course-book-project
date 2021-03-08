@@ -9,7 +9,14 @@
     using Services;
 
     public class GetAvatarRequest : IRequest<(string contentType, Stream contents)>
-    { }
+    {
+        public string UserId { get; }
+
+        public GetAvatarRequest(string userId)
+        {
+            UserId = userId;
+        }
+    }
 
     public class GetAvatarRequestHandler : IRequestHandler<GetAvatarRequest, (string contentType, Stream contents)>
     {
@@ -24,8 +31,9 @@
 
         public async Task<(string contentType, Stream contents)> Handle(GetAvatarRequest request, CancellationToken cancellationToken)
         {
-            var userId = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await this._fileService.GetAsync(userId);
+            // var userId = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return await this._fileService.GetAsync(request.UserId);
         }
     }
 }

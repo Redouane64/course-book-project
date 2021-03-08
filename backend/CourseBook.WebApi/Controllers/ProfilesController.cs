@@ -66,14 +66,14 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetProfile), null);
         }
 
-        [HttpGet("get-avatar", Name = nameof(GetAvatar))]
-        [Authorize]
+        [HttpGet("get-avatar/{userId}", Name = nameof(GetAvatar))]
+        //[Authorize]
         //[Produces("image/jpeg", "image/png")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAvatar(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAvatar([FromRoute]string userId, CancellationToken cancellationToken)
         {
-            var (contentType, stream) = await this._mediator.Send(new GetAvatarRequest());
+            var (contentType, stream) = await this._mediator.Send(new GetAvatarRequest(userId));
 
             if (contentType is null)
             {
