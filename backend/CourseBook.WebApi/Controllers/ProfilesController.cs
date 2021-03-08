@@ -20,8 +20,8 @@ namespace CourseBook.WebApi.Controllers
 
     [Route("[controller]")]
     [ApiController]
-    [Produces("application/json")]
-    [Consumes("application/json", "multipart/form-data")]
+    //[Produces("application/json")]
+    //[Consumes("application/json", "multipart/form-data")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -68,7 +68,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("get-avatar", Name = nameof(GetAvatar))]
         [Authorize]
-        [Produces("image/jpeg", "image/png")]
+        //[Produces("image/jpeg", "image/png")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAvatar(CancellationToken cancellationToken)
