@@ -30,6 +30,11 @@ namespace CourseBook.WebApi.Services
             Directory.CreateDirectory(UPLOAD_PATH);
             var file = Path.Combine(UPLOAD_PATH, filename);
 
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+            }
+
             using (var output = File.Create(file))
             {
                 await contents.CopyToAsync(output);
