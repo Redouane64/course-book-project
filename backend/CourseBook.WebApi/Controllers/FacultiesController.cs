@@ -1,22 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("[controller]")]
     [ApiController]
     public class FacultiesController : ControllerBase
     {
+        private readonly IMediator _mediator;
+
+        public FacultiesController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+
         [HttpGet("{id}", Name = nameof(GetFaculty))]
         public async Task<IActionResult> GetFaculty(CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var faculties = await this._mediator.Send(new GetFacultiesRequest(), cancellationToken);
+            return Ok(faculties);
         }
 
         [HttpPost(Name = nameof(CreateFaculty))]

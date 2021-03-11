@@ -9,7 +9,12 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class GetGroupsRequest : IRequest<object>
     {
+        public GetGroupsRequest(string directionId)
+        {
+            DirectionId = directionId;
+        }
 
+        public string DirectionId { get; }
     }
 
     public class GetGroupsRequestHanlder : IRequestHandler<GetGroupsRequest, object>

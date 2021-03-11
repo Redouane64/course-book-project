@@ -1,22 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class DisciplinesController : ControllerBase
     {
 
-        [HttpGet("{id}", Name = nameof(GetDiscipline))]
-        public async Task<IActionResult> GetDiscipline(CancellationToken cancellationToken = default)
+        private readonly IMediator _mediator;
+
+        public DisciplinesController(IMediator mediator)
         {
-            return Ok();
+            _mediator = mediator;
+        }
+
+
+        [HttpGet("{directionId}", Name = nameof(GetDiscipline))]
+        public async Task<IActionResult> GetDiscipline(string directionId, CancellationToken cancellationToken = default)
+        {
+            var discipline = await this._mediator.Send(new GetDisciplinesRequest(directionId), cancellationToken);
+            return Ok(discipline);
         }
 
         [HttpPost(Name = nameof(CreateDiscipline))]

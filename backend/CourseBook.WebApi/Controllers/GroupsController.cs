@@ -1,22 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class GroupsController : ControllerBase
     {
 
-        [HttpGet("{id}", Name = nameof(GetGroup))]
-        public async Task<IActionResult> GetGroup(CancellationToken cancellationToken = default)
+        private readonly IMediator _mediator;
+
+        public GroupsController(IMediator mediator)
         {
-            return Ok();
+            _mediator = mediator;
+        }
+
+        [HttpGet("{directionId}", Name = nameof(GetGroup))]
+        public async Task<IActionResult> GetGroup(string directionId, CancellationToken cancellationToken = default)
+        {
+            var groups = await this._mediator.Send(new GetGroupsRequest(directionId), cancellationToken);
+            return Ok(groups);
         }
 
         [HttpPost(Name = nameof(CreateGroup))]
