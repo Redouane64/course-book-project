@@ -5,23 +5,32 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.ViewModels;
     using MediatR;
 
-    public class GetDirectionsRequest : IRequest<object>
+    public class GetDirectionsRequest : IRequest<IEnumerable<DirectionViewModel>>
     {
-        public GetDirectionsRequest(string facultyId)
+        public GetDirectionsRequest(Guid facultyId)
         {
             FacultyId = facultyId;
         }
 
-        public string FacultyId { get; }
+        public Guid FacultyId { get; }
     }
 
-    public class GetDirectionsRequestHanlder : IRequestHandler<GetDirectionsRequest, object>
+    public class GetDirectionsRequestHanlder : IRequestHandler<GetDirectionsRequest, IEnumerable<DirectionViewModel>>
     {
-        public Task<object> Handle(GetDirectionsRequest request, CancellationToken cancellationToken)
+        private readonly IFacultiesRepository repository;
+
+        public GetDirectionsRequestHanlder(IFacultiesRepository repository)
         {
-            throw new NotImplementedException();
+            this.repository = repository;
+        }
+
+        public Task<IEnumerable<DirectionViewModel>> Handle(GetDirectionsRequest request, CancellationToken cancellationToken)
+        {
+            return repository.GetDirections(request.FacultyId, cancellationToken);
         }
     }
 }

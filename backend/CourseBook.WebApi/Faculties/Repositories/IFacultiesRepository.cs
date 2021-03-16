@@ -1,13 +1,16 @@
 namespace CourseBook.WebApi.Faculties.Repositories
 {
+    using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Common;
     using Entities;
 
-    internal interface IFacultiesRepository : IRepository<FacultyEntity>
+    public interface IFacultiesRepository : IRepository<FacultyEntity>
     {
-
+        Task<IEnumerable<DirectionEntity>> GetDirections(Guid facultyId, CancellationToken cancellationToken);
+        Task<IEnumerable<GroupEntity>> GetGroups(Guid directionId, CancellationToken cancellationToken);
     }
 }
