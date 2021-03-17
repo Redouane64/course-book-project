@@ -5,9 +5,11 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.ViewModels;
     using MediatR;
 
-    public class GetDisciplinesRequest : IRequest<object>
+    public class GetDisciplinesRequest : IRequest<IEnumerable<DisciplineViewModel>>
     {
         public GetDisciplinesRequest(string directionId)
         {
@@ -17,11 +19,17 @@ namespace CourseBook.WebApi.Faculties.Queries
         public string DirectionId { get; }
     }
 
-    public class GetDisciplinesRequestHanlder : IRequestHandler<GetDisciplinesRequest, object>
+    public class GetDisciplinesRequestHanlder : IRequestHandler<GetDisciplinesRequest, IEnumerable<DisciplineViewModel>>
     {
-        public Task<object> Handle(GetDisciplinesRequest request, CancellationToken cancellationToken)
+        private readonly IFacultiesRepository repository;
+
+        public GetDisciplinesRequestHanlder(IFacultiesRepository repository)
         {
-            throw new NotImplementedException();
+            this.repository = repository;
+        }
+        public Task<IEnumerable<DisciplineViewModel>> Handle(GetDisciplinesRequest request, CancellationToken cancellationToken)
+        {
+            return repository.GetDisciplines(cancellationToken);
         }
     }
 }

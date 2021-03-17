@@ -48,5 +48,10 @@ namespace CourseBook.WebApi.Faculties.Repositories
         {
             return await _context.Groups.AsNoTracking().Where(x => x.DirectionId == directionId).ToListAsync(cancellationToken);
         }
+
+        public async Task<IEnumerable<DisciplineEntity>> GetDisciplines(CancellationToken cancellationToken = default)
+        {
+            return await _context.Disciplines.AsNoTracking().ToListAsync(cancellationToken);
+        }
     }
 }
