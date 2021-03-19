@@ -3,6 +3,9 @@ namespace CourseBook.WebApi
     using System;
     using System.Text;
     using System.Text.Json.Serialization;
+    using CourseBook.WebApi.Faculties.Entities;
+    using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.ViewModels;
     using Data;
 
     using Infrastructure;
@@ -53,7 +56,7 @@ namespace CourseBook.WebApi
                 config.EnableSensitiveDataLogging();
             });
 
-     
+
             services.AddIdentityCore<IdentityUser>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
@@ -106,6 +109,16 @@ namespace CourseBook.WebApi
             services.AddScoped<UsersService>();
             services.AddScoped<IProfileService, ProfilesService>();
             services.AddScoped<IUserFileService, FilesService>();
+
+            services.AddScoped<IFacultiesRepository, FacultiesRepository>();
+
+            services.AddAutoMapper(options => {
+                options.CreateMap<FacultyEntity, FacultyViewModel>();
+                options.CreateMap<DirectionEntity, DirectionViewModel>();
+                options.CreateMap<GroupEntity, GroupViewModel>();
+                options.CreateMap<DisciplineEntity, DisciplineEntity>();
+            });
+
 
             services.AddAuthorization();
 
