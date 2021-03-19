@@ -2,11 +2,14 @@ namespace CourseBook.WebApi.Controllers
 {
     using System;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.ViewModels;
     using MediatR;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class GroupsController : ControllerBase
     {
 
@@ -18,6 +21,7 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
+        [ProducesResponseType(typeof(GroupViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetGroup([FromRoute] Guid id)
         {
             return Ok();

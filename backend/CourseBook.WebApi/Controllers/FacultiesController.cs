@@ -1,14 +1,18 @@
 namespace CourseBook.WebApi.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using CourseBook.WebApi.Faculties.Queries;
+    using CourseBook.WebApi.ViewModels;
     using MediatR;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class FacultiesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,6 +24,7 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpGet(Name = nameof(GetFaculties))]
+        [ProducesResponseType(typeof(IEnumerable<FacultyViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFaculties(CancellationToken cancellationToken = default)
         {
             var faculties = await this._mediator.Send(new GetFacultiesRequest(), cancellationToken);
@@ -27,12 +32,14 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
+        [ProducesResponseType(typeof(FacultyViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFaculty([FromRoute] Guid id)
         {
             return Ok();
         }
 
         [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]
+        [ProducesResponseType(typeof(IEnumerable<DirectionViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFacultyDirection([FromRoute]Guid id, CancellationToken cancellationToken = default)
         {
             var directions = await this._mediator.Send(new GetDirectionsRequest(id), cancellationToken);
