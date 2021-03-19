@@ -1,16 +1,13 @@
 namespace CourseBook.WebApi.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using CourseBook.WebApi.Faculties.Queries;
     using MediatR;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DirectionsController : ControllerBase
     {
@@ -22,36 +19,19 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{facultyId}", Name = nameof(GetDirection))]
-        public async Task<IActionResult> GetDirection([FromRoute]string facultyId, CancellationToken cancellationToken = default)
-        {
-            var directions = await this._mediator.Send(new GetDirectionsRequest(facultyId), cancellationToken);
-            return Ok(directions);
-        }
-
-        [HttpPost(Name = nameof(CreateDirection))]
-        public async Task<IActionResult> CreateDirection(CancellationToken cancellationToken = default)
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> GetDirection([FromRoute] Guid id)
         {
             return Ok();
         }
 
-        [HttpPut(Name = nameof(UpdateDirection))]
-        public async Task<IActionResult> UpdateDirection(CancellationToken cancellationToken = default)
+        [HttpGet("{directionId:Guid}/groups", Name = nameof(GetDirectionGroups))]
+        public async Task<IActionResult> GetDirectionGroups([FromRoute] Guid directionId, CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var groups = await this._mediator.Send(new GetGroupsRequest(directionId), cancellationToken);
+            return Ok(groups);
         }
 
-        [HttpGet(Name = nameof(GetAllDirections))]
-        public async Task<IActionResult> GetAllDirections(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
-
-        [HttpDelete(Name = nameof(DeleteDirection))]
-        public async Task<IActionResult> DeleteDirection(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
     }
 }
 
