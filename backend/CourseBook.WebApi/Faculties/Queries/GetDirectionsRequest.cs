@@ -2,7 +2,6 @@ namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -33,8 +32,8 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<IEnumerable<DirectionViewModel>> Handle(GetDirectionsRequest request, CancellationToken cancellationToken)
         {
-            var myObject = await repository.GetDirections(request.FacultyId, cancellationToken);
-            return this.mapper.Map<IEnumerable<DirectionViewModel>>(myObject);
+            var directions = await repository.GetDirections(request.FacultyId, cancellationToken);
+            return this.mapper.Map<IEnumerable<DirectionViewModel>>(directions);
         }
     }
 }

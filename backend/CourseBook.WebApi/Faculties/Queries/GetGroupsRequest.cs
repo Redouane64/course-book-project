@@ -2,7 +2,6 @@ namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -33,8 +32,8 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<IEnumerable<GroupViewModel>> Handle(GetGroupsRequest request, CancellationToken cancellationToken)
         {
-            var myObject = await repository.GetGroups(request.DirectionId, cancellationToken);
-            return this.mapper.Map<IEnumerable<GroupViewModel>>(myObject);
+            var groups = await repository.GetGroups(request.DirectionId, cancellationToken);
+            return this.mapper.Map<IEnumerable<GroupViewModel>>(groups);
         }
     }
 }
