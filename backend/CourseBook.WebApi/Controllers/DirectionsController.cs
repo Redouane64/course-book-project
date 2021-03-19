@@ -1,47 +1,43 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
+    using CourseBook.WebApi.ViewModels;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Route("[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class DirectionsController : ControllerBase
     {
 
-        [HttpGet("{id}",Name = nameof(GetDirection))]
-        public async Task<IActionResult> GetDirection(CancellationToken cancellationToken = default)
+        private readonly IMediator _mediator;
+
+        public DirectionsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet("{id:Guid}")]
+        [ProducesResponseType(typeof(DirectionViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDirection([FromRoute] Guid id)
         {
             return Ok();
         }
 
-        [HttpPost(Name = nameof(CreateDirection))]
-        public async Task<IActionResult> CreateDirection(CancellationToken cancellationToken = default)
+        [HttpGet("{id:Guid}/groups", Name = nameof(GetDirectionGroups))]
+        [ProducesResponseType(typeof(IEnumerable<DirectionViewModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDirectionGroups([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var groups = await this._mediator.Send(new GetGroupsRequest(id), cancellationToken);
+            return Ok(groups);
         }
 
-        [HttpPut(Name = nameof(UpdateDirection))]
-        public async Task<IActionResult> UpdateDirection(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
-
-        [HttpGet(Name = nameof(GetAllDirections))]
-        public async Task<IActionResult> GetAllDirections(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
-
-        [HttpDelete(Name = nameof(DeleteDirection))]
-        public async Task<IActionResult> DeleteDirection(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
     }
 }
 
