@@ -25,10 +25,10 @@ namespace CourseBook.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet("{directionId:Guid}/groups", Name = nameof(GetDirectionGroups))]
-        public async Task<IActionResult> GetDirectionGroups([FromRoute] Guid directionId, CancellationToken cancellationToken = default)
+        [HttpGet("{id:Guid}/groups", Name = nameof(GetDirectionGroups))]
+        public async Task<IActionResult> GetDirectionGroups([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
-            var groups = await this._mediator.Send(new GetGroupsRequest(directionId), cancellationToken);
+            var groups = await this._mediator.Send(new GetGroupsRequest(id), cancellationToken);
             return Ok(groups);
         }
 

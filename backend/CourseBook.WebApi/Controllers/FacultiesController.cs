@@ -32,10 +32,10 @@ namespace CourseBook.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet("{facultyId:Guid}/directions", Name = nameof(GetFacultyDirection))]
-        public async Task<IActionResult> GetFacultyDirection([FromRoute]Guid facultyId, CancellationToken cancellationToken = default)
+        [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]
+        public async Task<IActionResult> GetFacultyDirection([FromRoute]Guid id, CancellationToken cancellationToken = default)
         {
-            var directions = await this._mediator.Send(new GetDirectionsRequest(facultyId), cancellationToken);
+            var directions = await this._mediator.Send(new GetDirectionsRequest(id), cancellationToken);
             return Ok(directions);
         }
 
