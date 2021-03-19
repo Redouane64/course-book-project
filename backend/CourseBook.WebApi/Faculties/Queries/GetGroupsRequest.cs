@@ -5,6 +5,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using CourseBook.WebApi.Faculties.Repositories;
     using CourseBook.WebApi.ViewModels;
     using MediatR;
@@ -22,15 +23,18 @@ namespace CourseBook.WebApi.Faculties.Queries
     public class GetGroupsRequestHanlder : IRequestHandler<GetGroupsRequest, IEnumerable<GroupViewModel>>
     {
         private readonly IFacultiesRepository repository;
+        private readonly IMapper mapper;
 
-        public GetGroupsRequestHanlder(IFacultiesRepository repository)
+        public GetGroupsRequestHanlder(IFacultiesRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
 
-        public Task<IEnumerable<GroupViewModel>> Handle(GetGroupsRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GroupViewModel>> Handle(GetGroupsRequest request, CancellationToken cancellationToken)
         {
-            return repository.GetGroups(request.DirectionId, cancellationToken);
+            var myObject = await repository.GetGroups(request.DirectionId, cancellationToken);
+            return this.mapper.Map<IEnumerable<GroupViewModel>>(myObject);
         }
     }
 }

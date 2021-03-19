@@ -5,6 +5,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using CourseBook.WebApi.Faculties.Repositories;
     using CourseBook.WebApi.ViewModels;
     using MediatR;
@@ -18,15 +19,18 @@ namespace CourseBook.WebApi.Faculties.Queries
     public class GetFacultiesRequestHanlder : IRequestHandler<GetFacultiesRequest, IEnumerable<FacultyViewModel>>
     {
         private readonly IFacultiesRepository repository;
+        public readonly IMapper mapper;
 
-        public GetFacultiesRequestHanlder(IFacultiesRepository repository)
+        public GetFacultiesRequestHanlder(IFacultiesRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
 
-        public Task<IEnumerable<FacultyViewModel>> Handle(GetFacultiesRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<FacultyViewModel>> Handle(GetFacultiesRequest request, CancellationToken cancellationToken)
         {
-            return repository.GetAllAsync(cancellationToken);
+            var myObject = await repository.GetAllAsync(cancellationToken);
+            return this.mapper.Map<IEnumerable<FacultyViewModel>>(myObject);
         }
     }
 }

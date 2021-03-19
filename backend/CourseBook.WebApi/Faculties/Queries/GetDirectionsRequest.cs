@@ -5,6 +5,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using CourseBook.WebApi.Faculties.Repositories;
     using CourseBook.WebApi.ViewModels;
     using MediatR;
@@ -22,15 +23,18 @@ namespace CourseBook.WebApi.Faculties.Queries
     public class GetDirectionsRequestHanlder : IRequestHandler<GetDirectionsRequest, IEnumerable<DirectionViewModel>>
     {
         private readonly IFacultiesRepository repository;
+        public readonly IMapper mapper;
 
-        public GetDirectionsRequestHanlder(IFacultiesRepository repository)
+        public GetDirectionsRequestHanlder(IFacultiesRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
 
-        public Task<IEnumerable<DirectionViewModel>> Handle(GetDirectionsRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<DirectionViewModel>> Handle(GetDirectionsRequest request, CancellationToken cancellationToken)
         {
-            return repository.GetDirections(request.FacultyId, cancellationToken);
+            var myObject = await repository.GetDirections(request.FacultyId, cancellationToken);
+            return this.mapper.Map<IEnumerable<DirectionViewModel>>(myObject);
         }
     }
 }
