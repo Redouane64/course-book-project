@@ -32,7 +32,6 @@
                 .Ignore(e => e.EmailConfirmed)
                 .Ignore(e => e.LockoutEnabled)
                 .Ignore(e => e.LockoutEnd)
-                .Ignore(e => e.PhoneNumber)
                 .Ignore(e => e.PhoneNumberConfirmed)
                 .Ignore(e => e.TwoFactorEnabled);
 

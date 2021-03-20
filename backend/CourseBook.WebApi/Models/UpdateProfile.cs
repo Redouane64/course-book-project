@@ -14,6 +14,9 @@
         [EmailAddress]
         public string Email { get; set; }
 
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime BirthDay { get; set; }
     }

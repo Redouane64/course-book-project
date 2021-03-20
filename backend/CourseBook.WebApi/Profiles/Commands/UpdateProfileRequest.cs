@@ -43,6 +43,7 @@
                 Id = profile.UserId,
                 Name = profile.FullName,
                 Email = profile.User.Email,
+                PhoneNumber = profile.User.PhoneNumber,
                 Birthday = profile.BirthDay,
                 AdmissionYear = profile.AdmissionYear,
                 Faculty = profile.Faculty,

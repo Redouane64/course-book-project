@@ -28,6 +28,9 @@ namespace CourseBook.WebApi.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
