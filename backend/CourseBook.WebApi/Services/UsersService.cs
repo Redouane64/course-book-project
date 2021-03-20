@@ -49,6 +49,7 @@ namespace CourseBook.WebApi.Profiles.Repositories
             var profileEntity = new ProfileEntity()
             {
                 UserId = user.Id,
+                AccountType = form.AccountType,
                 FullName = form.Name,
                 BirthDay = form.Birthday,
                 AdmissionYear = form.AdmissionYear,

@@ -3,7 +3,7 @@ namespace CourseBook.WebApi.Profiles.Entities
     using System;
 
     using CourseBook.WebApi.Common;
-
+    using CourseBook.WebApi.Models;
     using Microsoft.AspNetCore.Identity;
 
     public sealed class ProfileEntity : Entity, IAggregateRoot
@@ -12,6 +12,8 @@ namespace CourseBook.WebApi.Profiles.Entities
         public IdentityUser User { get; set; }
 
         public string UserId { get; set; }
+
+        public AccountType AccountType { get; set; }
 
         public string FullName { get; set; }
 
