@@ -33,7 +33,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(FacultyViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetFaculty([FromRoute] Guid id)
+        public IActionResult GetFaculty([FromRoute] Guid id)
         {
             return Ok();
         }

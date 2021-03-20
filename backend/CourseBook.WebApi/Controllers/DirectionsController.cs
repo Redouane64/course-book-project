@@ -25,7 +25,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(DirectionViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDirection([FromRoute] Guid id)
+        public IActionResult GetDirection([FromRoute] Guid id)
         {
             return Ok();
         }

@@ -22,7 +22,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(GroupViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetGroup([FromRoute] Guid id)
+        public IActionResult GetGroup([FromRoute] Guid id)
         {
             return Ok();
         }

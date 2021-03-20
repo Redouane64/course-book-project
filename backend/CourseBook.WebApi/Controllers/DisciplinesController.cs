@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(DisciplineViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDiscipline([FromRoute] Guid id)
+        public IActionResult GetDiscipline([FromRoute] Guid id)
         {
             return Ok();
         }
