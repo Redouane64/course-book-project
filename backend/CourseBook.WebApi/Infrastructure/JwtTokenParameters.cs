@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Infrastructure
+namespace CourseBook.WebApi.Infrastructure
 {
     public class JwtTokenParameters
     {

@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Data
+namespace CourseBook.WebApi.Data
 {
     using Faculties.Data;
     using Faculties.Entities;

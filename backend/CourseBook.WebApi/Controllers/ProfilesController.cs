@@ -58,7 +58,7 @@ namespace CourseBook.WebApi.Controllers
         [Authorize]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(typeof(ProfileViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadAvatar([FromForm] IFormFile file, CancellationToken cancellationToken)
         {
             await this._mediator.Send(new UploadAvatarRequest(file.OpenReadStream(), file.ContentType),
                 cancellationToken);
@@ -71,7 +71,7 @@ namespace CourseBook.WebApi.Controllers
         //[Produces("image/jpeg", "image/png")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAvatar([FromRoute]string userId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAvatar([FromRoute] string userId, CancellationToken cancellationToken)
         {
             var (contentType, stream) = await this._mediator.Send(new GetAvatarRequest(userId));
 

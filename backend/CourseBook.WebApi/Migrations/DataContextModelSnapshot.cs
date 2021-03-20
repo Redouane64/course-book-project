@@ -155,6 +155,9 @@ namespace CourseBook.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("AccountType")
+                        .HasColumnType("integer");
+
                     b.Property<int>("AdmissionYear")
                         .HasColumnType("integer");
 
