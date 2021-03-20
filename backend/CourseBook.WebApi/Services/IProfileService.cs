@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Services
+namespace CourseBook.WebApi.Services
 {
     using System.Threading;
     using System.Threading.Tasks;

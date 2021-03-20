@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Profiles.Commands
+namespace CourseBook.WebApi.Profiles.Commands
 {
     using System.IO;
     using System.Security.Claims;

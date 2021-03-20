@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Faculties.Data
+namespace CourseBook.WebApi.Faculties.Data
 {
     using Entities;
     using Microsoft.EntityFrameworkCore;

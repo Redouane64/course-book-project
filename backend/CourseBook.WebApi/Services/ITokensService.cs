@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Services
+namespace CourseBook.WebApi.Services
 {
     using System.Collections.Generic;
     using System.Security.Claims;

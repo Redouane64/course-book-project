@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Services
+namespace CourseBook.WebApi.Services
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.DataProtection;
@@ -18,7 +18,7 @@
             IDataProtectionProvider dataProtectionProvider,
             IOptions<JwtRefreshTokenProviderOptions> options,
             ILogger<DataProtectorTokenProvider<IdentityUser>> logger
-        ) :  base(dataProtectionProvider, options, logger)
+        ) : base(dataProtectionProvider, options, logger)
         {
         }
 

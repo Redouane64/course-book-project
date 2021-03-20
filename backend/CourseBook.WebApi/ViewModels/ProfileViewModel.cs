@@ -1,10 +1,14 @@
-﻿namespace CourseBook.WebApi.ViewModels
+namespace CourseBook.WebApi.ViewModels
 {
     using System;
+    using System.Text.Json.Serialization;
+    using CourseBook.WebApi.Models;
 
     public class ProfileViewModel
     {
         public string Id { get; set; }
+
+        public AccountType AccountType { get; set; }
 
         public string Name { get; set; }
 

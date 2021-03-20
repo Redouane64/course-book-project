@@ -40,7 +40,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]
         [ProducesResponseType(typeof(IEnumerable<DirectionViewModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetFacultyDirection([FromRoute]Guid id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetFacultyDirection([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
             var directions = await this._mediator.Send(new GetDirectionsRequest(id), cancellationToken);
             return Ok(directions);

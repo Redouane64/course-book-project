@@ -27,8 +27,8 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("login", Name =nameof(Login))]
-        public async Task<IActionResult> Login([FromBody]LoginCredentials credentials, CancellationToken cancellationToken = default)
+        [HttpPost("login", Name = nameof(Login))]
+        public async Task<IActionResult> Login([FromBody] LoginCredentials credentials, CancellationToken cancellationToken = default)
         {
             try
             {

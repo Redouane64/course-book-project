@@ -112,7 +112,8 @@ namespace CourseBook.WebApi
 
             services.AddScoped<IFacultiesRepository, FacultiesRepository>();
 
-            services.AddAutoMapper(options => {
+            services.AddAutoMapper(options =>
+            {
                 options.CreateMap<FacultyEntity, FacultyViewModel>();
                 options.CreateMap<DirectionEntity, DirectionViewModel>();
                 options.CreateMap<GroupEntity, GroupViewModel>();

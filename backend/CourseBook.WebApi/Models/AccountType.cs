@@ -1,11 +1,12 @@
-﻿namespace CourseBook.WebApi.Models
+namespace CourseBook.WebApi.Models
 {
     using System;
-    
-    public enum AccountType : ushort
+    using System.Text.Json.Serialization;
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum AccountType
     {
-        Student = 1,
-        Teacher = 2,
-        Both = 3
+        Student,
+        Teacher
     }
 }

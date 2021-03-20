@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.ViewModels
+namespace CourseBook.WebApi.ViewModels
 {
     using System;
 

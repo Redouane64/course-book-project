@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Profiles.Queries
+namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.IO;
     using System.Security.Claims;

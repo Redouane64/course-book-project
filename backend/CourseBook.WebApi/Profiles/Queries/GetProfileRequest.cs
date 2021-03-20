@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Profiles.Queries
+namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,7 +23,6 @@
     public class GetProfileRequestHandler : IRequestHandler<GetProfileRequest, ProfileViewModel>
     {
         private readonly IProfileService _profileService;
-        private readonly IUrlHelperFactory _urlHelperFactory;
 
         public GetProfileRequestHandler(IProfileService profileService)
         {
