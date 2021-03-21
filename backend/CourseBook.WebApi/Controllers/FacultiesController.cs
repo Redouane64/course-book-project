@@ -42,7 +42,7 @@ namespace CourseBook.WebApi.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(faculty);
         }
 
         [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]
