@@ -7,6 +7,7 @@ namespace CourseBook.WebApi.ViewModels
 
     public class FacultyViewModel
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }
