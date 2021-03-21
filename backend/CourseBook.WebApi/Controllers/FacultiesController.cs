@@ -32,10 +32,17 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        [ProducesResponseType(typeof(FacultyViewModel), StatusCodes.Status200OK)]
-        public IActionResult GetFaculty([FromRoute] Guid id)
+        [ProducesResponseType(typeof(FacultyDetailsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async  Task<IActionResult> GetFaculty([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var faculty = await this._mediator.Send(new GetFacultyRequest(id), cancellationToken);
+
+            if (faculty is null) {
+                return NotFound();
+            }
+
+            return Ok(faculty);
         }
 
         [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]

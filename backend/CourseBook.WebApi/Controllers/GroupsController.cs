@@ -2,6 +2,7 @@ namespace CourseBook.WebApi.Controllers
 {
     using System;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.ViewModels;
     using MediatR;
     using Microsoft.AspNetCore.Http;
@@ -22,9 +23,16 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(GroupViewModel), StatusCodes.Status200OK)]
-        public IActionResult GetGroup([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetGroup([FromRoute] Guid id)
         {
-            return Ok();
+            var group = await this._mediator.Send(new GetGroupRequest(id));
+
+            if (group is null) {
+                return NotFound();
+            }
+
+            return Ok(group);
         }
     }
 

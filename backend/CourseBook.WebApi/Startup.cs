@@ -118,6 +118,16 @@ namespace CourseBook.WebApi
                 options.CreateMap<DirectionEntity, DirectionViewModel>();
                 options.CreateMap<GroupEntity, GroupViewModel>();
                 options.CreateMap<DisciplineEntity, DisciplineViewModel>();
+
+                options.CreateMap<FacultyEntity, FacultyDetailsViewModel>();
+
+                options.CreateMap<DirectionEntity, DirectionDetailsViewModel>()
+                        // TODO: fix
+                        .ForMember(x => x.Disciplines, mapper => mapper.Ignore())
+                        .ForMember(x => x.Groups, mapper => mapper.Ignore());
+
+                options.CreateMap<GroupEntity, GroupDetailsViewModel>();
+                options.CreateMap<DisciplineEntity, DisciplineDetailsViewModel>();
             });
 
 

@@ -10,4 +10,10 @@ namespace CourseBook.WebApi.ViewModels
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
+
+    public class DirectionDetailsViewModel : DirectionViewModel
+    {
+        public ICollection<DisciplineViewModel> Disciplines { get; set; }
+        public ICollection<GroupViewModel> Groups { get; set; }
+    }
 }
