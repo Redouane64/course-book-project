@@ -21,6 +21,25 @@ namespace CourseBook.WebApi.Faculties.Data
             builder.Property(e => e.Name)
                 .HasColumnName("name")
                 .IsRequired();
+
+            builder.HasData(
+                new FacultyEntity
+                {
+                    Name = "Institute of Arts and Culture"
+                },
+                new FacultyEntity
+                {
+                    Name = "Faculty of Physics"
+                },
+                new FacultyEntity
+                {
+                    Name = "Faculty of Radiophysics"
+                },
+                new FacultyEntity
+                {
+                    Name = "Faculty of Chemistry"
+                }
+            );
         }
     }
 }
