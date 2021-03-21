@@ -53,5 +53,20 @@ namespace CourseBook.WebApi.Faculties.Repositories
         {
             return await _context.Disciplines.AsNoTracking().ToListAsync(cancellationToken);
         }
+
+        public Task<FacultyEntity> GetFaculty(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DirectionEntity> GetDirection(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DisciplineEntity> GetDiscipline(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
