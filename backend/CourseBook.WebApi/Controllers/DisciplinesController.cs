@@ -34,9 +34,16 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(DisciplineDetailsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDiscipline([FromRoute] Guid id)
         {
-            return Ok(await this._mediator.Send(new GetDisciplineRequest(id)));
+            var discipline = await this._mediator.Send(new GetDisciplineRequest(id));
+
+            if(discipline is null) {
+                return NotFound();
+            }
+
+            return Ok(discipline);
         }
     }
 }

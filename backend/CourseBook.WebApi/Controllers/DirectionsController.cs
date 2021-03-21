@@ -25,9 +25,16 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(DirectionDetailsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDirection([FromRoute] Guid id)
         {
-            return Ok(await this._mediator.Send(new GetDirectionRequest(id)));
+            var direction = await this._mediator.Send(new GetDirectionRequest(id));
+
+            if(direction is null) {
+                return NotFound();
+            }
+
+            return Ok(direction);
         }
 
         [HttpGet("{id:Guid}/groups", Name = nameof(GetDirectionGroups))]

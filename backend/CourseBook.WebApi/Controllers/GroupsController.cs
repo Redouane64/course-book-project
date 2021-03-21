@@ -23,9 +23,16 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(GroupViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetGroup([FromRoute] Guid id)
         {
-            return Ok(await this._mediator.Send(new GetGroupRequest(id)));
+            var group = await this._mediator.Send(new GetGroupRequest(id));
+
+            if (group is null) {
+                return NotFound();
+            }
+
+            return Ok(group);
         }
     }
 
