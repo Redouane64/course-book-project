@@ -56,22 +56,34 @@ namespace CourseBook.WebApi.Faculties.Repositories
 
         public async Task<FacultyEntity> GetFacultyAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Faculties.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Faculties.AsNoTracking()
+                .Include(x => x.Directions)
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<DirectionEntity> GetDirectionAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Directions.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Directions.AsNoTracking()
+                .Include(x => x.Disciplines)
+                .Include(x => x.Groups)
+                .Include(x => x.Faculty)
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<GroupEntity> GetGroupAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Groups.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Groups.AsNoTracking()
+                .Include(x => x.Direction)
+                .Include(x => x.Disciplines)
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<DisciplineEntity> GetDisciplineAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Disciplines.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Disciplines.AsNoTracking()
+                .Include(x => x.Directions)
+                .Include(x => x.Groups)
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
     }
 }
