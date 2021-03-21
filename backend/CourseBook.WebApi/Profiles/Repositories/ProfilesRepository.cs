@@ -27,9 +27,11 @@ namespace CourseBook.WebApi.Profiles.Repositories
             return added.Entity;
         }
 
-        public Task<ProfileEntity> UpdateAsync(ProfileEntity entity, CancellationToken cancellationToken = default)
+        public async Task<ProfileEntity> UpdateAsync(ProfileEntity entity, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            var entry = this._context.Profiles.Update(entity);
+            await this._context.SaveChangesAsync(cancellationToken);
+            return entry.Entity;
         }
 
         public Task<IEnumerable<ProfileEntity>> GetAllAsync(CancellationToken cancellationToken = default)

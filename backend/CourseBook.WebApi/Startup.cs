@@ -2,7 +2,10 @@ namespace CourseBook.WebApi
 {
     using System;
     using System.Text;
-
+    using System.Text.Json.Serialization;
+    using CourseBook.WebApi.Faculties.Entities;
+    using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.ViewModels;
     using Data;
 
     using Infrastructure;
@@ -11,6 +14,7 @@ namespace CourseBook.WebApi
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Cors.Infrastructure;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -35,7 +39,11 @@ namespace CourseBook.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            }).AddMvcOptions(options => options.Filters.Add<JsonExceptionFilter>());
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course Book API", Version = "v1" });
@@ -43,10 +51,11 @@ namespace CourseBook.WebApi
 
             services.AddDbContext<DataContext>(config =>
             {
-                config.UseNpgsql(Configuration.GetConnectionString("default"));
+                config.UseSqlite(Configuration.GetConnectionString("localhost"));
                 config.EnableDetailedErrors();
                 config.EnableSensitiveDataLogging();
             });
+
 
             services.AddIdentityCore<IdentityUser>(options =>
                 {
@@ -99,12 +108,27 @@ namespace CourseBook.WebApi
             services.AddScoped<IProfilesRepository, ProfilesRepository>();
             services.AddScoped<UsersService>();
             services.AddScoped<IProfileService, ProfilesService>();
+            services.AddScoped<IUserFileService, FilesService>();
+
+            services.AddScoped<IFacultiesRepository, FacultiesRepository>();
+
+            services.AddAutoMapper(options =>
+            {
+                options.CreateMap<FacultyEntity, FacultyViewModel>();
+                options.CreateMap<DirectionEntity, DirectionViewModel>();
+                options.CreateMap<GroupEntity, GroupViewModel>();
+                options.CreateMap<DisciplineEntity, DisciplineViewModel>();
+            });
+
 
             services.AddAuthorization();
 
             services.AddMediatR(typeof(Startup));
 
             services.AddHttpContextAccessor();
+
+            services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,7 +141,13 @@ namespace CourseBook.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseBook.WebApi v1"));
             }
 
+
             app.UseRouting();
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            });
 
             app.UseAuthentication();
 

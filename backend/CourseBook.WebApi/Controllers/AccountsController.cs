@@ -3,13 +3,15 @@ namespace CourseBook.WebApi.Controllers
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Exceptions;
     using CourseBook.WebApi.Models;
 
     using MediatR;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    
+
     using Profiles.Commands;
 
     [Route("[controller]")]
@@ -25,8 +27,8 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("login", Name =nameof(Login))]
-        public async Task<IActionResult> Login([FromBody]LoginCredentials credentials, CancellationToken cancellationToken = default)
+        [HttpPost("login", Name = nameof(Login))]
+        public async Task<IActionResult> Login([FromBody] LoginCredentials credentials, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -60,6 +62,13 @@ namespace CourseBook.WebApi.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost("logout", Name = nameof(LogOut))]
+        [Authorize]
+        public async Task<IActionResult> LogOut(CancellationToken cancellationToken = default)
+        {
+            return Ok(await this._mediator.Send(new LogOutRequest(), cancellationToken));
         }
     }
 }

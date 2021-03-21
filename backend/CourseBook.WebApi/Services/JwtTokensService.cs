@@ -6,7 +6,9 @@ namespace CourseBook.WebApi.Services
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Exceptions;
+
     using Infrastructure;
 
     using Microsoft.AspNetCore.Identity;
@@ -83,7 +85,10 @@ namespace CourseBook.WebApi.Services
 
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
-            var claims = await this._userManager.GetClaimsAsync(user);
+            var claims = new List<Claim>(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+            });
 
             return await this.GenerateToken(claims, user);
         }
@@ -118,9 +123,26 @@ namespace CourseBook.WebApi.Services
 
             var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
 
-            var claims = await this._userManager.GetClaimsAsync(user);
+            var claims = new List<Claim>(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId),
+            });
 
             return await this.GenerateToken(claims, user);
+        }
+
+        public async Task Invalidate(string userId)
+        {
+            var user = await this._userManager.FindByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new InvalidOperationException("Incorrect or unauthorized user.");
+            }
+
+            await this._userManager.UpdateSecurityStampAsync(user);
+
+            /* in production, it is more complex than this. */
         }
     }
 }

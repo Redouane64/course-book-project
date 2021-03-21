@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Faculties.Data
+namespace CourseBook.WebApi.Faculties.Data
 {
     using Entities;
     using Microsoft.EntityFrameworkCore;
@@ -10,15 +10,13 @@
         {
             builder.ToTable("groups_disciplines");
 
-            builder.HasKey(e => new {e.GroupId, e.DisciplineId});
+            builder.HasKey(e => new { e.GroupId, e.DisciplineId });
 
             builder.HasOne(e => e.Group)
-                .WithMany(e => e.Disciplines)
-                .HasForeignKey("group_id");
+                .WithMany(e => e.Disciplines);
 
             builder.HasOne(e => e.Discipline)
-                .WithMany(e => e.Groups)
-                .HasForeignKey("discipline_id");
+                .WithMany(e => e.Groups);
 
             builder.Property(e => e.Year)
                 .IsRequired();

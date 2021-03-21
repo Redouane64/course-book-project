@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Exceptions
+namespace CourseBook.WebApi.Exceptions
 {
     using System;
 

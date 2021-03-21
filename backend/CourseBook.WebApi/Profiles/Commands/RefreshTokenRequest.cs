@@ -37,9 +37,11 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<TokenViewModel> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
         {
+            var userId = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var (Token, RefreshToken) = await this._tokensService.RefreshToken(
                 request.Tokens.RefreshToken,
-                this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                userId
             );
 
             return new TokenViewModel(Token, RefreshToken);

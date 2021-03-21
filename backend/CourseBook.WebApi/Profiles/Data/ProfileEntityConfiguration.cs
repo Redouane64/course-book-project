@@ -1,5 +1,6 @@
-﻿namespace CourseBook.WebApi.Profiles.Data
+namespace CourseBook.WebApi.Profiles.Data
 {
+    using CourseBook.WebApi.Models;
     using Entities;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -32,6 +33,9 @@
                 .IsRequired();
 
             builder.Ignore(e => e.User);
+
+            builder.Property(e => e.AccountType)
+                .IsRequired();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Services
+namespace CourseBook.WebApi.Services
 {
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -12,5 +12,7 @@
         Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, IdentityUser user);
 
         Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string userId);
+
+        Task Invalidate(string userId);
     }
 }

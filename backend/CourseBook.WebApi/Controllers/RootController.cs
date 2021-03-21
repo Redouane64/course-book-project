@@ -13,6 +13,6 @@ namespace CourseBook.WebApi.Controllers
     public class RootController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get() => Ok(new {  Message = "Ok" });
+        public IActionResult Get() => Ok(new { Message = "Ok" });
     }
 }
