@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<GroupDetailsViewModel> Handle(GetGroupRequest request, CancellationToken cancellationToken)
         {
-            var group = await repository.GetGroup(request.Id);
+            var group = await repository.GetGroupAsync(request.Id, cancellationToken);
             return this.mapper.Map<GroupDetailsViewModel>(group);
         }
     }

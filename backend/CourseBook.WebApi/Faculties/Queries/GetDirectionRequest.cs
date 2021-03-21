@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<DirectionDetailsViewModel> Handle(GetDirectionRequest request, CancellationToken cancellationToken)
         {
-            var direction = await repository.GetDirection(request.Id);
+            var direction = await repository.GetDirectionAsync(request.Id, cancellationToken);
             return this.mapper.Map<DirectionDetailsViewModel>(direction);
         }
     }

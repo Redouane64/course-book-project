@@ -15,9 +15,9 @@ namespace CourseBook.WebApi.Faculties.Repositories
 
         Task<IEnumerable<DisciplineEntity>> GetDisciplines(CancellationToken cancellationToken);
 
-        Task<FacultyEntity> GetFaculty(Guid id);
-        Task<DirectionEntity> GetDirection(Guid id);
-        Task<GroupEntity> GetGroup(Guid id);
-        Task<DisciplineEntity> GetDiscipline(Guid id);
+        Task<FacultyEntity> GetFacultyAsync(Guid id, CancellationToken cancellationToken);
+        Task<DirectionEntity> GetDirectionAsync(Guid id, CancellationToken cancellationToken);
+        Task<GroupEntity> GetGroupAsync(Guid id, CancellationToken cancellationToken);
+        Task<DisciplineEntity> GetDisciplineAsync(Guid id, CancellationToken cancellationToken);
     }
 }

@@ -33,9 +33,9 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(FacultyDetailsViewModel), StatusCodes.Status200OK)]
-        public async  Task<IActionResult> GetFaculty([FromRoute] Guid id)
+        public async  Task<IActionResult> GetFaculty([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
-            return Ok(await this._mediator.Send(new GetFacultyRequest(id)));
+            return Ok(await this._mediator.Send(new GetFacultyRequest(id), cancellationToken));
         }
 
         [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]

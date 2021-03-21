@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<FacultyDetailsViewModel> Handle(GetFacultyRequest request, CancellationToken cancellationToken)
         {
-            var faculty = await repository.GetFaculty(request.Id);
+            var faculty = await repository.GetFacultyAsync(request.Id, cancellationToken);
             return this.mapper.Map<FacultyDetailsViewModel>(faculty);
         }
     }
