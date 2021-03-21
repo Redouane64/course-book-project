@@ -1,10 +1,11 @@
-﻿namespace CourseBook.WebApi.Profiles.Queries
+namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.Threading;
     using System.Threading.Tasks;
 
     using MediatR;
-
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Services;
 
     using ViewModels;
@@ -34,8 +35,10 @@
 
             return new ProfileViewModel()
             {
+                Id = profile.UserId,
                 Name = profile.FullName,
                 Email = profile.User.Email,
+                PhoneNumber = profile.User.PhoneNumber,
                 Birthday = profile.BirthDay,
                 AdmissionYear = profile.AdmissionYear,
                 Faculty = profile.Faculty,

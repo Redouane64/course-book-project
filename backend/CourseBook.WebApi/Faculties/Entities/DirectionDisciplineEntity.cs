@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Faculties.Entities
+namespace CourseBook.WebApi.Faculties.Entities
 {
     using System;
     using System.ComponentModel.DataAnnotations.Schema;

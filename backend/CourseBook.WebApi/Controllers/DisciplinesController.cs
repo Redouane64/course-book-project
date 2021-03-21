@@ -1,44 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CourseBook.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CourseBook.WebApi.Faculties.Queries;
+    using CourseBook.WebApi.ViewModels;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Route("[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class DisciplinesController : ControllerBase
     {
 
-        [HttpGet("{id}", Name = nameof(GetDiscipline))]
-        public async Task<IActionResult> GetDiscipline(CancellationToken cancellationToken = default)
+        private readonly IMediator _mediator;
+
+        public DisciplinesController(IMediator mediator)
         {
-            return Ok();
+            _mediator = mediator;
         }
 
-        [HttpPost(Name = nameof(CreateDiscipline))]
-        public async Task<IActionResult> CreateDiscipline(CancellationToken cancellationToken = default)
+
+        [HttpGet(Name = nameof(GetDisciplines))]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineViewModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDisciplines(CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var disciplines = await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken);
+            return Ok(disciplines);
         }
 
-        [HttpPut(Name = nameof(UpdateDiscipline))]
-        public async Task<IActionResult> UpdateDiscipline(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
-
-        [HttpGet(Name = nameof(GetAllDiscipline))]
-        public async Task<IActionResult> GetAllDiscipline(CancellationToken cancellationToken = default)
-        {
-            return Ok();
-        }
-
-        [HttpDelete(Name = nameof(DeleteDiscipline))]
-        public async Task<IActionResult> DeleteDiscipline(CancellationToken cancellationToken = default)
+        [HttpGet("{id:Guid}")]
+        [ProducesResponseType(typeof(DisciplineViewModel), StatusCodes.Status200OK)]
+        public IActionResult GetDiscipline([FromRoute] Guid id)
         {
             return Ok();
         }
