@@ -51,7 +51,7 @@ namespace CourseBook.WebApi
 
             services.AddDbContext<DataContext>(config =>
             {
-                config.UseNpgsql(Configuration.GetConnectionString("default"));
+                config.UseSqlite(Configuration.GetConnectionString("localhost"));
                 config.EnableDetailedErrors();
                 config.EnableSensitiveDataLogging();
             });
