@@ -117,7 +117,7 @@ namespace CourseBook.WebApi
                 options.CreateMap<FacultyEntity, FacultyViewModel>();
                 options.CreateMap<DirectionEntity, DirectionViewModel>();
                 options.CreateMap<GroupEntity, GroupViewModel>();
-                options.CreateMap<DisciplineEntity, DisciplineEntity>();
+                options.CreateMap<DisciplineEntity, DisciplineViewModel>();
             });
 
 
