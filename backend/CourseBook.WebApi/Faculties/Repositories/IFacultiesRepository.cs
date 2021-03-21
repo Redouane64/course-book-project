@@ -17,6 +17,7 @@ namespace CourseBook.WebApi.Faculties.Repositories
 
         Task<FacultyEntity> GetFaculty(Guid id);
         Task<DirectionEntity> GetDirection(Guid id);
+        Task<GroupEntity> GetGroup(Guid id);
         Task<DisciplineEntity> GetDiscipline(Guid id);
     }
 }

@@ -33,10 +33,10 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        [ProducesResponseType(typeof(DisciplineViewModel), StatusCodes.Status200OK)]
-        public IActionResult GetDiscipline([FromRoute] Guid id)
+        [ProducesResponseType(typeof(DisciplineDetailsViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDiscipline([FromRoute] Guid id)
         {
-            return Ok();
+            return Ok(await this._mediator.Send(new GetDisciplineRequest(id)));
         }
     }
 }

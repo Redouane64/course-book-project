@@ -24,10 +24,10 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        [ProducesResponseType(typeof(DirectionViewModel), StatusCodes.Status200OK)]
-        public IActionResult GetDirection([FromRoute] Guid id)
+        [ProducesResponseType(typeof(DirectionDetailsViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDirection([FromRoute] Guid id)
         {
-            return Ok();
+            return Ok(await this._mediator.Send(new GetDirectionRequest(id)));
         }
 
         [HttpGet("{id:Guid}/groups", Name = nameof(GetDirectionGroups))]

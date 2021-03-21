@@ -54,19 +54,24 @@ namespace CourseBook.WebApi.Faculties.Repositories
             return await _context.Disciplines.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public Task<FacultyEntity> GetFaculty(Guid id)
+        public async Task<FacultyEntity> GetFaculty(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Faculties.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<DirectionEntity> GetDirection(Guid id)
+        public async Task<DirectionEntity> GetDirection(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Directions.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<DisciplineEntity> GetDiscipline(Guid id)
+        public async Task<GroupEntity> GetGroup(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Groups.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<DisciplineEntity> GetDiscipline(Guid id)
+        {
+            return await _context.Disciplines.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }
