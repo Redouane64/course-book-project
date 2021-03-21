@@ -14,12 +14,10 @@ namespace CourseBook.WebApi.Faculties.Data
             builder.HasKey(e => new { e.DirectionId, e.DisciplineId });
 
             builder.HasOne(e => e.Direction)
-                .WithMany(e => e.Disciplines)
-                .HasForeignKey("direction_id");
+                .WithMany(e => e.Disciplines);
 
             builder.HasOne(e => e.Discipline)
-                .WithMany(e => e.Directions)
-                .HasForeignKey("discipline_id");
+                .WithMany(e => e.Directions);
 
             builder.HasData(new DirectionDisciplineEntity[] {
                 //Culturology
@@ -69,25 +67,6 @@ namespace CourseBook.WebApi.Faculties.Data
                     DirectionId = Guid.Parse("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"),
                     DisciplineId = Guid.Parse("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce")
                 },
-                // Library and Information Activities
-                /*
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
-                    DisciplineId = Guid.Parse("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
-                    DisciplineId = Guid.Parse("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
-                    DisciplineId = Guid.Parse("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
-                    DisciplineId = Guid.Parse("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce")
-                },
-                */
                 // Astronomy and Space Geodesy
                 new DirectionDisciplineEntity {
                     DirectionId = Guid.Parse("fb92cb9d-c54c-4882-8a84-d357392586b7"),
@@ -104,23 +83,6 @@ namespace CourseBook.WebApi.Faculties.Data
                 new DirectionDisciplineEntity {
                     DirectionId = Guid.Parse("fb92cb9d-c54c-4882-8a84-d357392586b7"),
                     DisciplineId = Guid.Parse("bc957929-f744-4315-a4ed-08530c7f0f3e")
-                },
-                //General and Experimental Physics
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
-                    DisciplineId = Guid.Parse("d6b13c5b-cabf-4034-af31-f3c30d344393")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
-                    DisciplineId = Guid.Parse("ad97d079-2037-4dd7-abfd-f23befa01df2")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
-                    DisciplineId = Guid.Parse("d80697b7-aa62-49e2-86e8-2a83e2e71004")
-                },
-                new DirectionDisciplineEntity {
-                    DirectionId = Guid.Parse("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
-                    DisciplineId = Guid.Parse("9fe893d9-19e8-4ca5-99a1-09c165918e8b")
                 },
                 // Quantum Field Theory
                 new DirectionDisciplineEntity {

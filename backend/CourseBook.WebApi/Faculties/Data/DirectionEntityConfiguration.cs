@@ -13,11 +13,8 @@ namespace CourseBook.WebApi.Faculties.Data
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
-
             builder.HasMany(e => e.Groups)
-                .WithOne(e => e.Direction)
-                .HasForeignKey("direction_id");
+                .WithOne(e => e.Direction);
 
             builder.HasData(
                //Institute of Arts and Culture

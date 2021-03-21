@@ -13,14 +13,10 @@ namespace CourseBook.WebApi.Faculties.Data
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
-
             builder.HasMany(e => e.Directions)
-                .WithOne(e => e.Faculty)
-                .HasForeignKey("faculty_id");
+                .WithOne(e => e.Faculty);
 
             builder.Property(e => e.Name)
-                .HasColumnName("name")
                 .IsRequired();
 
             builder.HasData(
