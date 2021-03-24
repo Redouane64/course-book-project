@@ -5,7 +5,7 @@ namespace CourseBook.WebApi.Profiles.Repositories
     using System.Security.Authentication;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Profiles.Constants;
     using CourseBook.WebApi.Profiles.Entities;
 
     using Microsoft.AspNetCore.Identity;
@@ -59,6 +59,13 @@ namespace CourseBook.WebApi.Profiles.Repositories
             };
 
             // TODO: assign roles
+            var roleResult = await this._userManager.AddToRoleAsync(user, form.AccountType.ToString());
+
+            if(!roleResult.Succeeded)
+            {
+                var message = result.Errors.Select(error => error.Description).First();
+                throw new Exception(message);
+            }
 
             var saved = await this._profilesRepository.CreateAsync(profileEntity, cancellationToken);
             saved.User = user;
@@ -90,6 +97,8 @@ namespace CourseBook.WebApi.Profiles.Repositories
                 throw new InvalidCredentialException("Invalid user credentials.");
             }
 
+            var roles = await this._userManager.GetRolesAsync(user);
+            // TODO: assign account type value based on role
             profileEntity.User = user;
 
             return profileEntity;
