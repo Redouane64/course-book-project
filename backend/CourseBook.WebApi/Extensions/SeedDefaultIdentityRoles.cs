@@ -46,7 +46,7 @@ namespace CourseBook.WebApi.Extensions
                     }
 
                     // seed Admin role:
-                    if ((await roleManager.FindByNameAsync(Roles.TeacherRoleName)) is null)
+                    if ((await roleManager.FindByNameAsync(Roles.AdministratorRoleName)) is null)
                     {
                         var result = await roleManager.CreateAsync(new IdentityRole(Roles.AdministratorRoleName));
                         if (result.Errors.Any())
