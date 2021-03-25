@@ -27,8 +27,7 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<Unit> Handle(LogOutRequest request, CancellationToken cancellationToken)
         {
-            var userId = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this._tokensService.Invalidate(userId);
+            // TODO: clear old JWT token
             return await Task.FromResult(Unit.Value);
         }
     }

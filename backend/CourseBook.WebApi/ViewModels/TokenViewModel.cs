@@ -10,17 +10,7 @@ namespace CourseBook.WebApi.ViewModels
             RefreshToken = refreshToken;
         }
 
-        public TokenViewModel(string token, string refreshToken, string id)
-        {
-            Token = token;
-            RefreshToken = refreshToken;
-            Id = id;
-        }
-
-        public string Id { get; }
-
         public string Token { get; }
-
         public string RefreshToken { get; }
 
     }

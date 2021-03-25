@@ -5,6 +5,7 @@ namespace CourseBook.WebApi
     using System.Text.Json.Serialization;
     using CourseBook.WebApi.Faculties.Entities;
     using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.Profiles.Entities;
     using CourseBook.WebApi.ViewModels;
     using Data;
 
@@ -57,7 +58,7 @@ namespace CourseBook.WebApi
             });
 
 
-            services.AddIdentityCore<IdentityUser>(options =>
+            services.AddIdentityCore<UserEntity>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
                     options.SignIn.RequireConfirmedPhoneNumber = false;
@@ -67,7 +68,7 @@ namespace CourseBook.WebApi
                     options.Password.RequireUppercase = false;
                 })
                 .AddRoles<IdentityRole>()
-                .AddUserManager<UserManager<IdentityUser>>()
+                .AddUserManager<UserManager<UserEntity>>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddTokenProvider<JwtRefreshTokenProvider>(JwtRefreshTokenProvider.ProviderName);
@@ -105,7 +106,6 @@ namespace CourseBook.WebApi
             });
 
             services.AddScoped<ITokensService, JwtTokensService>();
-            services.AddScoped<IProfilesRepository, ProfilesRepository>();
             services.AddScoped<UsersService>();
             services.AddScoped<IProfileService, ProfilesService>();
             services.AddScoped<IUserFileService, FilesService>();

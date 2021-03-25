@@ -3,15 +3,10 @@ namespace CourseBook.WebApi.Profiles.Commands
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
-
     using MediatR;
-
     using Microsoft.AspNetCore.Http;
-
     using Models;
-
     using Services;
-
     using ViewModels;
 
     public class RefreshTokenRequest : IRequest<TokenViewModel>
@@ -37,11 +32,11 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<TokenViewModel> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
         {
-            var userId = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Id = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var (Token, RefreshToken) = await this._tokensService.RefreshToken(
                 request.Tokens.RefreshToken,
-                userId
+                Id
             );
 
             return new TokenViewModel(Token, RefreshToken);

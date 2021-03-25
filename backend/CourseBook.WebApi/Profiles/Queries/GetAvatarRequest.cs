@@ -10,11 +10,11 @@ namespace CourseBook.WebApi.Profiles.Queries
 
     public class GetAvatarRequest : IRequest<(string contentType, Stream contents)>
     {
-        public string UserId { get; }
+        public string Id { get; }
 
-        public GetAvatarRequest(string userId)
+        public GetAvatarRequest(string id)
         {
-            UserId = userId;
+            Id = id;
         }
     }
 
@@ -31,9 +31,9 @@ namespace CourseBook.WebApi.Profiles.Queries
 
         public async Task<(string contentType, Stream contents)> Handle(GetAvatarRequest request, CancellationToken cancellationToken)
         {
-            // var userId = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            return await this._fileService.GetAsync(request.UserId);
+            // TODO: fix and refactor
+            // var Id = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await this._fileService.GetAsync(request.Id);
         }
     }
 }

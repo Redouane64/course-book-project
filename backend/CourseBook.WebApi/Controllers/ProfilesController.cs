@@ -39,8 +39,8 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(typeof(ProfileViewModel), StatusCodes.Status200OK)]
         public async Task<ActionResult> GetProfile(CancellationToken cancellationToken = default)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var profile = await this._mediator.Send(new GetProfileRequest(userId), cancellationToken);
+            var Id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var profile = await this._mediator.Send(new GetProfileRequest(Id), cancellationToken);
             profile.Avatar = Url.Link(nameof(GetAvatar), null);
 
             return Ok(profile);
@@ -66,14 +66,14 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetProfile), null);
         }
 
-        [HttpGet("get-avatar/{userId}", Name = nameof(GetAvatar))]
+        [HttpGet("get-avatar/{Id}", Name = nameof(GetAvatar))]
         //[Authorize]
         //[Produces("image/jpeg", "image/png")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAvatar([FromRoute] string userId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAvatar([FromRoute] string Id, CancellationToken cancellationToken)
         {
-            var (contentType, stream) = await this._mediator.Send(new GetAvatarRequest(userId));
+            var (contentType, stream) = await this._mediator.Send(new GetAvatarRequest(Id));
 
             if (contentType is null)
             {

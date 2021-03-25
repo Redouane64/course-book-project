@@ -7,10 +7,10 @@ namespace CourseBook.WebApi.Services
     {
         public static readonly string UPLOAD_PATH = Path.Combine(Directory.GetCurrentDirectory(), "upload");
 
-        public Task<(string contentType, FileStream contents)> GetAsync(string userId)
+        public Task<(string contentType, FileStream contents)> GetAsync(string Id)
         {
-            var jpegAvatar = Path.Combine(UPLOAD_PATH, $"{userId}.jpg");
-            var pngAvatar = Path.Combine(UPLOAD_PATH, $"{userId}.png");
+            var jpegAvatar = Path.Combine(UPLOAD_PATH, $"{Id}.jpg");
+            var pngAvatar = Path.Combine(UPLOAD_PATH, $"{Id}.png");
 
             if (File.Exists(jpegAvatar))
             {

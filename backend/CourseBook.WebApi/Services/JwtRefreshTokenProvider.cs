@@ -1,6 +1,7 @@
 namespace CourseBook.WebApi.Services
 {
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Profiles.Entities;
     using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ namespace CourseBook.WebApi.Services
     public sealed class JwtRefreshTokenProviderOptions : DataProtectionTokenProviderOptions
     { }
 
-    public sealed class JwtRefreshTokenProvider : DataProtectorTokenProvider<IdentityUser>
+    public sealed class JwtRefreshTokenProvider : DataProtectorTokenProvider<UserEntity>
     {
         public const string ProviderName = nameof(JwtRefreshTokenProvider);
         public const string Purpose = "RefershJwtAccessToken";
@@ -17,12 +18,12 @@ namespace CourseBook.WebApi.Services
         public JwtRefreshTokenProvider(
             IDataProtectionProvider dataProtectionProvider,
             IOptions<JwtRefreshTokenProviderOptions> options,
-            ILogger<DataProtectorTokenProvider<IdentityUser>> logger
+            ILogger<DataProtectorTokenProvider<UserEntity>> logger
         ) : base(dataProtectionProvider, options, logger)
         {
         }
 
-        public override Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<IdentityUser> manager, IdentityUser user)
+        public override Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<UserEntity> manager, UserEntity user)
         {
             return Task.FromResult(false);
         }

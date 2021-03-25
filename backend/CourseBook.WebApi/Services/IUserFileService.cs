@@ -5,7 +5,7 @@ namespace CourseBook.WebApi.Services
 
     public interface IUserFileService
     {
-        Task<(string contentType, FileStream contents)> GetAsync(string userId);
+        Task<(string contentType, FileStream contents)> GetAsync(string Id);
 
         Task<string> CreateAsync(string filename, Stream contents);
         Task DeleteAsync(string filename);

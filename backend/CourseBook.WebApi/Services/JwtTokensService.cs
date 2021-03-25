@@ -8,7 +8,8 @@ namespace CourseBook.WebApi.Services
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Exceptions;
-
+    using CourseBook.WebApi.Profiles.Constants;
+    using CourseBook.WebApi.Profiles.Entities;
     using Infrastructure;
 
     using Microsoft.AspNetCore.Identity;
@@ -18,13 +19,13 @@ namespace CourseBook.WebApi.Services
     public sealed class JwtTokensService : ITokensService
     {
         private readonly JwtRefreshTokenProvider _jwtRefreshTokenProvider;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly JwtTokenParameters _jwtTokenOptions;
 
         public JwtTokensService(
             IOptions<JwtTokenParameters> jwtTokenOptions,
             JwtRefreshTokenProvider jwtRefreshTokenProvider,
-            UserManager<IdentityUser> userManager
+            UserManager<UserEntity> userManager
             )
         {
             _jwtRefreshTokenProvider = jwtRefreshTokenProvider;
@@ -32,7 +33,7 @@ namespace CourseBook.WebApi.Services
             _jwtTokenOptions = jwtTokenOptions.Value;
         }
 
-        public async Task<(string Token, string RefreshToken)> GenerateToken(IEnumerable<Claim> claims, IdentityUser user)
+        public async Task<(string Token, string RefreshToken)> GenerateToken(IEnumerable<Claim> claims, UserEntity user)
         {
             if (claims == null)
             {
@@ -62,7 +63,7 @@ namespace CourseBook.WebApi.Services
             return (Token: stringifiedToken, RefreshToken: refreshToken);
         }
 
-        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, IdentityUser user)
+        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, UserEntity user)
         {
             if (refreshToken == null)
             {
@@ -81,31 +82,36 @@ namespace CourseBook.WebApi.Services
                 throw new Exception("Invalid refresh token.");
             }
 
-            await this._userManager.UpdateSecurityStampAsync(user);
+            // TODO: refactor this
 
-            var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
+            var roles = await this._userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>(new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, Roles.StudentRoleName),
             });
+
+            if(roles.Contains(Roles.TeacherRoleName)) {
+                claims.Add(new Claim(ClaimTypes.Role, Roles.TeacherRoleName));
+            }
 
             return await this.GenerateToken(claims, user);
         }
 
-        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string userId)
+        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string Id)
         {
             if (refreshToken == null)
             {
                 throw new ArgumentNullException(nameof(refreshToken));
             }
 
-            if (userId == null)
+            if (Id == null)
             {
-                throw new ArgumentNullException(nameof(userId));
+                throw new ArgumentNullException(nameof(Id));
             }
 
-            var user = await this._userManager.FindByIdAsync(userId);
+            var user = await this._userManager.FindByIdAsync(Id);
 
             if (user is null)
             {
@@ -119,30 +125,22 @@ namespace CourseBook.WebApi.Services
                 throw new InvalidRefreshTokenException("Invalid refresh token.");
             }
 
-            await this._userManager.UpdateSecurityStampAsync(user);
+            // TODO: refactor this
 
-            var newRefreshToken = await this._jwtRefreshTokenProvider.GenerateAsync(JwtRefreshTokenProvider.Purpose, _userManager, user);
+            var roles = await this._userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>(new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, Roles.StudentRoleName),
             });
+
+            if(roles.Contains(Roles.TeacherRoleName)) {
+                claims.Add(new Claim(ClaimTypes.Role, Roles.TeacherRoleName));
+            }
 
             return await this.GenerateToken(claims, user);
         }
 
-        public async Task Invalidate(string userId)
-        {
-            var user = await this._userManager.FindByIdAsync(userId);
-
-            if (user is null)
-            {
-                throw new InvalidOperationException("Incorrect or unauthorized user.");
-            }
-
-            await this._userManager.UpdateSecurityStampAsync(user);
-
-            /* in production, it is more complex than this. */
-        }
     }
 }
