@@ -7,9 +7,9 @@ namespace CourseBook.WebApi.Services
 
     public interface IProfileService
     {
-        Task<ProfileEntity> GetProfile(string userId, CancellationToken cancellationToken = default);
+        Task<UserEntity> GetProfile(string Id, CancellationToken cancellationToken = default);
 
-        Task<ProfileEntity> UpdateProfile(string userId, UpdateProfile profileData,
+        Task<UserEntity> UpdateProfile(string Id, UpdateProfile profileData,
             CancellationToken cancellationToken = default);
     }
 }

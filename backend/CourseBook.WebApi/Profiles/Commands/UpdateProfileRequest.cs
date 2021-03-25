@@ -1,12 +1,10 @@
 namespace CourseBook.WebApi.Profiles.Commands
 {
-    using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
     using MediatR;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
     using Models;
     using Services;
     using ViewModels;
@@ -34,21 +32,17 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<ProfileViewModel> Handle(UpdateProfileRequest request, CancellationToken cancellationToken)
         {
-            var userId = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Debug.Assert(userId is not null);
-            var profile = await this._profileService.UpdateProfile(userId, request.Profile, cancellationToken);
+            var Id = this._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this._profileService.UpdateProfile(Id, request.Profile, cancellationToken);
 
             return new ProfileViewModel()
             {
-                Id = profile.UserId,
-                Name = profile.FullName,
-                Email = profile.User.Email,
-                PhoneNumber = profile.User.PhoneNumber,
-                Birthday = profile.BirthDay,
-                AdmissionYear = profile.AdmissionYear,
-                Faculty = profile.Faculty,
-                Direction = profile.Direction,
-                Group = profile.Group
+                Id = user.Id.ToString(),
+                Name = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Birthday = user.BirthDay,
+                AdmissionYear = user.AdmissionYear,
             };
         }
     }

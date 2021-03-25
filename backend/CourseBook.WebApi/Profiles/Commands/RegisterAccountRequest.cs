@@ -1,19 +1,15 @@
 namespace CourseBook.WebApi.Profiles.Commands
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Profiles.Constants;
     using MediatR;
-
     using Models;
-
     using Repositories;
-
     using Services;
-
     using ViewModels;
 
     public class RegisterAccountRequest : IRequest<TokenViewModel>
@@ -39,19 +35,23 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<TokenViewModel> Handle(RegisterAccountRequest request, CancellationToken cancellationToken)
         {
-            var profile = await this._usersService.CreateUserAsync(request.Form, cancellationToken);
+            var user = await this._usersService.CreateUserAsync(request.Form, cancellationToken);
 
-            Debug.Assert(profile.User is not null);
+            var roles = await this._usersService.GetUserRolesAsync(user);
 
             var claims = new List<Claim>(new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, profile.UserId),
-                new Claim(ClaimTypes.Role, profile.AccountType.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, Roles.StudentRoleName),
             });
 
-            var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, profile.User);
+            if(roles.Contains(Roles.TeacherRoleName)) {
+                claims.Add(new Claim(ClaimTypes.Role, Roles.TeacherRoleName));
+            }
 
-            return new TokenViewModel(Token, RefreshToken, profile.UserId);
+            var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, user);
+
+            return new TokenViewModel(Token, RefreshToken);
         }
     }
 }

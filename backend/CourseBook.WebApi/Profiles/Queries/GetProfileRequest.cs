@@ -2,12 +2,8 @@ namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.Threading;
     using System.Threading.Tasks;
-
     using MediatR;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Services;
-
     using ViewModels;
 
     public class GetProfileRequest : IRequest<ProfileViewModel>
@@ -31,19 +27,16 @@ namespace CourseBook.WebApi.Profiles.Queries
 
         public async Task<ProfileViewModel> Handle(GetProfileRequest request, CancellationToken cancellationToken)
         {
-            var profile = await this._profileService.GetProfile(request.Id, cancellationToken);
+            var user = await this._profileService.GetProfile(request.Id, cancellationToken);
 
             return new ProfileViewModel()
             {
-                Id = profile.UserId,
-                Name = profile.FullName,
-                Email = profile.User.Email,
-                PhoneNumber = profile.User.PhoneNumber,
-                Birthday = profile.BirthDay,
-                AdmissionYear = profile.AdmissionYear,
-                Faculty = profile.Faculty,
-                Direction = profile.Direction,
-                Group = profile.Group
+                Id = user.Id.ToString(),
+                Name = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Birthday = user.BirthDay,
+                AdmissionYear = user.AdmissionYear,
             };
         }
     }

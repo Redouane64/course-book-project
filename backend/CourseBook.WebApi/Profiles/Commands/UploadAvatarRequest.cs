@@ -36,7 +36,7 @@ namespace CourseBook.WebApi.Profiles.Commands
 
         public async Task<Unit> Handle(UploadAvatarRequest request, CancellationToken cancellationToken)
         {
-            var userId = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Id = this._httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var extension = request.ContentType switch
             {
@@ -45,7 +45,7 @@ namespace CourseBook.WebApi.Profiles.Commands
                 _ => throw new UnsupportedContentTypeException("Only JPEG and PNG format are supported.")
             };
 
-            await this._fileService.CreateAsync($"{userId}.{extension}", request.ImageStream);
+            await this._fileService.CreateAsync($"{Id}.{extension}", request.ImageStream);
 
             return await Unit.Task;
         }
