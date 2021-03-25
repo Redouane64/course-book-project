@@ -13,7 +13,10 @@ namespace CourseBook.WebApi.Faculties.Data
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id);
+
+            builder.HasMany(e => e.Students)
+                   .WithOne(e => e.Group);
 
             builder.HasData(
                 //Culturology

@@ -5,8 +5,7 @@ namespace CourseBook.WebApi.Profiles.Entities
     using CourseBook.WebApi.Common;
     using Microsoft.AspNetCore.Identity;
 
-    public abstract class IdentityEntity : IdentityUser<Guid>, IAggregateRoot
+    public abstract class IdentityEntity : IdentityUser, IAggregateRoot<string>
     {
-        Guid IEntity.Id { get { return this.Id; } set { /* TODO: */ } }
     }
 }

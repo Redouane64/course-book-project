@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseBook.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210321154852_SwitchToSqlite")]
-    partial class SwitchToSqlite
+    [Migration("20210325165327_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -770,12 +770,17 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<int>("Semester")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Year")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("GroupId", "DisciplineId");
 
                     b.HasIndex("DisciplineId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("groups_disciplines");
                 });
@@ -797,16 +802,398 @@ namespace CourseBook.WebApi.Migrations
                     b.HasIndex("DirectionId");
 
                     b.ToTable("groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ea5900f5-e7a9-4bd2-bad7-dda5cb2ff042"),
+                            DirectionId = new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"),
+                            Name = "931910"
+                        },
+                        new
+                        {
+                            Id = new Guid("c4ba2c3f-6f86-41a2-b79e-0288e25b5d06"),
+                            DirectionId = new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"),
+                            Name = "932010"
+                        },
+                        new
+                        {
+                            Id = new Guid("e30e8b99-d2c0-4d7a-8d7f-1d3b092447b2"),
+                            DirectionId = new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"),
+                            Name = "932028"
+                        },
+                        new
+                        {
+                            Id = new Guid("590eb367-5fcf-4b67-a350-e2f87a688ef4"),
+                            DirectionId = new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"),
+                            Name = "931928"
+                        },
+                        new
+                        {
+                            Id = new Guid("bc7fa160-02a9-45b9-9484-8337801f5fd9"),
+                            DirectionId = new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"),
+                            Name = "93180"
+                        },
+                        new
+                        {
+                            Id = new Guid("fdc3519e-1e1b-4c30-909f-89872df9aab4"),
+                            DirectionId = new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"),
+                            Name = "931802"
+                        },
+                        new
+                        {
+                            Id = new Guid("06808fe5-9a1f-46d6-be33-46ee2554a185"),
+                            DirectionId = new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"),
+                            Name = "931804"
+                        },
+                        new
+                        {
+                            Id = new Guid("e90ec78b-115f-4d45-af21-1f6e89b3ea62"),
+                            DirectionId = new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"),
+                            Name = "931803"
+                        },
+                        new
+                        {
+                            Id = new Guid("db6ffaaf-ac89-41cc-9e05-bb27942fc255"),
+                            DirectionId = new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"),
+                            Name = "93190"
+                        },
+                        new
+                        {
+                            Id = new Guid("b4c4b62f-9530-4f18-84e9-05ec8b254076"),
+                            DirectionId = new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"),
+                            Name = "931901"
+                        },
+                        new
+                        {
+                            Id = new Guid("7725cdb7-17cd-430a-90be-56efb1c25b9c"),
+                            DirectionId = new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"),
+                            Name = "931902"
+                        },
+                        new
+                        {
+                            Id = new Guid("a46d545a-6367-4ecc-a667-d7b197e7e130"),
+                            DirectionId = new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"),
+                            Name = "931903"
+                        },
+                        new
+                        {
+                            Id = new Guid("5290a552-09dd-499b-af03-700b898e89e2"),
+                            DirectionId = new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
+                            Name = "93200"
+                        },
+                        new
+                        {
+                            Id = new Guid("ddd9e772-9cf6-401a-9cc5-33bfc63ae010"),
+                            DirectionId = new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
+                            Name = "93201"
+                        },
+                        new
+                        {
+                            Id = new Guid("a5403b73-62c8-4c36-9921-2986fb3c107b"),
+                            DirectionId = new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
+                            Name = "93202"
+                        },
+                        new
+                        {
+                            Id = new Guid("b71701e8-361a-4d91-a661-6942b7a2cca1"),
+                            DirectionId = new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"),
+                            Name = "93203"
+                        },
+                        new
+                        {
+                            Id = new Guid("7f4c4a85-799f-44d8-ad90-dca1da9d1a96"),
+                            DirectionId = new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"),
+                            Name = "122001"
+                        },
+                        new
+                        {
+                            Id = new Guid("1c09799d-904a-4e2f-9d5f-6535f83ef4b8"),
+                            DirectionId = new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"),
+                            Name = "122002"
+                        },
+                        new
+                        {
+                            Id = new Guid("9e74ca38-96a8-4af5-aaeb-002b5e1f3599"),
+                            DirectionId = new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"),
+                            Name = "122003"
+                        },
+                        new
+                        {
+                            Id = new Guid("4d46156f-7e51-47ea-b795-3f0c2d8a10b7"),
+                            DirectionId = new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"),
+                            Name = "122004"
+                        },
+                        new
+                        {
+                            Id = new Guid("129fd25d-edf9-411e-8b20-d36bf904957b"),
+                            DirectionId = new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"),
+                            Name = "121901"
+                        },
+                        new
+                        {
+                            Id = new Guid("86b80b67-14e7-4954-8e1d-972c73e44235"),
+                            DirectionId = new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"),
+                            Name = "121902"
+                        },
+                        new
+                        {
+                            Id = new Guid("e1fdc8b3-8047-4087-a2c5-1ca79446b8d2"),
+                            DirectionId = new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"),
+                            Name = "121903"
+                        },
+                        new
+                        {
+                            Id = new Guid("1faa2450-cf27-48b9-8626-f2135a08f606"),
+                            DirectionId = new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"),
+                            Name = "121904"
+                        },
+                        new
+                        {
+                            Id = new Guid("4cb1a0ae-b7d9-4cbc-8c93-4489bdfd7cda"),
+                            DirectionId = new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
+                            Name = "24200"
+                        },
+                        new
+                        {
+                            Id = new Guid("f9fced79-70b6-4ef0-b059-7548cd6cb491"),
+                            DirectionId = new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
+                            Name = "24201"
+                        },
+                        new
+                        {
+                            Id = new Guid("2566b128-cc7a-4b94-a3a4-19872999ef43"),
+                            DirectionId = new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
+                            Name = "24202"
+                        },
+                        new
+                        {
+                            Id = new Guid("1ada8e8d-fe48-4ea2-af87-714b00dac914"),
+                            DirectionId = new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"),
+                            Name = "24203"
+                        },
+                        new
+                        {
+                            Id = new Guid("2190b991-f0f8-41fe-81bc-f6cf8f8dfd37"),
+                            DirectionId = new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"),
+                            Name = "24301"
+                        },
+                        new
+                        {
+                            Id = new Guid("86c6eee1-a591-4933-9c10-4c26db8de2ef"),
+                            DirectionId = new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"),
+                            Name = "24302"
+                        },
+                        new
+                        {
+                            Id = new Guid("1ddedb89-1269-402c-b860-b29fd56d7f5d"),
+                            DirectionId = new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"),
+                            Name = "24303"
+                        },
+                        new
+                        {
+                            Id = new Guid("1a4bd82f-b1f1-4a3c-ae90-11e4871d7630"),
+                            DirectionId = new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"),
+                            Name = "24304"
+                        },
+                        new
+                        {
+                            Id = new Guid("f6b933a0-b715-40c5-8640-113fcaacb996"),
+                            DirectionId = new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"),
+                            Name = "25301"
+                        },
+                        new
+                        {
+                            Id = new Guid("c91ae9e0-0b7e-4ec8-936b-450bde57a01d"),
+                            DirectionId = new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"),
+                            Name = "25302"
+                        },
+                        new
+                        {
+                            Id = new Guid("939cee3d-00d0-452a-b727-bbedc1cd10ba"),
+                            DirectionId = new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"),
+                            Name = "25303"
+                        },
+                        new
+                        {
+                            Id = new Guid("e5a9ade9-7a00-4d12-894f-a5bd991a4273"),
+                            DirectionId = new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"),
+                            Name = "25304"
+                        },
+                        new
+                        {
+                            Id = new Guid("bcfd2592-c830-431d-9cc8-ee99ea0f6062"),
+                            DirectionId = new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"),
+                            Name = "30001"
+                        },
+                        new
+                        {
+                            Id = new Guid("63d7a7f2-a1ad-47f0-9e98-49adf64a7bdb"),
+                            DirectionId = new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"),
+                            Name = "30002"
+                        },
+                        new
+                        {
+                            Id = new Guid("7b9a7b18-b25f-43dd-be9b-6b11cb6a629b"),
+                            DirectionId = new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"),
+                            Name = "30003"
+                        },
+                        new
+                        {
+                            Id = new Guid("c6f70945-fc4e-4637-a90f-ad9a859c0b3a"),
+                            DirectionId = new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"),
+                            Name = "30004"
+                        },
+                        new
+                        {
+                            Id = new Guid("bc6f600e-3c90-4fd2-a650-7fe8496d6b99"),
+                            DirectionId = new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"),
+                            Name = "40001"
+                        },
+                        new
+                        {
+                            Id = new Guid("d47f6ceb-be52-4d14-94c2-3891dae8524d"),
+                            DirectionId = new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"),
+                            Name = "40002"
+                        },
+                        new
+                        {
+                            Id = new Guid("8d22e5be-874c-4467-a8a6-10ec4be05940"),
+                            DirectionId = new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"),
+                            Name = "40003"
+                        },
+                        new
+                        {
+                            Id = new Guid("f12316e7-00a1-44d1-8cd4-f130cb1549d7"),
+                            DirectionId = new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"),
+                            Name = "40004"
+                        },
+                        new
+                        {
+                            Id = new Guid("301db25d-27bc-4fdd-9422-76161b433222"),
+                            DirectionId = new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"),
+                            Name = "50001"
+                        },
+                        new
+                        {
+                            Id = new Guid("61779bbf-e712-4c4f-9c1c-cfde792f8123"),
+                            DirectionId = new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"),
+                            Name = "50002"
+                        },
+                        new
+                        {
+                            Id = new Guid("6600b84a-46d6-4457-b553-2bc76cf429b1"),
+                            DirectionId = new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"),
+                            Name = "50003"
+                        },
+                        new
+                        {
+                            Id = new Guid("21e70871-00c4-435f-a58f-e5ee217c9daf"),
+                            DirectionId = new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"),
+                            Name = "50004"
+                        },
+                        new
+                        {
+                            Id = new Guid("53b46c40-973d-4011-96bd-88b6d6d2f266"),
+                            DirectionId = new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"),
+                            Name = "60001"
+                        },
+                        new
+                        {
+                            Id = new Guid("0c9e1c5b-b73c-4761-9e8b-3fac8fe1ec39"),
+                            DirectionId = new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"),
+                            Name = "60002"
+                        },
+                        new
+                        {
+                            Id = new Guid("0d4c5368-15a1-46a4-9605-723c91d725bc"),
+                            DirectionId = new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"),
+                            Name = "60003"
+                        },
+                        new
+                        {
+                            Id = new Guid("d6382f9d-4e4c-45b3-8b34-4a63e69de09f"),
+                            DirectionId = new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"),
+                            Name = "60004"
+                        },
+                        new
+                        {
+                            Id = new Guid("deff19d1-bf42-4d14-9ac1-5c21b2a18a5c"),
+                            DirectionId = new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"),
+                            Name = "70001"
+                        },
+                        new
+                        {
+                            Id = new Guid("e9880029-92c6-4143-a680-00c06e6347d3"),
+                            DirectionId = new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"),
+                            Name = "70002"
+                        },
+                        new
+                        {
+                            Id = new Guid("0d80b63a-50d1-4c0f-b1f7-0a351d57192e"),
+                            DirectionId = new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"),
+                            Name = "70003"
+                        },
+                        new
+                        {
+                            Id = new Guid("0ccaf237-249b-49a2-91bf-4e13199f0ed8"),
+                            DirectionId = new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"),
+                            Name = "70004"
+                        },
+                        new
+                        {
+                            Id = new Guid("78b0c8a8-02d4-476d-a201-667cd79d0557"),
+                            DirectionId = new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"),
+                            Name = "80001"
+                        },
+                        new
+                        {
+                            Id = new Guid("a06269e9-85a7-4108-b199-0a5f81b9dedd"),
+                            DirectionId = new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"),
+                            Name = "80002"
+                        },
+                        new
+                        {
+                            Id = new Guid("4320ca86-9aaf-42fb-8832-35c9076e5b05"),
+                            DirectionId = new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"),
+                            Name = "80003"
+                        },
+                        new
+                        {
+                            Id = new Guid("462afa34-c206-4761-bd96-b87e72d1d243"),
+                            DirectionId = new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"),
+                            Name = "80004"
+                        },
+                        new
+                        {
+                            Id = new Guid("7e311ede-5d6c-4df4-9c64-192e00f65cf9"),
+                            DirectionId = new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"),
+                            Name = "90001"
+                        },
+                        new
+                        {
+                            Id = new Guid("24b4ee8d-c599-41b2-be5c-b27597cf278b"),
+                            DirectionId = new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"),
+                            Name = "90002"
+                        },
+                        new
+                        {
+                            Id = new Guid("deea0a5c-fb24-4994-9384-fabe85e4a76a"),
+                            DirectionId = new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"),
+                            Name = "90003"
+                        },
+                        new
+                        {
+                            Id = new Guid("4af28876-24b2-4f33-ac7b-4c4c95385ab3"),
+                            DirectionId = new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"),
+                            Name = "90004"
+                        });
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.ProfileEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.UserEntity", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("AccountType")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AdmissionYear")
                         .HasColumnType("INTEGER");
@@ -814,29 +1201,49 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Direction")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Faculty")
-                        .IsRequired()
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Group")
-                        .IsRequired()
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("profiles");
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -886,48 +1293,6 @@ namespace CourseBook.WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("role_claims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -1031,9 +1396,15 @@ namespace CourseBook.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
                     b.Navigation("Discipline");
 
                     b.Navigation("Group");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupEntity", b =>
@@ -1047,6 +1418,17 @@ namespace CourseBook.WebApi.Migrations
                     b.Navigation("Direction");
                 });
 
+            modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.UserEntity", b =>
+                {
+                    b.HasOne("CourseBook.WebApi.Faculties.Entities.GroupEntity", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1058,7 +1440,7 @@ namespace CourseBook.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1073,7 +1455,7 @@ namespace CourseBook.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1082,7 +1464,7 @@ namespace CourseBook.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1111,6 +1493,8 @@ namespace CourseBook.WebApi.Migrations
             modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupEntity", b =>
                 {
                     b.Navigation("Disciplines");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

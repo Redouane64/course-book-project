@@ -1,13 +1,12 @@
 namespace CourseBook.WebApi.Data
 {
-    using Faculties.Data;
     using Faculties.Entities;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Profiles.Entities;
 
-    public class DataContext : IdentityDbContext<IdentityUser>
+    public class DataContext : IdentityDbContext<UserEntity>
     {
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -25,7 +24,7 @@ namespace CourseBook.WebApi.Data
             modelBuilder
                 .Ignore<IdentityUserLogin<string>>();
 
-            modelBuilder.Entity<IdentityUser>()
+            modelBuilder.Entity<UserEntity>()
                 .ToTable("users")
                 .Ignore(e => e.AccessFailedCount)
                 .Ignore(e => e.ConcurrencyStamp)
@@ -59,6 +58,6 @@ namespace CourseBook.WebApi.Data
 
         public DbSet<GroupEntity> Groups { get; set; }
 
-        public DbSet<ProfileEntity> Profiles { get; set; }
+        public DbSet<UserEntity> Profiles { get; set; }
     }
 }

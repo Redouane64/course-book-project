@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CourseBook.WebApi.Migrations
 {
-    public partial class SwitchToSqlite : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,25 +33,6 @@ namespace CourseBook.WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "profiles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    AccountType = table.Column<int>(type: "INTEGER", nullable: false),
-                    FullName = table.Column<string>(type: "TEXT", nullable: false),
-                    BirthDay = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    AdmissionYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    Faculty = table.Column<string>(type: "TEXT", nullable: false),
-                    Direction = table.Column<string>(type: "TEXT", nullable: false),
-                    Group = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_profiles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "roles",
                 columns: table => new
                 {
@@ -63,24 +44,6 @@ namespace CourseBook.WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "users",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,6 +84,110 @@ namespace CourseBook.WebApi.Migrations
                         principalTable: "roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "directions_disciplines",
+                columns: table => new
+                {
+                    DirectionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    DisciplineId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_directions_disciplines", x => new { x.DirectionId, x.DisciplineId });
+                    table.ForeignKey(
+                        name: "FK_directions_disciplines_directions_DirectionId",
+                        column: x => x.DirectionId,
+                        principalTable: "directions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_directions_disciplines_disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
+                        principalTable: "disciplines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "groups",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    DirectionId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_groups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_groups_directions_DirectionId",
+                        column: x => x.DirectionId,
+                        principalTable: "directions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "users",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    FullName = table.Column<string>(type: "TEXT", nullable: true),
+                    BirthDay = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AdmissionYear = table.Column<int>(type: "INTEGER", nullable: false),
+                    GroupId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_users_groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "groups_disciplines",
+                columns: table => new
+                {
+                    GroupId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    DisciplineId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Year = table.Column<int>(type: "INTEGER", nullable: false),
+                    Semester = table.Column<int>(type: "INTEGER", nullable: false),
+                    TeacherId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_groups_disciplines", x => new { x.GroupId, x.DisciplineId });
+                    table.ForeignKey(
+                        name: "FK_groups_disciplines_disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
+                        principalTable: "disciplines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_groups_disciplines_groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_groups_disciplines_users_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,75 +251,6 @@ namespace CourseBook.WebApi.Migrations
                         name: "FK_user_tokens_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "directions_disciplines",
-                columns: table => new
-                {
-                    DirectionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DisciplineId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_directions_disciplines", x => new { x.DirectionId, x.DisciplineId });
-                    table.ForeignKey(
-                        name: "FK_directions_disciplines_directions_DirectionId",
-                        column: x => x.DirectionId,
-                        principalTable: "directions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_directions_disciplines_disciplines_DisciplineId",
-                        column: x => x.DisciplineId,
-                        principalTable: "disciplines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "groups",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    DirectionId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_groups", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_groups_directions_DirectionId",
-                        column: x => x.DirectionId,
-                        principalTable: "directions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "groups_disciplines",
-                columns: table => new
-                {
-                    GroupId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DisciplineId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Year = table.Column<int>(type: "INTEGER", nullable: false),
-                    Semester = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_groups_disciplines", x => new { x.GroupId, x.DisciplineId });
-                    table.ForeignKey(
-                        name: "FK_groups_disciplines_disciplines_DisciplineId",
-                        column: x => x.DisciplineId,
-                        principalTable: "disciplines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_groups_disciplines_groups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -640,27 +638,7 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), new Guid("f532bb4b-725b-4b00-8643-a335a4c3fe2f") });
-
-            migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), new Guid("96e8af39-7453-49cb-af5a-28d1e64e001a") });
-
-            migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("0af79477-a80e-4eb6-b156-97bc4cb47315") });
-
-            migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("a5f99e5d-a6a6-4a15-96b0-b2c3f54ce06c") });
-
-            migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("1faf9ce2-d392-4097-af23-2d962b90e9d6") });
+                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("7131c3a2-4bc4-4195-859a-f5af9bd7d144") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -670,27 +648,27 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("7131c3a2-4bc4-4195-859a-f5af9bd7d144") });
+                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("1faf9ce2-d392-4097-af23-2d962b90e9d6") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("9f160c04-c98b-4d58-a631-cdec4a04e316") });
+                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("a5f99e5d-a6a6-4a15-96b0-b2c3f54ce06c") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("fef757f5-8653-4ac3-814d-b60af590ce5a") });
+                values: new object[] { new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), new Guid("0af79477-a80e-4eb6-b156-97bc4cb47315") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("075486bf-0147-4bf7-97ca-e83191675bfb") });
+                values: new object[] { new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), new Guid("96e8af39-7453-49cb-af5a-28d1e64e001a") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("96cd27bd-dcff-496b-9984-4489b11a2712") });
+                values: new object[] { new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), new Guid("f532bb4b-725b-4b00-8643-a335a4c3fe2f") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -700,67 +678,62 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("b46cc5bc-6fc4-4f1e-9b2a-ff68b3f1234d") });
+                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("4bd00c26-498f-439e-b269-5052091dc53f") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("aad3f967-7158-46ca-9b8a-405581f207a4") });
+                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("4f4ffe1d-b54c-45f7-9e34-a0cc26df4ddd") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("e55051fc-17a6-41ec-b76e-fe6d98a15058") });
+                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("bf026a3f-9e2a-4506-a411-8bda85002c36") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("65830d5c-c0b3-46b6-8bea-b3dd2ce6e1dd") });
+                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("bc5bc711-5718-4b9c-a6cf-3d08a00f157c") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("54f742d3-a89d-4e4a-bd39-d233e0c34395") });
+                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("9fe893d9-19e8-4ca5-99a1-09c165918e8b") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("27bedee0-3b3e-4ab2-9bab-7f910ea12df2") });
+                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("d80697b7-aa62-49e2-86e8-2a83e2e71004") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("f3a05565-4293-47b4-8799-78a7e0d8787f") });
+                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("ad97d079-2037-4dd7-abfd-f23befa01df2") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("abc7d661-c1c4-4bd7-b767-d88ce7b748e5") });
+                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("9f160c04-c98b-4d58-a631-cdec4a04e316") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("7798ec77-2078-410b-9a47-3ecb1f17b100") });
+                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("d6b13c5b-cabf-4034-af31-f3c30d344393") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("5f926e12-86e0-4c9f-9f99-734ef39575ca") });
+                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("fef757f5-8653-4ac3-814d-b60af590ce5a") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("0a89c092-a7df-4570-b7a4-1042d4a08b04") });
+                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("96cd27bd-dcff-496b-9984-4489b11a2712") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), new Guid("579e5d9d-cf33-41d4-a172-56853419f169") });
-
-            migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("3ac05f7b-8ee9-4bf5-a37b-692eb9670c35") });
+                values: new object[] { new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), new Guid("ff28aa68-df77-4829-a2ce-f322d4b15a2b") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -770,12 +743,87 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), new Guid("579e5d9d-cf33-41d4-a172-56853419f169") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("0a89c092-a7df-4570-b7a4-1042d4a08b04") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("5f926e12-86e0-4c9f-9f99-734ef39575ca") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), new Guid("7798ec77-2078-410b-9a47-3ecb1f17b100") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("abc7d661-c1c4-4bd7-b767-d88ce7b748e5") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("f3a05565-4293-47b4-8799-78a7e0d8787f") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), new Guid("27bedee0-3b3e-4ab2-9bab-7f910ea12df2") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("54f742d3-a89d-4e4a-bd39-d233e0c34395") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("65830d5c-c0b3-46b6-8bea-b3dd2ce6e1dd") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), new Guid("e55051fc-17a6-41ec-b76e-fe6d98a15058") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("aad3f967-7158-46ca-9b8a-405581f207a4") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("3ac05f7b-8ee9-4bf5-a37b-692eb9670c35") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), new Guid("b46cc5bc-6fc4-4f1e-9b2a-ff68b3f1234d") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), new Guid("075486bf-0147-4bf7-97ca-e83191675bfb") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("211181c7-ef7c-4de0-b382-70e0eb9c89d3") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
                 values: new object[] { new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), new Guid("eeccea9a-ebaa-4660-b2f2-8fad550b38bb") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("4f4ffe1d-b54c-45f7-9e34-a0cc26df4ddd") });
+                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("a02c08b7-bd53-43e7-8a83-ead1185fbdd0") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -820,7 +868,7 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), new Guid("e1de5ca1-58dd-4a15-8544-0b370db9f2bb") });
+                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("db2a6fec-1be3-4e5a-9dc2-71e0104c150d") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -835,12 +883,17 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("4bd00c26-498f-439e-b269-5052091dc53f") });
+                values: new object[] { new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), new Guid("5b63a570-f5b2-47e7-8b2f-a79ca090797a") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
                 columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), new Guid("5b63a570-f5b2-47e7-8b2f-a79ca090797a") });
+                values: new object[] { new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), new Guid("5687210f-0fe3-4111-b0c6-a4764c3ad27c") });
+
+            migrationBuilder.InsertData(
+                table: "directions_disciplines",
+                columns: new[] { "DirectionId", "DisciplineId" },
+                values: new object[] { new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), new Guid("e1de5ca1-58dd-4a15-8544-0b370db9f2bb") });
 
             migrationBuilder.InsertData(
                 table: "directions_disciplines",
@@ -853,59 +906,324 @@ namespace CourseBook.WebApi.Migrations
                 values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("45a4ac18-d257-4bbf-8c90-959c5222aecf") });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("a02c08b7-bd53-43e7-8a83-ead1185fbdd0") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("301db25d-27bc-4fdd-9422-76161b433222"), new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), "50001" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("db2a6fec-1be3-4e5a-9dc2-71e0104c150d") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("61779bbf-e712-4c4f-9c1c-cfde792f8123"), new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), "50002" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), new Guid("211181c7-ef7c-4de0-b382-70e0eb9c89d3") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("6600b84a-46d6-4457-b553-2bc76cf429b1"), new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), "50003" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("d6b13c5b-cabf-4034-af31-f3c30d344393") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("21e70871-00c4-435f-a58f-e5ee217c9daf"), new Guid("de2a66b0-56ea-44e3-b202-c1b4754b1721"), "50004" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("ad97d079-2037-4dd7-abfd-f23befa01df2") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("bc7fa160-02a9-45b9-9484-8337801f5fd9"), new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"), "93180" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("d80697b7-aa62-49e2-86e8-2a83e2e71004") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("9e74ca38-96a8-4af5-aaeb-002b5e1f3599"), new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), "122003" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), new Guid("9fe893d9-19e8-4ca5-99a1-09c165918e8b") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("4d46156f-7e51-47ea-b795-3f0c2d8a10b7"), new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), "122004" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("bc5bc711-5718-4b9c-a6cf-3d08a00f157c") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("53b46c40-973d-4011-96bd-88b6d6d2f266"), new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), "60001" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), new Guid("bf026a3f-9e2a-4506-a411-8bda85002c36") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("0c9e1c5b-b73c-4761-9e8b-3fac8fe1ec39"), new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), "60002" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), new Guid("5687210f-0fe3-4111-b0c6-a4764c3ad27c") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("0d4c5368-15a1-46a4-9605-723c91d725bc"), new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), "60003" });
 
             migrationBuilder.InsertData(
-                table: "directions_disciplines",
-                columns: new[] { "DirectionId", "DisciplineId" },
-                values: new object[] { new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), new Guid("ff28aa68-df77-4829-a2ce-f322d4b15a2b") });
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("d6382f9d-4e4c-45b3-8b34-4a63e69de09f"), new Guid("eb9b5b37-07f2-4e86-a4f0-cc54f186a24a"), "60004" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("1faa2450-cf27-48b9-8626-f2135a08f606"), new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), "121904" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("590eb367-5fcf-4b67-a350-e2f87a688ef4"), new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"), "931928" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("fdc3519e-1e1b-4c30-909f-89872df9aab4"), new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"), "931802" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("deff19d1-bf42-4d14-9ac1-5c21b2a18a5c"), new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), "70001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("0d80b63a-50d1-4c0f-b1f7-0a351d57192e"), new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), "70003" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("0ccaf237-249b-49a2-91bf-4e13199f0ed8"), new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), "70004" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("e30e8b99-d2c0-4d7a-8d7f-1d3b092447b2"), new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"), "932028" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("c4ba2c3f-6f86-41a2-b79e-0288e25b5d06"), new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"), "932010" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("ea5900f5-e7a9-4bd2-bad7-dda5cb2ff042"), new Guid("aaa504f9-b3ad-4854-9820-90cdcbd27322"), "931910" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("78b0c8a8-02d4-476d-a201-667cd79d0557"), new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), "80001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("a06269e9-85a7-4108-b199-0a5f81b9dedd"), new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), "80002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("4320ca86-9aaf-42fb-8832-35c9076e5b05"), new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), "80003" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("462afa34-c206-4761-bd96-b87e72d1d243"), new Guid("afdfcc0a-ffdd-41e1-ab01-a712574e289a"), "80004" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("e1fdc8b3-8047-4087-a2c5-1ca79446b8d2"), new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), "121903" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("86b80b67-14e7-4954-8e1d-972c73e44235"), new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), "121902" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("129fd25d-edf9-411e-8b20-d36bf904957b"), new Guid("46c6bba6-91be-4b95-b9c9-812fbdce601e"), "121901" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("7e311ede-5d6c-4df4-9c64-192e00f65cf9"), new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), "90001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("24b4ee8d-c599-41b2-be5c-b27597cf278b"), new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), "90002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("e9880029-92c6-4143-a680-00c06e6347d3"), new Guid("37dd1e11-b958-45ef-ab51-09650b3d43d4"), "70002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("7f4c4a85-799f-44d8-ad90-dca1da9d1a96"), new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), "122001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("06808fe5-9a1f-46d6-be33-46ee2554a185"), new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"), "931804" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("1c09799d-904a-4e2f-9d5f-6535f83ef4b8"), new Guid("fb92cb9d-c54c-4882-8a84-d357392586b7"), "122002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("1ada8e8d-fe48-4ea2-af87-714b00dac914"), new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), "24203" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("2190b991-f0f8-41fe-81bc-f6cf8f8dfd37"), new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), "24301" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("86c6eee1-a591-4933-9c10-4c26db8de2ef"), new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), "24302" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("1ddedb89-1269-402c-b860-b29fd56d7f5d"), new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), "24303" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("1a4bd82f-b1f1-4a3c-ae90-11e4871d7630"), new Guid("f1db86a1-2647-44ff-81df-6e4781239dcc"), "24304" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("deea0a5c-fb24-4994-9384-fabe85e4a76a"), new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), "90003" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("2566b128-cc7a-4b94-a3a4-19872999ef43"), new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), "24202" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("b71701e8-361a-4d91-a661-6942b7a2cca1"), new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"), "93203" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("a5403b73-62c8-4c36-9921-2986fb3c107b"), new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"), "93202" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("f6b933a0-b715-40c5-8640-113fcaacb996"), new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), "25301" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("c91ae9e0-0b7e-4ec8-936b-450bde57a01d"), new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), "25302" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("939cee3d-00d0-452a-b727-bbedc1cd10ba"), new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), "25303" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("e5a9ade9-7a00-4d12-894f-a5bd991a4273"), new Guid("435557fa-35a0-4f35-9efa-7aba31755b46"), "25304" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("ddd9e772-9cf6-401a-9cc5-33bfc63ae010"), new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"), "93201" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("5290a552-09dd-499b-af03-700b898e89e2"), new Guid("fa2a6596-0f78-42c8-8f3f-56430aa50087"), "93200" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("a46d545a-6367-4ecc-a667-d7b197e7e130"), new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), "931903" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("7725cdb7-17cd-430a-90be-56efb1c25b9c"), new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), "931902" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("bcfd2592-c830-431d-9cc8-ee99ea0f6062"), new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), "30001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("63d7a7f2-a1ad-47f0-9e98-49adf64a7bdb"), new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), "30002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("7b9a7b18-b25f-43dd-be9b-6b11cb6a629b"), new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), "30003" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("c6f70945-fc4e-4637-a90f-ad9a859c0b3a"), new Guid("bc4dd321-36ee-4050-905e-b1aa3fa01182"), "30004" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("b4c4b62f-9530-4f18-84e9-05ec8b254076"), new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), "931901" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("db6ffaaf-ac89-41cc-9e05-bb27942fc255"), new Guid("9c4684ec-04ab-4da9-9fa2-6ddebb7a5a40"), "93190" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("f9fced79-70b6-4ef0-b059-7548cd6cb491"), new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), "24201" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("4cb1a0ae-b7d9-4cbc-8c93-4489bdfd7cda"), new Guid("d3c7313e-0e11-4f9e-94fe-0b96a66bffa9"), "24200" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("bc6f600e-3c90-4fd2-a650-7fe8496d6b99"), new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), "40001" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("d47f6ceb-be52-4d14-94c2-3891dae8524d"), new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), "40002" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("8d22e5be-874c-4467-a8a6-10ec4be05940"), new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), "40003" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("f12316e7-00a1-44d1-8cd4-f130cb1549d7"), new Guid("ae4d9db2-9358-4a51-9928-888d5338a78e"), "40004" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("e90ec78b-115f-4d45-af21-1f6e89b3ea62"), new Guid("0efe92d1-4959-4cf5-8969-56bce0e8558c"), "931803" });
+
+            migrationBuilder.InsertData(
+                table: "groups",
+                columns: new[] { "Id", "DirectionId", "Name" },
+                values: new object[] { new Guid("4af28876-24b2-4f33-ac7b-4c4c95385ab3"), new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), "90004" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_directions_FacultyId",
@@ -926,6 +1244,11 @@ namespace CourseBook.WebApi.Migrations
                 name: "IX_groups_disciplines_DisciplineId",
                 table: "groups_disciplines",
                 column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_groups_disciplines_TeacherId",
+                table: "groups_disciplines",
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_role_claims_RoleId",
@@ -954,6 +1277,11 @@ namespace CourseBook.WebApi.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_users_GroupId",
+                table: "users",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "users",
                 column: "NormalizedUserName",
@@ -967,9 +1295,6 @@ namespace CourseBook.WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "groups_disciplines");
-
-            migrationBuilder.DropTable(
-                name: "profiles");
 
             migrationBuilder.DropTable(
                 name: "role_claims");
@@ -987,13 +1312,13 @@ namespace CourseBook.WebApi.Migrations
                 name: "disciplines");
 
             migrationBuilder.DropTable(
-                name: "groups");
-
-            migrationBuilder.DropTable(
                 name: "roles");
 
             migrationBuilder.DropTable(
                 name: "users");
+
+            migrationBuilder.DropTable(
+                name: "groups");
 
             migrationBuilder.DropTable(
                 name: "directions");
