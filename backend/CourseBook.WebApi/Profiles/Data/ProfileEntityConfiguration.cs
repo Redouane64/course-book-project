@@ -34,8 +34,7 @@ namespace CourseBook.WebApi.Profiles.Data
 
             builder.Ignore(e => e.User);
 
-            builder.Property(e => e.AccountType)
-                .IsRequired();
+            builder.Ignore(e => e.AccountType);
         }
     }
 }

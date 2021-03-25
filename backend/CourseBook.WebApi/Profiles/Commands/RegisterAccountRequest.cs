@@ -46,6 +46,7 @@ namespace CourseBook.WebApi.Profiles.Commands
             var claims = new List<Claim>(new Claim[]
             {
                 new Claim(ClaimTypes.NameIdentifier, profile.UserId),
+                new Claim(ClaimTypes.Role, profile.AccountType.ToString())
             });
 
             var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, profile.User);
