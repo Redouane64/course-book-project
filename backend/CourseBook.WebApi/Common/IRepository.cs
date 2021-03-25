@@ -4,7 +4,7 @@ namespace CourseBook.WebApi.Common
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IRepository<T> where T : Entity, IAggregateRoot
+    public interface IRepository<T> where T : IAggregateRoot
     {
         Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default);
 

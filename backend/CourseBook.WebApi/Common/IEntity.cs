@@ -2,7 +2,8 @@ namespace CourseBook.WebApi.Common
 {
     using System;
 
-    public interface IAggregateRoot : IEntity
+    public interface IEntity
     {
+        Guid Id { get; set; }
     }
 }
