@@ -83,6 +83,13 @@ namespace CourseBook.WebApi.Common.Entities
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
+                    DisciplineId = Guid.Parse("09da399f-d269-4333-b3a9-c7203dee1a01"),
+                    Year = DateTime.Now.Year + 1,
+                    Semester = 0
+                },
+                new GroupDisciplineEntity
+                {
+                    GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
                     DisciplineId = Guid.Parse("d4e27800-46bd-48d4-b320-92380548f689"),
                     Year = DateTime.Now.Year + 1,
                     Semester = 1,
