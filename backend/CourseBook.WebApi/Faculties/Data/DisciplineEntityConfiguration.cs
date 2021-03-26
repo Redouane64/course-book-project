@@ -78,6 +78,22 @@ namespace CourseBook.WebApi.Faculties.Data
                    Name = "Museology, conservation and restoration of historical and cultural objects"
                },
 
+               ////Library and Information Activities
+               new DisciplineEntity
+               {
+                   Id = Guid.Parse("45842fa6-5b8b-4a31-ad6e-e5038340ab5d"),
+                   Name = "Professional communication in a foreign language"
+               },
+               new DisciplineEntity
+               {
+                   Id = Guid.Parse("39400eb6-3c42-4527-a444-519ef1987e06"),
+                   Name = "Leadership and leadership of teamwork"
+               },
+               new DisciplineEntity
+               {
+                   Id = Guid.Parse("0675ed9c-788d-4301-8b97-558992d04f20"),
+                   Name = "Modern problems of the humanities and natural sciences"
+               },
 
                //Astronomy and Space Geodesy
                new DisciplineEntity
