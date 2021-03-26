@@ -50,6 +50,20 @@ namespace CourseBook.WebApi.Controllers
             return Ok(discipline);
         }
 
+        [HttpGet("{teacherId}")]
+        [ProducesResponseType(typeof(DisciplineDetailsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetTeacherDisciplines([FromRoute] string teacherId)
+        {
+            var teacherDisciplines = await this._mediator.Send(new GetTeacherDisciplinesRequest(teacherId));
+
+            if (teacherDisciplines is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(teacherDisciplines);
+        }
     }
 }
 
