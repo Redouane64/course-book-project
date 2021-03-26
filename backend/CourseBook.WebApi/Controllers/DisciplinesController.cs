@@ -29,6 +29,7 @@ namespace CourseBook.WebApi.Controllers
         public async Task<IActionResult> GetDisciplines(CancellationToken cancellationToken = default)
         {
             var disciplines = await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken);
+
             return Ok(disciplines);
         }
 
@@ -45,6 +46,7 @@ namespace CourseBook.WebApi.Controllers
 
             return Ok(discipline);
         }
+
     }
 }
 
