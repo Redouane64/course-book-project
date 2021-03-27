@@ -1,8 +1,7 @@
-namespace CourseBook.WebApi.Models
+namespace CourseBook.WebApi.Identity.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Text.Json.Serialization;
 
     public class RegistrationForm
     {
@@ -12,17 +11,10 @@ namespace CourseBook.WebApi.Models
         [Required]
         public DateTime Birthday { get; set; }
 
-        [Display(Name = "Account Type", Description = "Allowed values 'Teacher' or 'Student' or 'Both'.")]
+        [Required]
         public AccountType AccountType { get; set; }
 
-        public string Faculty { get; set; }
-
-        public string Direction { get; set; }
-
-        public string Group { get; set; }
-
-        [Required]
-        public int AdmissionYear { get; set; }
+        public Education Education { get; set; }
 
         [Required]
         [EmailAddress]
@@ -36,8 +28,16 @@ namespace CourseBook.WebApi.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare(nameof(Password), ErrorMessage = "Password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class Education
+    {
+        [Required]
+        public Guid Group { get; set; }
+
+        [Required]
+        public int AdmissionYear { get; set; }
     }
 }

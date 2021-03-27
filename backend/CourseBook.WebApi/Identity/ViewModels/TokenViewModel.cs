@@ -1,7 +1,5 @@
-namespace CourseBook.WebApi.ViewModels
+namespace CourseBook.WebApi.Identity.ViewModels
 {
-    using System;
-
     public class TokenViewModel
     {
         public TokenViewModel(string token, string refreshToken)

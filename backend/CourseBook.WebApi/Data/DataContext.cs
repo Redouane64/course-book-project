@@ -32,7 +32,11 @@ namespace CourseBook.WebApi.Data
                 .Ignore(e => e.LockoutEnabled)
                 .Ignore(e => e.LockoutEnd)
                 .Ignore(e => e.PhoneNumberConfirmed)
-                .Ignore(e => e.TwoFactorEnabled);
+                .Ignore(e => e.TwoFactorEnabled)
+                .HasOne(e => e.Group)
+                .WithMany(e => e.Students)
+                .IsRequired(required: false)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<IdentityRole>()
                 .ToTable("roles");

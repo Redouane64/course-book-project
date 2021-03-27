@@ -1,4 +1,4 @@
-namespace CourseBook.WebApi.Services
+namespace CourseBook.WebApi.Identity.Services
 {
     using System;
     using System.Collections.Generic;
@@ -6,15 +6,11 @@ namespace CourseBook.WebApi.Services
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-
-    using CourseBook.WebApi.Exceptions;
-    using CourseBook.WebApi.Profiles.Constants;
-    using CourseBook.WebApi.Profiles.Entities;
     using Infrastructure;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
+    using Profiles.Entities;
 
     public sealed class JwtTokensService : ITokensService
     {
@@ -63,17 +59,19 @@ namespace CourseBook.WebApi.Services
             return (Token: stringifiedToken, RefreshToken: refreshToken);
         }
 
-        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, UserEntity user)
+        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string userId)
         {
             if (refreshToken == null)
             {
                 throw new ArgumentNullException(nameof(refreshToken));
             }
 
-            if (user == null)
+            if (userId == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(userId));
             }
+
+            var user = await this._userManager.FindByIdAsync(userId);
 
             var isValid = await this._jwtRefreshTokenProvider.ValidateAsync(JwtRefreshTokenProvider.Purpose, refreshToken, _userManager, user);
 
@@ -82,62 +80,13 @@ namespace CourseBook.WebApi.Services
                 throw new Exception("Invalid refresh token.");
             }
 
-            // TODO: refactor this
-
             var roles = await this._userManager.GetRolesAsync(user);
 
-            var claims = new List<Claim>(new Claim[]
+            var claims = new Claim[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, Roles.StudentRoleName),
-            });
-
-            if(roles.Contains(Roles.TeacherRoleName)) {
-                claims.Add(new Claim(ClaimTypes.Role, Roles.TeacherRoleName));
-            }
-
-            return await this.GenerateToken(claims, user);
-        }
-
-        public async Task<(string Token, string RefreshToken)> RefreshToken(string refreshToken, string Id)
-        {
-            if (refreshToken == null)
-            {
-                throw new ArgumentNullException(nameof(refreshToken));
-            }
-
-            if (Id == null)
-            {
-                throw new ArgumentNullException(nameof(Id));
-            }
-
-            var user = await this._userManager.FindByIdAsync(Id);
-
-            if (user is null)
-            {
-                throw new InvalidOperationException("Incorrect or unauthorized user.");
-            }
-
-            var isValid = await this._jwtRefreshTokenProvider.ValidateAsync(JwtRefreshTokenProvider.Purpose, refreshToken, _userManager, user);
-
-            if (!isValid)
-            {
-                throw new InvalidRefreshTokenException("Invalid refresh token.");
-            }
-
-            // TODO: refactor this
-
-            var roles = await this._userManager.GetRolesAsync(user);
-
-            var claims = new List<Claim>(new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, Roles.StudentRoleName),
-            });
-
-            if(roles.Contains(Roles.TeacherRoleName)) {
-                claims.Add(new Claim(ClaimTypes.Role, Roles.TeacherRoleName));
-            }
+                new Claim(ClaimTypes.Role, roles[0])
+            };
 
             return await this.GenerateToken(claims, user);
         }

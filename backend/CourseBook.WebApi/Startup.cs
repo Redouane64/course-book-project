@@ -8,7 +8,7 @@ namespace CourseBook.WebApi
     using CourseBook.WebApi.Profiles.Entities;
     using CourseBook.WebApi.ViewModels;
     using Data;
-
+    using Identity.Services;
     using Infrastructure;
 
     using MediatR;
@@ -24,7 +24,6 @@ namespace CourseBook.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using Profiles.Repositories;
     using Services;
 
     public class Startup
@@ -106,7 +105,6 @@ namespace CourseBook.WebApi
             });
 
             services.AddScoped<ITokensService, JwtTokensService>();
-            services.AddScoped<UsersService>();
             services.AddScoped<IProfileService, ProfilesService>();
             services.AddScoped<IUserFileService, FilesService>();
 

@@ -3,6 +3,7 @@ namespace CourseBook.WebApi.ViewModels
     using System;
     using System.Text.Json.Serialization;
     using CourseBook.WebApi.Models;
+    using Identity.Models;
 
     public class ProfileViewModel
     {
