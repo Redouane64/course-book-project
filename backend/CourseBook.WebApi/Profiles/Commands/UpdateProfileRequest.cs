@@ -4,6 +4,7 @@ namespace CourseBook.WebApi.Profiles.Commands
     using System.Threading;
     using System.Threading.Tasks;
 
+    using CourseBook.WebApi.Profiles.Models;
     using CourseBook.WebApi.Profiles.ViewModels;
 
     using MediatR;

@@ -3,6 +3,8 @@ namespace CourseBook.WebApi.Profiles.Services
     using System.Threading;
     using System.Threading.Tasks;
 
+    using CourseBook.WebApi.Profiles.Models;
+
     using Models;
 
     using Profiles.Entities;

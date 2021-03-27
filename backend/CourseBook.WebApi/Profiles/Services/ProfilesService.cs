@@ -4,8 +4,8 @@ namespace CourseBook.WebApi.Profiles.Services
     using System.Threading;
     using System.Threading.Tasks;
 
-    using CourseBook.WebApi.Models;
     using CourseBook.WebApi.Profiles.Entities;
+    using CourseBook.WebApi.Profiles.Models;
 
     using Microsoft.AspNetCore.Identity;
 
