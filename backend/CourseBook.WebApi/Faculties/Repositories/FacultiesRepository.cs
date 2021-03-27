@@ -12,6 +12,7 @@ namespace CourseBook.WebApi.Faculties.Repositories
     using CourseBook.WebApi.Faculties.Entities;
     using CourseBook.WebApi.Groups.Entities;
 
+    using CourseBook.WebApi.Profiles.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public class FacultiesRepository : IFacultiesRepository
@@ -91,5 +92,28 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
+        public async Task<IEnumerable<GroupDisciplineEntity>> GetTeacherDisciplines(string teacherId, CancellationToken cancellationToken)
+        {
+            return await _context.Set<GroupDisciplineEntity>().AsNoTracking()
+                .Include(x => x.Group)
+                .Include(x => x.Discipline)
+                .Where(x => x.TeacherId == teacherId)
+                .OrderBy(x => x.Year)
+                .ThenBy(x => x.Discipline.Name)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<GroupDisciplineEntity>> GetStudentDisciplines(string studentId, CancellationToken cancellationToken)
+        {
+            var currentStduent = await _context.Set<UserEntity>().AsNoTracking().Where(x => x.Id == studentId).FirstOrDefaultAsync();
+            var groupId = currentStduent.GroupId;
+            return await _context.Set<GroupDisciplineEntity>().AsNoTracking()
+                .Include(x => x.Group)
+                .Include(x => x.Discipline)
+                .Where(x => x.GroupId == groupId)
+
+                .ToListAsync(cancellationToken);
+
+        }
     }
 }
