@@ -5,8 +5,6 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading;
     using System.Threading.Tasks;
 
-    using CourseBook.WebApi.Directions.Queries;
-    using CourseBook.WebApi.Directions.ViewModels;
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Faculties.ViewModels;
 
@@ -49,14 +47,6 @@ namespace CourseBook.WebApi.Controllers
             }
 
             return Ok(faculty);
-        }
-
-        [HttpGet("{id:Guid}/directions", Name = nameof(GetFacultyDirection))]
-        [ProducesResponseType(typeof(IEnumerable<DirectionViewModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetFacultyDirection([FromRoute] Guid id, CancellationToken cancellationToken = default)
-        {
-            var directions = await this._mediator.Send(new GetDirectionsRequest(id), cancellationToken);
-            return Ok(directions);
         }
 
     }

@@ -11,8 +11,6 @@ namespace CourseBook.WebApi.Profiles.Commands
 
     using Microsoft.AspNetCore.Http;
 
-    using Models;
-
     using Services;
 
     public class UpdateProfileRequest : IRequest<ProfileViewModel>

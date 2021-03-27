@@ -5,8 +5,6 @@ namespace CourseBook.WebApi.Profiles.Services
 
     using CourseBook.WebApi.Profiles.Models;
 
-    using Models;
-
     using Profiles.Entities;
 
     public interface IProfileService

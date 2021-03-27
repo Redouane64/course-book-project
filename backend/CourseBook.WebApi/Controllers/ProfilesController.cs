@@ -14,8 +14,6 @@ namespace CourseBook.WebApi.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    using Models;
-
     using Profiles.Commands;
     using Profiles.Queries;
 
