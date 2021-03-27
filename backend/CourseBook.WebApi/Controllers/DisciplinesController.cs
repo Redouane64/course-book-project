@@ -71,7 +71,7 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetStudentDisciplines([FromRoute] string studentId)
         {
-            var studentDisciplines = await this._mediator.Send(new GetTeacherDisciplinesRequest(studentId));
+            var studentDisciplines = await this._mediator.Send(new GetStudentDisciplinesRequest(studentId));
 
             if (studentDisciplines is null)
             {
