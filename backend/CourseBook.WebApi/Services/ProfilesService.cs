@@ -9,7 +9,6 @@ namespace CourseBook.WebApi.Services
     using Models;
 
     using Profiles.Entities;
-    using Profiles.Repositories;
 
     public sealed class ProfilesService : IProfileService
     {

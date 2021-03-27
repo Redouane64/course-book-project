@@ -4,6 +4,8 @@ namespace CourseBook.WebApi.Identity.Commands
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
+
+    using CourseBook.WebApi.Common.Events;
     using CourseBook.WebApi.Profiles.Entities;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
@@ -23,13 +25,16 @@ namespace CourseBook.WebApi.Identity.Commands
 
     public class RegisterAccountRequestHandler : IRequestHandler<RegisterAccountRequest, TokenViewModel>
     {
+        private readonly IMediator mediator;
         private readonly UserManager<UserEntity> userManager;
         private readonly ITokensService tokensService;
 
         public RegisterAccountRequestHandler(
+            IMediator mediator,
             UserManager<UserEntity> userManager,
             ITokensService tokensService)
         {
+            this.mediator = mediator;
             this.userManager = userManager;
             this.tokensService = tokensService;
         }
@@ -59,6 +64,8 @@ namespace CourseBook.WebApi.Identity.Commands
 
                 throw new Exception("Unable to create user.");
             }
+
+            await this.mediator.Publish(new StudentAccountCreated(user.Id, request.Form.Education.Group), cancellationToken);
 
             var claims = new Claim[]
             {
