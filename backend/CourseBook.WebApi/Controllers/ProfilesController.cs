@@ -5,7 +5,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading;
     using System.Threading.Tasks;
 
-    using CourseBook.WebApi.ViewModels;
+    using CourseBook.WebApi.Profiles.ViewModels;
 
     using MediatR;
 

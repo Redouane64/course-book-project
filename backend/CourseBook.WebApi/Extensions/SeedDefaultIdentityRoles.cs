@@ -3,11 +3,11 @@ namespace CourseBook.WebApi.Extensions
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Identity.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
-    using Identity.Models;
 
     public static partial class HostExtensions
     {

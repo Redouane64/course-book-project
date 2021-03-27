@@ -5,8 +5,13 @@ namespace CourseBook.WebApi.Faculties.Repositories
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Data;
+    using CourseBook.WebApi.Directions.Entities;
+    using CourseBook.WebApi.Disciplines.Entities;
     using CourseBook.WebApi.Faculties.Entities;
+    using CourseBook.WebApi.Groups.Entities;
+
     using Microsoft.EntityFrameworkCore;
 
     public class FacultiesRepository : IFacultiesRepository

@@ -3,19 +3,30 @@ namespace CourseBook.WebApi
     using System;
     using System.Text;
     using System.Text.Json.Serialization;
+
+    using CourseBook.WebApi.Directions.Entities;
+    using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Disciplines.Entities;
+    using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Faculties.Entities;
     using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.Faculties.ViewModels;
+    using CourseBook.WebApi.Files.Services;
+    using CourseBook.WebApi.Groups.Entities;
+    using CourseBook.WebApi.Groups.ViewModels;
     using CourseBook.WebApi.Profiles.Entities;
-    using CourseBook.WebApi.ViewModels;
+    using CourseBook.WebApi.Profiles.Services;
+
     using Data;
+
     using Identity.Services;
+
     using Infrastructure;
 
     using MediatR;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Cors.Infrastructure;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -24,7 +35,6 @@ namespace CourseBook.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using Services;
 
     public class Startup
     {

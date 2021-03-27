@@ -4,9 +4,14 @@ namespace CourseBook.WebApi.Controllers
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+
+    using CourseBook.WebApi.Directions.Queries;
+    using CourseBook.WebApi.Directions.ViewModels;
     using CourseBook.WebApi.Faculties.Queries;
-    using CourseBook.WebApi.ViewModels;
+    using CourseBook.WebApi.Faculties.ViewModels;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -34,11 +39,12 @@ namespace CourseBook.WebApi.Controllers
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(FacultyDetailsViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async  Task<IActionResult> GetFaculty([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetFaculty([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
             var faculty = await this._mediator.Send(new GetFacultyRequest(id), cancellationToken);
 
-            if (faculty is null) {
+            if (faculty is null)
+            {
                 return NotFound();
             }
 

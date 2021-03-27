@@ -2,9 +2,12 @@ namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.Threading;
     using System.Threading.Tasks;
+
+    using CourseBook.WebApi.Profiles.ViewModels;
+
     using MediatR;
+
     using Services;
-    using ViewModels;
 
     public class GetProfileRequest : IRequest<ProfileViewModel>
     {

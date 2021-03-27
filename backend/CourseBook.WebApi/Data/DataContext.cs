@@ -1,9 +1,15 @@
 namespace CourseBook.WebApi.Data
 {
+    using CourseBook.WebApi.Directions.Entities;
+    using CourseBook.WebApi.Disciplines.Entities;
+    using CourseBook.WebApi.Groups.Entities;
+
     using Faculties.Entities;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
     using Profiles.Entities;
 
     public class DataContext : IdentityDbContext<UserEntity>

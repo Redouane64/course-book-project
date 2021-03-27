@@ -5,11 +5,12 @@ namespace CourseBook.WebApi.Profiles.Commands
     using System.Threading;
     using System.Threading.Tasks;
 
+    using CourseBook.WebApi.Files.Services;
+
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Services;
 
     public class UploadAvatarRequest : IRequest
     {

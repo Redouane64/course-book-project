@@ -2,9 +2,12 @@ namespace CourseBook.WebApi.Controllers
 {
     using System;
     using System.Threading.Tasks;
-    using CourseBook.WebApi.Faculties.Queries;
-    using CourseBook.WebApi.ViewModels;
+
+    using CourseBook.WebApi.Groups.Queries;
+    using CourseBook.WebApi.Groups.ViewModels;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +31,8 @@ namespace CourseBook.WebApi.Controllers
         {
             var group = await this._mediator.Send(new GetGroupRequest(id));
 
-            if (group is null) {
+            if (group is null)
+            {
                 return NotFound();
             }
 

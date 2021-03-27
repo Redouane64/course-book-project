@@ -1,12 +1,14 @@
 namespace CourseBook.WebApi.Profiles.Queries
 {
     using System.IO;
-    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
+
+    using CourseBook.WebApi.Files.Services;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
-    using Services;
 
     public class GetAvatarRequest : IRequest<(string contentType, Stream contents)>
     {

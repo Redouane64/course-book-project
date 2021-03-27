@@ -4,9 +4,12 @@ namespace CourseBook.WebApi.Controllers
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using CourseBook.WebApi.Faculties.Queries;
-    using CourseBook.WebApi.ViewModels;
+
+    using CourseBook.WebApi.Disciplines.Queries;
+    using CourseBook.WebApi.Disciplines.ViewModels;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +42,8 @@ namespace CourseBook.WebApi.Controllers
         {
             var discipline = await this._mediator.Send(new GetDisciplineRequest(id));
 
-            if(discipline is null) {
+            if (discipline is null)
+            {
                 return NotFound();
             }
 

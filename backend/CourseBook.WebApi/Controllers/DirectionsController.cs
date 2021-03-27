@@ -4,9 +4,13 @@ namespace CourseBook.WebApi.Controllers
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using CourseBook.WebApi.Faculties.Queries;
-    using CourseBook.WebApi.ViewModels;
+
+    using CourseBook.WebApi.Directions.Queries;
+    using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Groups.Queries;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +34,8 @@ namespace CourseBook.WebApi.Controllers
         {
             var direction = await this._mediator.Send(new GetDirectionRequest(id));
 
-            if(direction is null) {
+            if (direction is null)
+            {
                 return NotFound();
             }
 
