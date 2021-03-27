@@ -3,14 +3,16 @@ using System;
 using CourseBook.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseBook.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210327110004_MakeRelationshipOptional")]
+    partial class MakeRelationshipOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1590,7 +1592,7 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("GroupId")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -1804,8 +1806,7 @@ namespace CourseBook.WebApi.Migrations
                 {
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.GroupEntity", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
