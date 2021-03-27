@@ -1,14 +1,14 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CourseBook.WebApi.Profiles.Constants;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
 namespace CourseBook.WebApi.Extensions
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Identity.Models;
+
     public static partial class HostExtensions
     {
         public static async Task<IHost> SeedDefaultIdentityRoles(this IHost webHost)
@@ -22,9 +22,10 @@ namespace CourseBook.WebApi.Extensions
                 {
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     // seed Student role:
-                    if ((await roleManager.FindByNameAsync(Roles.StudentRoleName)) is null)
+                    var student = AccountType.Student.ToString();
+                    if ((await roleManager.FindByNameAsync(student)) is null)
                     {
-                        var result = await roleManager.CreateAsync(new IdentityRole(Roles.StudentRoleName));
+                        var result = await roleManager.CreateAsync(new IdentityRole(student));
                         if (result.Errors.Any())
                         {
                             throw new Exception($"Failed to create `Student` role: {result.Errors.First().Description}");
@@ -34,9 +35,10 @@ namespace CourseBook.WebApi.Extensions
                     }
 
                     // seed Teacher role:
-                    if ((await roleManager.FindByNameAsync(Roles.TeacherRoleName)) is null)
+                    var teacher = AccountType.Teacher.ToString();
+                    if ((await roleManager.FindByNameAsync(teacher)) is null)
                     {
-                        var result = await roleManager.CreateAsync(new IdentityRole(Roles.TeacherRoleName));
+                        var result = await roleManager.CreateAsync(new IdentityRole(teacher));
                         if (result.Errors.Any())
                         {
                             throw new Exception($"Failed to create `Teacher` role: {result.Errors.First().Description}");
@@ -46,9 +48,10 @@ namespace CourseBook.WebApi.Extensions
                     }
 
                     // seed Admin role:
-                    if ((await roleManager.FindByNameAsync(Roles.AdministratorRoleName)) is null)
+                    var admin = AccountType.StudentTeacher.ToString();
+                    if ((await roleManager.FindByNameAsync(admin)) is null)
                     {
-                        var result = await roleManager.CreateAsync(new IdentityRole(Roles.AdministratorRoleName));
+                        var result = await roleManager.CreateAsync(new IdentityRole(admin));
                         if (result.Errors.Any())
                         {
                             throw new Exception($"Failed to create `Administrator` role: {result.Errors.First().Description}");

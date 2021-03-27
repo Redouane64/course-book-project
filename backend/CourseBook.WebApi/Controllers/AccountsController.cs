@@ -5,14 +5,12 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Exceptions;
-    using CourseBook.WebApi.Models;
-
+    using Identity.Commands;
+    using Identity.Models;
     using MediatR;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using Profiles.Commands;
 
     [Route("[controller]")]
     [ApiController]
@@ -68,7 +66,8 @@ namespace CourseBook.WebApi.Controllers
         [Authorize]
         public async Task<IActionResult> LogOut(CancellationToken cancellationToken = default)
         {
-            return Ok(await this._mediator.Send(new LogOutRequest(), cancellationToken));
+            await this._mediator.Send(new LogoutRequest(), cancellationToken);
+            return NoContent();
         }
     }
 }

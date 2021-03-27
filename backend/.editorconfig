@@ -66,9 +66,6 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggest
 
 #Style - Modifier preferences
 
-#when this rule is set to a list of modifiers, prefer the specified ordering.
-csharp_preferred_modifier_order = public,static:suggestion
-
 #Style - qualification options
 
 #prefer properties not to be prefaced with this. or Me. in Visual Basic

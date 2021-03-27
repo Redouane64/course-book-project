@@ -1,4 +1,4 @@
-namespace CourseBook.WebApi.Models
+namespace CourseBook.WebApi.Identity.Models
 {
     using System.ComponentModel.DataAnnotations;
 
