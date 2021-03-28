@@ -6,6 +6,11 @@ namespace CourseBook.WebApi.Faculties.Repositories
     using System.Threading.Tasks;
 
     using Common;
+
+    using CourseBook.WebApi.Directions.Entities;
+    using CourseBook.WebApi.Disciplines.Entities;
+    using CourseBook.WebApi.Groups.Entities;
+
     using Entities;
 
     public interface IFacultiesRepository : IRepository<FacultyEntity>

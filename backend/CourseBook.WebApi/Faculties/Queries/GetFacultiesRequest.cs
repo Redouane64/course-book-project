@@ -3,9 +3,12 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+
     using AutoMapper;
+
     using CourseBook.WebApi.Faculties.Repositories;
-    using CourseBook.WebApi.ViewModels;
+    using CourseBook.WebApi.Faculties.ViewModels;
+
     using MediatR;
 
     public class GetFacultiesRequest : IRequest<IEnumerable<FacultyViewModel>>

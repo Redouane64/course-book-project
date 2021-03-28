@@ -3,11 +3,15 @@ namespace CourseBook.WebApi.Profiles.Commands
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
+
+    using CourseBook.WebApi.Profiles.Models;
+    using CourseBook.WebApi.Profiles.ViewModels;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
-    using Models;
+
     using Services;
-    using ViewModels;
 
     public class UpdateProfileRequest : IRequest<ProfileViewModel>
     {

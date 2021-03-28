@@ -1,7 +1,8 @@
 namespace CourseBook.WebApi.Profiles.Entities
 {
     using System;
-    using CourseBook.WebApi.Faculties.Entities;
+
+    using CourseBook.WebApi.Groups.Entities;
 
     public class UserEntity : IdentityEntity
     {

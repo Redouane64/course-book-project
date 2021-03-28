@@ -5,15 +5,14 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading;
     using System.Threading.Tasks;
 
-    using CourseBook.WebApi.ViewModels;
+    using CourseBook.WebApi.Profiles.Models;
+    using CourseBook.WebApi.Profiles.ViewModels;
 
     using MediatR;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-
-    using Models;
 
     using Profiles.Commands;
     using Profiles.Queries;
