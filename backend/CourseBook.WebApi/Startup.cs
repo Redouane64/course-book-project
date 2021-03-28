@@ -4,9 +4,11 @@ namespace CourseBook.WebApi
     using System.Text;
     using System.Text.Json.Serialization;
 
+    using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Directions.ViewModels;
     using CourseBook.WebApi.Disciplines.Entities;
+    using CourseBook.WebApi.Disciplines.Repositories;
     using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Faculties.Entities;
     using CourseBook.WebApi.Faculties.Repositories;
@@ -119,6 +121,7 @@ namespace CourseBook.WebApi
             services.AddScoped<IUserFileService, FilesService>();
 
             services.AddScoped<IFacultiesRepository, FacultiesRepository>();
+            services.AddScoped<ITeachersRepository, TeachersRepository>();
 
             services.AddAutoMapper(options =>
             {
@@ -126,6 +129,8 @@ namespace CourseBook.WebApi
                 options.CreateMap<DirectionEntity, DirectionViewModel>();
                 options.CreateMap<GroupEntity, GroupViewModel>();
                 options.CreateMap<DisciplineEntity, DisciplineViewModel>();
+
+                options.CreateMap<GroupDisciplineEntity, TeacherDisciplineViewModel>();
 
                 options.CreateMap<FacultyEntity, FacultyDetailsViewModel>();
 

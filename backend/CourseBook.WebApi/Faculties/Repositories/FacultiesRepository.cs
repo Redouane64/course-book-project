@@ -91,17 +91,5 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<IEnumerable<DisciplineEntity>> GetTeacherDisciplines(string teacherId, CancellationToken cancellationToken)
-        {
-            return await _context.Set<GroupDisciplineEntity>()
-                .AsNoTracking()
-                .Include(x => x.Group)
-                .Include(x => x.Discipline)
-                .Where(x => x.TeacherId == teacherId)
-                .OrderBy(x => x.Year)
-                .ThenBy(x => x.Discipline.Name)
-                .Select(x => x.Discipline)
-                .ToListAsync(cancellationToken);
-        }
     }
 }

@@ -17,6 +17,8 @@ namespace CourseBook.WebApi
                 .MigrateDatabase<DataContext>()
                 .SeedDefaultIdentityRoles();
 
+            host = await host.SeedTeacherUsers();
+
             host.Run();
         }
 

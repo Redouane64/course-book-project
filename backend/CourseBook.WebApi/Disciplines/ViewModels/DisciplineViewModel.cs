@@ -18,4 +18,12 @@ namespace CourseBook.WebApi.Disciplines.ViewModels
 
         public ICollection<GroupViewModel> Groups { get; set; }
     }
+
+    public class TeacherDisciplineViewModel
+    {
+        public DisciplineViewModel Discipline { get; set; }
+        public GroupViewModel Group { get; set; }
+        public int Year { get; set; }
+        public int Semester { get; set; }
+    }
 }

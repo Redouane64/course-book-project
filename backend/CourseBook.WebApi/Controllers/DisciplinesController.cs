@@ -7,6 +7,8 @@ namespace CourseBook.WebApi.Controllers
 
     using CourseBook.WebApi.Disciplines.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
+    using CourseBook.WebApi.Faculties.Queries;
+    using CourseBook.WebApi.ViewModels;
 
     using MediatR;
 
@@ -29,11 +31,18 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet(Name = nameof(GetDisciplines))]
         [ProducesResponseType(typeof(IEnumerable<DisciplineViewModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDisciplines(CancellationToken cancellationToken = default)
+        [ProducesResponseType(typeof(TeacherDisciplinesViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDisciplines(
+            [FromQuery(Name = "teacher")]string teacherId,
+            CancellationToken cancellationToken = default)
         {
-            var disciplines = await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken);
+            if (teacherId is not null)
+            {
+                return Ok(await this._mediator.Send(new GetTeacherDisciplinesRequest(teacherId), cancellationToken));
+            }
 
-            return Ok(disciplines);
+            // fallback: return all disciplines.
+            return Ok(await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken));
         }
 
         [HttpGet("{id:Guid}")]
