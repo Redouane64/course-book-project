@@ -17,7 +17,9 @@ namespace CourseBook.WebApi
     using CourseBook.WebApi.Groups.Entities;
     using CourseBook.WebApi.Groups.ViewModels;
     using CourseBook.WebApi.Profiles.Entities;
+    using CourseBook.WebApi.Profiles.Mappings;
     using CourseBook.WebApi.Profiles.Services;
+    using CourseBook.WebApi.Profiles.ViewModels;
 
     using Data;
 
@@ -31,6 +33,8 @@ namespace CourseBook.WebApi
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -141,7 +145,12 @@ namespace CourseBook.WebApi
 
                 options.CreateMap<GroupEntity, GroupDetailsViewModel>();
                 options.CreateMap<DisciplineEntity, DisciplineDetailsViewModel>();
-            });
+
+                options.CreateMap<UserEntity, ProfileViewModel>()
+                        .ForMember(d => d.Name, o => o.MapFrom(s => s.FullName))
+                        .ForMember(d => d.AccountType, o => o.MapFrom<AccountTypeValueResolver>())
+                        .ForMember(d => d.Avatar, o => o.MapFrom<AvatarUrlResolver, string>(s => s.Id));
+            }, typeof(Startup).Assembly);
 
 
             services.AddAuthorization();
@@ -149,7 +158,7 @@ namespace CourseBook.WebApi
             services.AddMediatR(typeof(Startup));
 
             services.AddHttpContextAccessor();
-
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddCors();
 
         }

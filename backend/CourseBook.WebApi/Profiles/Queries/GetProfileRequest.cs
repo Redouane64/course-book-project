@@ -3,6 +3,8 @@ namespace CourseBook.WebApi.Profiles.Queries
     using System.Threading;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using CourseBook.WebApi.Profiles.ViewModels;
 
     using MediatR;
@@ -22,25 +24,18 @@ namespace CourseBook.WebApi.Profiles.Queries
     public class GetProfileRequestHandler : IRequestHandler<GetProfileRequest, ProfileViewModel>
     {
         private readonly IProfileService _profileService;
+        private readonly IMapper mapper;
 
-        public GetProfileRequestHandler(IProfileService profileService)
+        public GetProfileRequestHandler(IProfileService profileService, IMapper mapper)
         {
             _profileService = profileService;
+            this.mapper = mapper;
         }
 
         public async Task<ProfileViewModel> Handle(GetProfileRequest request, CancellationToken cancellationToken)
         {
             var user = await this._profileService.GetProfile(request.Id, cancellationToken);
-
-            return new ProfileViewModel()
-            {
-                Id = user.Id.ToString(),
-                Name = user.FullName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Birthday = user.BirthDay,
-                AdmissionYear = user.AdmissionYear,
-            };
+            return this.mapper.Map<ProfileViewModel>(user);
         }
     }
 }

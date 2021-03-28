@@ -38,7 +38,13 @@ namespace CourseBook.WebApi.Data
                 .Ignore(e => e.LockoutEnabled)
                 .Ignore(e => e.LockoutEnd)
                 .Ignore(e => e.PhoneNumberConfirmed)
-                .Ignore(e => e.TwoFactorEnabled)
+                .Ignore(e => e.TwoFactorEnabled);
+
+            modelBuilder.Entity<UserEntity>()
+                .Property(e => e.AdmissionYear)
+                .HasDefaultValue(null);
+
+            modelBuilder.Entity<UserEntity>()
                 .HasOne(e => e.Group)
                 .WithMany(e => e.Students)
                 .IsRequired(required: false)

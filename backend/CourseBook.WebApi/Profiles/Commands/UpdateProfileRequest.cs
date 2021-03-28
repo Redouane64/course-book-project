@@ -45,7 +45,7 @@ namespace CourseBook.WebApi.Profiles.Commands
                 Name = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Birthday = user.BirthDay,
+                BirthDay = user.BirthDay,
                 AdmissionYear = user.AdmissionYear,
             };
         }

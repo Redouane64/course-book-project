@@ -16,9 +16,9 @@ namespace CourseBook.WebApi.Profiles.ViewModels
 
         public string PhoneNumber { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateTime BirthDay { get; set; }
 
-        public int AdmissionYear { get; set; }
+        public int? AdmissionYear { get; set; }
 
         public string Faculty { get; set; }
 

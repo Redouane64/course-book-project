@@ -7,10 +7,15 @@ namespace CourseBook.WebApi.Identity.Commands
 
     using CourseBook.WebApi.Common.Events;
     using CourseBook.WebApi.Profiles.Entities;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Identity;
+
     using Models;
+
     using Services;
+
     using ViewModels;
 
     public class RegisterAccountRequest : IRequest<TokenViewModel>
@@ -47,7 +52,25 @@ namespace CourseBook.WebApi.Identity.Commands
             */
             var username = request.Form.Name.Replace(" ", ".").ToLowerInvariant();
 
-            var user = new UserEntity { UserName = username, Email = request.Form.Email };
+            var user = new UserEntity {
+                UserName = username,
+                FullName = request.Form.Name,
+                Email = request.Form.Email,
+                PhoneNumber = request.Form.PhoneNumber,
+                BirthDay = request.Form.Birthday
+            };
+
+            var isStudent = request.Form.AccountType == AccountType.Student || request.Form.AccountType == AccountType.StudentTeacher;
+
+            if (isStudent && request.Form.Education is null)
+            {
+                throw new InvalidOperationException("Invalid registration data.");
+            }
+
+            if (isStudent && request.Form.Education is not null)
+            {
+                user.AdmissionYear = request.Form.Education.AdmissionYear.Value;
+            }
 
             var result = await this.userManager.CreateAsync(user, request.Form.Password);
 
@@ -65,7 +88,10 @@ namespace CourseBook.WebApi.Identity.Commands
                 throw new Exception("Unable to create user.");
             }
 
-            await this.mediator.Publish(new StudentAccountCreated(user.Id, request.Form.Education.Group), cancellationToken);
+            if(isStudent && request.Form.Education is not null)
+            {
+                await this.mediator.Publish(new StudentAccountCreated(user.Id, request.Form.Education.Group), cancellationToken);
+            }
 
             var claims = new Claim[]
             {
