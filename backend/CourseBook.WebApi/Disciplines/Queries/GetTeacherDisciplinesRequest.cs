@@ -1,18 +1,17 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
 
+    using CourseBook.WebApi.Common.ViewModels;
     using CourseBook.WebApi.Disciplines.Repositories;
     using CourseBook.WebApi.Disciplines.ViewModels;
-    using CourseBook.WebApi.ViewModels;
 
     using MediatR;
 
-    public class GetTeacherDisciplinesRequest : IRequest<TeacherDisciplinesViewModel>
+    public class GetTeacherDisciplinesRequest : IRequest<ItemsCollection<TeacherDisciplineViewModel>>
     {
         public GetTeacherDisciplinesRequest(string teacherId)
         {
@@ -22,7 +21,7 @@ namespace CourseBook.WebApi.Faculties.Queries
         public string TeacherId { get; }
     }
 
-    public class GetTeacherDisciplinesRequestHandler : IRequestHandler<GetTeacherDisciplinesRequest, TeacherDisciplinesViewModel>
+    public class GetTeacherDisciplinesRequestHandler : IRequestHandler<GetTeacherDisciplinesRequest, ItemsCollection<TeacherDisciplineViewModel>>
     {
         private readonly ITeachersRepository repository;
         public readonly IMapper mapper;
@@ -33,11 +32,11 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.mapper = mapper;
         }
 
-        public async Task<TeacherDisciplinesViewModel> Handle(GetTeacherDisciplinesRequest request, CancellationToken cancellationToken)
+        public async Task<ItemsCollection<TeacherDisciplineViewModel>> Handle(GetTeacherDisciplinesRequest request, CancellationToken cancellationToken)
         {
             var entities = await repository.GetTeacherDisciplines(request.TeacherId, cancellationToken);
-            var disciplines = this.mapper.Map<IEnumerable<TeacherDisciplineViewModel>>(entities);
-            return new TeacherDisciplinesViewModel(disciplines);
+            var disciplines = this.mapper.Map<TeacherDisciplineViewModel[]>(entities);
+            return new ItemsCollection<TeacherDisciplineViewModel>(disciplines);
         }
     }
 }

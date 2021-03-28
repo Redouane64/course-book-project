@@ -1,14 +1,13 @@
 namespace CourseBook.WebApi.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
+    using CourseBook.WebApi.Common.ViewModels;
     using CourseBook.WebApi.Disciplines.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Faculties.Queries;
-    using CourseBook.WebApi.ViewModels;
 
     using MediatR;
 
@@ -30,8 +29,7 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpGet(Name = nameof(GetDisciplines))]
-        [ProducesResponseType(typeof(IEnumerable<DisciplineViewModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(TeacherDisciplinesViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ItemsCollection<>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDisciplines(
             [FromQuery(Name = "teacher")]string teacherId,
             CancellationToken cancellationToken = default)
