@@ -38,6 +38,6 @@ namespace CourseBook.WebApi.Identity.Models
         public Guid Group { get; set; }
 
         [Required]
-        public int AdmissionYear { get; set; }
+        public int? AdmissionYear { get; set; }
     }
 }

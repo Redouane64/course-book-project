@@ -8,7 +8,7 @@ namespace CourseBook.WebApi.Profiles.Entities
     {
         public string FullName { get; set; }
         public DateTime BirthDay { get; set; }
-        public int AdmissionYear { get; set; }
+        public int? AdmissionYear { get; set; }
         public Guid? GroupId { get; set; }
         public GroupEntity Group { get; set; }
     }
