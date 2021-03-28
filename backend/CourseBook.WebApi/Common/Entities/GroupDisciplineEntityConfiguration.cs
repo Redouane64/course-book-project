@@ -32,28 +32,35 @@ namespace CourseBook.WebApi.Common.Entities
                     GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
                     DisciplineId = Guid.Parse("986d7006-65c4-4246-b99a-2d390e1ae4f7"),
                     Year = DateTime.Now.Year,
-                    Semester = 0
+                    Semester = 0,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
                     DisciplineId = Guid.Parse("b0a130ae-8d09-4cec-8814-24c811028771"),
                     Year = DateTime.Now.Year + 1,
-                    Semester = 0
+                    Semester = 0,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
+
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
                     DisciplineId = Guid.Parse("fee99c99-831c-4f29-acd0-5eb5ad0ca7e2"),
                     Year = DateTime.Now.Year,
-                    Semester = 1
+                    Semester = 1,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
+
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
                     DisciplineId = Guid.Parse("d12b6e66-e758-48ca-af31-102aa991bdc0"),
                     Year = DateTime.Now.Year + 1,
-                    Semester = 1
+                    Semester = 1,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
+
                 },
 
                 //group93180
@@ -62,28 +69,32 @@ namespace CourseBook.WebApi.Common.Entities
                     GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
                     DisciplineId = Guid.Parse("0142a5ca-e2ab-423a-a03f-d2c3092a0339"),
                     Year = DateTime.Now.Year,
-                    Semester = 0
+                    Semester = 0,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
                     DisciplineId = Guid.Parse("09da399f-d269-4333-b3a9-c7203dee1a01"),
                     Year = DateTime.Now.Year + 1,
-                    Semester = 0
+                    Semester = 0,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
                     DisciplineId = Guid.Parse("d4e27800-46bd-48d4-b320-92380548f689"),
                     Year = DateTime.Now.Year + 1,
-                    Semester = 1
+                    Semester = 1,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
                 },
                 new GroupDisciplineEntity
                 {
                     GroupId = Guid.Parse("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
                     DisciplineId = Guid.Parse("f333c6ac-530c-4092-8160-a336bafb4d6c"),
                     Year = DateTime.Now.Year + 1,
-                    Semester = 1
+                    Semester = 1,
+                    TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
                 }
             );
 
