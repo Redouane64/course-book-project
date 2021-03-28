@@ -90,5 +90,6 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .Include(x => x.Groups)
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
+
     }
 }
