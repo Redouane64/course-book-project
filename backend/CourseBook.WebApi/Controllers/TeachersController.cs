@@ -1,14 +1,14 @@
 namespace CourseBook.WebApi.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+
     using CourseBook.WebApi.Common.ViewModels;
-    using CourseBook.WebApi.Disciplines.Queries;
+    using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Faculties.Queries;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -24,19 +24,13 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = nameof(GetDisciplines))]
-        [ProducesResponseType(typeof(ItemsCollection<>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDisciplines(
-             [FromQuery(Name = "teacher")] string teacherId,
+        [HttpGet("{id}",Name = nameof(GetDisciplinesByTeacherId))]
+        [ProducesResponseType(typeof(ItemsCollection<TeacherDisciplineViewModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDisciplinesByTeacherId(
+             [FromRoute] string id,
              CancellationToken cancellationToken = default)
         {
-            if (teacherId is not null)
-            {
-                return Ok(await this._mediator.Send(new GetTeacherDisciplinesRequest(teacherId), cancellationToken));
-            }
-
-            // fallback: return all disciplines.
-            return Ok(await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken));
+            return Ok(await this._mediator.Send(new GetTeacherDisciplinesRequest(id), cancellationToken));
         }
 
     }
