@@ -29,7 +29,7 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpGet(Name = nameof(GetDisciplines))]
-        [ProducesResponseType(typeof(ItemsCollection<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ItemsCollection<DisciplineViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDisciplines(CancellationToken cancellationToken = default)
         {
             return Ok(await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken));
