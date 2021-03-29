@@ -30,16 +30,8 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpGet(Name = nameof(GetDisciplines))]
         [ProducesResponseType(typeof(ItemsCollection<>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDisciplines(
-            [FromQuery(Name = "teacher")]string teacherId,
-            CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetDisciplines(CancellationToken cancellationToken = default)
         {
-            if (teacherId is not null)
-            {
-                return Ok(await this._mediator.Send(new GetTeacherDisciplinesRequest(teacherId), cancellationToken));
-            }
-
-            // fallback: return all disciplines.
             return Ok(await this._mediator.Send(new GetDisciplinesRequest(), cancellationToken));
         }
 
