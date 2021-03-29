@@ -1,15 +1,16 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+
     using AutoMapper;
+
     using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.Faculties.ViewModels;
+
     using MediatR;
 
-    public class GetStudentDisciplinesRequest : IRequest<object>
+    public class GetStudentDisciplinesRequest : IRequest<StudentDisciplinesViewModel>
     {
         public GetStudentDisciplinesRequest(string studentId)
         {
@@ -18,7 +19,7 @@ namespace CourseBook.WebApi.Faculties.Queries
         public string StudentId { get; }
     }
 
-    public class GetStudentDisciplinesRequestHandler : IRequestHandler<GetStudentDisciplinesRequest, object>
+    public class GetStudentDisciplinesRequestHandler : IRequestHandler<GetStudentDisciplinesRequest, StudentDisciplinesViewModel>
     {
         private readonly IFacultiesRepository repository;
         public readonly IMapper mapper;
@@ -29,10 +30,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.mapper = mapper;
         }
 
-        public async Task<object> Handle(GetStudentDisciplinesRequest request, CancellationToken cancellationToken)
+        public async Task<StudentDisciplinesViewModel> Handle(GetStudentDisciplinesRequest request, CancellationToken cancellationToken)
         {
             var studentDisciplines = await repository.GetStudentDisciplines(request.StudentId, cancellationToken);
-            return this.mapper.Map<object>(studentDisciplines);
+            return this.mapper.Map<StudentDisciplinesViewModel>(studentDisciplines);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace CourseBook.WebApi.Faculties.Repositories
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Data;
     using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Disciplines.Entities;
@@ -92,28 +92,22 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<IEnumerable<GroupDisciplineEntity>> GetTeacherDisciplines(string teacherId, CancellationToken cancellationToken)
+        public record DisciplinesGroupedBySemester(int Semester, DisciplineEntity[] Disciplines);
+
+        public async Task<IEnumerable<DisciplinesGroupedBySemester>> GetStudentDisciplines(string studentId, CancellationToken cancellationToken)
         {
-            return await _context.Set<GroupDisciplineEntity>().AsNoTracking()
+            var student = await _context.Set<UserEntity>().AsNoTracking().Where(x => x.Id == studentId).FirstOrDefaultAsync();
+
+            var disciplines = await _context.Set<GroupDisciplineEntity>().AsNoTracking()
                 .Include(x => x.Group)
                 .Include(x => x.Discipline)
-                .Where(x => x.TeacherId == teacherId)
-                .OrderBy(x => x.Year)
-                .ThenBy(x => x.Discipline.Name)
-                .ToListAsync(cancellationToken);
-        }
-
-        public async Task<IEnumerable<GroupDisciplineEntity>> GetStudentDisciplines(string studentId, CancellationToken cancellationToken)
-        {
-            var currentStduent = await _context.Set<UserEntity>().AsNoTracking().Where(x => x.Id == studentId).FirstOrDefaultAsync();
-            var groupId = currentStduent.GroupId;
-            return await _context.Set<GroupDisciplineEntity>().AsNoTracking()
-                .Include(x => x.Group)
-                .Include(x => x.Discipline)
-                .Where(x => x.GroupId == groupId)
-
+                .Where(x => x.GroupId == student.GroupId)
+                .Select(x => new { x.Semester, x.Discipline, x.DisciplineId, x.Year })
                 .ToListAsync(cancellationToken);
 
+            return disciplines
+                .GroupBy(x => x.Semester)
+                .Select(x => new DisciplinesGroupedBySemester(x.Key, x.Select(e => e.Discipline).ToArray()));
         }
     }
 }

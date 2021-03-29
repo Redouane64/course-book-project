@@ -7,7 +7,6 @@ namespace CourseBook.WebApi.Controllers
     using CourseBook.WebApi.Common.ViewModels;
     using CourseBook.WebApi.Disciplines.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
-    using CourseBook.WebApi.Faculties.Queries;
 
     using MediatR;
 
@@ -50,36 +49,6 @@ namespace CourseBook.WebApi.Controllers
             return Ok(discipline);
         }
 
-        [HttpGet("{teacherId}")]
-        [ProducesResponseType(typeof(DisciplineDetailsViewModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTeacherDisciplines([FromRoute] string teacherId)
-        {
-            var teacherDisciplines = await this._mediator.Send(new GetTeacherDisciplinesRequest(teacherId));
-
-            if (teacherDisciplines is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(teacherDisciplines);
-        }
-
-
-        [HttpGet("{studentId}")]
-        [ProducesResponseType(typeof(DisciplineDetailsViewModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetStudentDisciplines([FromRoute] string studentId)
-        {
-            var studentDisciplines = await this._mediator.Send(new GetStudentDisciplinesRequest(studentId));
-
-            if (studentDisciplines is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(studentDisciplines);
-        }
     }
 }
 
