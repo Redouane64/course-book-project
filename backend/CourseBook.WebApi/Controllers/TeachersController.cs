@@ -24,9 +24,9 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{id}",Name = nameof(GetDisciplinesByTeacherId))]
+        [HttpGet("{id}/disciplines",Name = nameof(GetTeacherDisciplines))]
         [ProducesResponseType(typeof(ItemsCollection<TeacherDisciplineViewModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDisciplinesByTeacherId(
+        public async Task<IActionResult> GetTeacherDisciplines(
              [FromRoute] string id,
              CancellationToken cancellationToken = default)
         {
