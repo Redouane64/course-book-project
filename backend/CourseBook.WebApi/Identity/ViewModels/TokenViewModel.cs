@@ -2,14 +2,15 @@ namespace CourseBook.WebApi.Identity.ViewModels
 {
     public class TokenViewModel
     {
-        public TokenViewModel(string token, string refreshToken)
+        public TokenViewModel(string token, string refreshToken, string userId)
         {
             Token = token;
             RefreshToken = refreshToken;
+            UserId = userId;
         }
 
         public string Token { get; }
         public string RefreshToken { get; }
-
+        public string UserId { get; }
     }
 }

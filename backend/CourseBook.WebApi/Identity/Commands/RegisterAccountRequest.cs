@@ -101,7 +101,7 @@ namespace CourseBook.WebApi.Identity.Commands
 
             var (Token, RefreshToken) = await this.tokensService.GenerateToken(claims, user);
 
-            return new TokenViewModel(Token, RefreshToken);
+            return new TokenViewModel(Token, RefreshToken, user.Id);
         }
     }
 }

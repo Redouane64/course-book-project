@@ -39,7 +39,7 @@ namespace CourseBook.WebApi.Identity.Commands
                 Id
             );
 
-            return new TokenViewModel(Token, RefreshToken);
+            return new TokenViewModel(Token, RefreshToken, Id);
         }
     }
 }
