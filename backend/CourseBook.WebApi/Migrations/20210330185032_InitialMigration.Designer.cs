@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseBook.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210327111553_AddDeleteBehaviour")]
-    partial class AddDeleteBehaviour
+    [Migration("20210330185032_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace CourseBook.WebApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.4");
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DirectionDisciplineEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Common.Entities.DirectionDisciplineEntity", b =>
                 {
                     b.Property<Guid>("DirectionId")
                         .HasColumnType("TEXT");
@@ -310,7 +310,99 @@ namespace CourseBook.WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DirectionEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Common.Entities.GroupDisciplineEntity", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("DisciplineId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Semester")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("GroupId", "DisciplineId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("groups_disciplines");
+
+                    b.HasData(
+                        new
+                        {
+                            GroupId = new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                            DisciplineId = new Guid("986d7006-65c4-4246-b99a-2d390e1ae4f7"),
+                            Semester = 0,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2021
+                        },
+                        new
+                        {
+                            GroupId = new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                            DisciplineId = new Guid("b0a130ae-8d09-4cec-8814-24c811028771"),
+                            Semester = 0,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2022
+                        },
+                        new
+                        {
+                            GroupId = new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                            DisciplineId = new Guid("fee99c99-831c-4f29-acd0-5eb5ad0ca7e2"),
+                            Semester = 1,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2021
+                        },
+                        new
+                        {
+                            GroupId = new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                            DisciplineId = new Guid("d12b6e66-e758-48ca-af31-102aa991bdc0"),
+                            Semester = 1,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2022
+                        },
+                        new
+                        {
+                            GroupId = new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
+                            DisciplineId = new Guid("0142a5ca-e2ab-423a-a03f-d2c3092a0339"),
+                            Semester = 0,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2021
+                        },
+                        new
+                        {
+                            GroupId = new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
+                            DisciplineId = new Guid("09da399f-d269-4333-b3a9-c7203dee1a01"),
+                            Semester = 0,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2022
+                        },
+                        new
+                        {
+                            GroupId = new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
+                            DisciplineId = new Guid("d4e27800-46bd-48d4-b320-92380548f689"),
+                            Semester = 1,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2022
+                        },
+                        new
+                        {
+                            GroupId = new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"),
+                            DisciplineId = new Guid("f333c6ac-530c-4092-8160-a336bafb4d6c"),
+                            Semester = 1,
+                            TeacherId = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            Year = 2022
+                        });
+                });
+
+            modelBuilder.Entity("CourseBook.WebApi.Directions.Entities.DirectionEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -427,7 +519,7 @@ namespace CourseBook.WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Disciplines.Entities.DisciplineEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -499,6 +591,21 @@ namespace CourseBook.WebApi.Migrations
                         {
                             Id = new Guid("f5a8d4f5-a85c-4141-be24-7ba4d2bae6ce"),
                             Name = "Museology, conservation and restoration of historical and cultural objects"
+                        },
+                        new
+                        {
+                            Id = new Guid("45842fa6-5b8b-4a31-ad6e-e5038340ab5d"),
+                            Name = "Professional communication in a foreign language"
+                        },
+                        new
+                        {
+                            Id = new Guid("39400eb6-3c42-4527-a444-519ef1987e06"),
+                            Name = "Leadership and leadership of teamwork"
+                        },
+                        new
+                        {
+                            Id = new Guid("0675ed9c-788d-4301-8b97-558992d04f20"),
+                            Name = "Modern problems of the humanities and natural sciences"
                         },
                         new
                         {
@@ -759,33 +866,7 @@ namespace CourseBook.WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupDisciplineEntity", b =>
-                {
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("DisciplineId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Semester")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GroupId", "DisciplineId");
-
-                    b.HasIndex("DisciplineId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("groups_disciplines");
-                });
-
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Groups.Entities.GroupEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1579,7 +1660,7 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("AdmissionYear")
+                    b.Property<int?>("AdmissionYear")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("BirthDay")
@@ -1592,7 +1673,7 @@ namespace CourseBook.WebApi.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -1628,6 +1709,14 @@ namespace CourseBook.WebApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            BirthDay = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "538ce8c6-1a86-4b80-9881-c5bc2c0c1189"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1736,15 +1825,15 @@ namespace CourseBook.WebApi.Migrations
                     b.ToTable("user_tokens");
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DirectionDisciplineEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Common.Entities.DirectionDisciplineEntity", b =>
                 {
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.DirectionEntity", "Direction")
+                    b.HasOne("CourseBook.WebApi.Directions.Entities.DirectionEntity", "Direction")
                         .WithMany("Disciplines")
                         .HasForeignKey("DirectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", "Discipline")
+                    b.HasOne("CourseBook.WebApi.Disciplines.Entities.DisciplineEntity", "Discipline")
                         .WithMany("Directions")
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1755,7 +1844,33 @@ namespace CourseBook.WebApi.Migrations
                     b.Navigation("Discipline");
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DirectionEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Common.Entities.GroupDisciplineEntity", b =>
+                {
+                    b.HasOne("CourseBook.WebApi.Disciplines.Entities.DisciplineEntity", "Discipline")
+                        .WithMany("Groups")
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CourseBook.WebApi.Groups.Entities.GroupEntity", "Group")
+                        .WithMany("Disciplines")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", "Teacher")
+                        .WithMany("Disciplines")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("CourseBook.WebApi.Directions.Entities.DirectionEntity", b =>
                 {
                     b.HasOne("CourseBook.WebApi.Faculties.Entities.FacultyEntity", "Faculty")
                         .WithMany("Directions")
@@ -1766,34 +1881,9 @@ namespace CourseBook.WebApi.Migrations
                     b.Navigation("Faculty");
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupDisciplineEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Groups.Entities.GroupEntity", b =>
                 {
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", "Discipline")
-                        .WithMany("Groups")
-                        .HasForeignKey("DisciplineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.GroupEntity", "Group")
-                        .WithMany("Disciplines")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
-
-                    b.Navigation("Discipline");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Teacher");
-                });
-
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupEntity", b =>
-                {
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.DirectionEntity", "Direction")
+                    b.HasOne("CourseBook.WebApi.Directions.Entities.DirectionEntity", "Direction")
                         .WithMany("Groups")
                         .HasForeignKey("DirectionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1804,10 +1894,9 @@ namespace CourseBook.WebApi.Migrations
 
             modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.UserEntity", b =>
                 {
-                    b.HasOne("CourseBook.WebApi.Faculties.Entities.GroupEntity", "Group")
+                    b.HasOne("CourseBook.WebApi.Groups.Entities.GroupEntity", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
@@ -1854,14 +1943,14 @@ namespace CourseBook.WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DirectionEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Directions.Entities.DirectionEntity", b =>
                 {
                     b.Navigation("Disciplines");
 
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.DisciplineEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Disciplines.Entities.DisciplineEntity", b =>
                 {
                     b.Navigation("Directions");
 
@@ -1873,11 +1962,16 @@ namespace CourseBook.WebApi.Migrations
                     b.Navigation("Directions");
                 });
 
-            modelBuilder.Entity("CourseBook.WebApi.Faculties.Entities.GroupEntity", b =>
+            modelBuilder.Entity("CourseBook.WebApi.Groups.Entities.GroupEntity", b =>
                 {
                     b.Navigation("Disciplines");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Disciplines");
                 });
 #pragma warning restore 612, 618
         }

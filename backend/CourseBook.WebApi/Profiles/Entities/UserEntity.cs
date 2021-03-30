@@ -1,7 +1,8 @@
 namespace CourseBook.WebApi.Profiles.Entities
 {
     using System;
-
+    using System.Collections.Generic;
+    using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Groups.Entities;
 
     public class UserEntity : IdentityEntity
@@ -11,5 +12,6 @@ namespace CourseBook.WebApi.Profiles.Entities
         public int? AdmissionYear { get; set; }
         public Guid? GroupId { get; set; }
         public GroupEntity Group { get; set; }
+        public ICollection<GroupDisciplineEntity> Disciplines { get; set; }
     }
 }

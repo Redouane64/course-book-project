@@ -16,7 +16,8 @@ namespace CourseBook.WebApi.Groups.Entities
             builder.Property(e => e.Id);
 
             builder.HasMany(e => e.Students)
-                   .WithOne(e => e.Group);
+                   .WithOne(e => e.Group)
+                   .HasForeignKey(e => e.GroupId);
 
             builder.HasData(
                 //Culturology

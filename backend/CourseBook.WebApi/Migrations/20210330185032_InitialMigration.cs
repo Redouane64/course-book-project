@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CourseBook.WebApi.Migrations
@@ -136,8 +136,8 @@ namespace CourseBook.WebApi.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     FullName = table.Column<string>(type: "TEXT", nullable: true),
                     BirthDay = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    AdmissionYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    GroupId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AdmissionYear = table.Column<int>(type: "INTEGER", nullable: true),
+                    GroupId = table.Column<Guid>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -154,7 +154,7 @@ namespace CourseBook.WebApi.Migrations
                         column: x => x.GroupId,
                         principalTable: "groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,8 +186,7 @@ namespace CourseBook.WebApi.Migrations
                         name: "FK_groups_disciplines_users_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -263,6 +262,16 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("f532bb4b-725b-4b00-8643-a335a4c3fe2f"), null, "Mathematical analysis" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("96e8af39-7453-49cb-af5a-28d1e64e001a"), null, "Foreign language" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
                 values: new object[] { new Guid("0af79477-a80e-4eb6-b156-97bc4cb47315"), null, "Microprocessors" });
 
             migrationBuilder.InsertData(
@@ -313,17 +322,17 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("eeccea9a-ebaa-4660-b2f2-8fad550b38bb"), null, "Linear Algebra" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
                 values: new object[] { new Guid("3ac05f7b-8ee9-4bf5-a37b-692eb9670c35"), null, "Elective disciplines in physical culture and sports" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("96e8af39-7453-49cb-af5a-28d1e64e001a"), null, "Foreign language" });
-
-            migrationBuilder.InsertData(
-                table: "disciplines",
-                columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("aad3f967-7158-46ca-9b8a-405581f207a4"), null, "Study Practice" });
+                values: new object[] { new Guid("e55051fc-17a6-41ec-b76e-fe6d98a15058"), null, "Analytical chemistry" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -383,7 +392,12 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("e55051fc-17a6-41ec-b76e-fe6d98a15058"), null, "Analytical chemistry" });
+                values: new object[] { new Guid("aad3f967-7158-46ca-9b8a-405581f207a4"), null, "Study Practice" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("4bd00c26-498f-439e-b269-5052091dc53f"), null, "Biomedical laser technology" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -393,12 +407,7 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("f532bb4b-725b-4b00-8643-a335a4c3fe2f"), null, "Mathematical analysis" });
-
-            migrationBuilder.InsertData(
-                table: "disciplines",
-                columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("4bd00c26-498f-439e-b269-5052091dc53f"), null, "Biomedical laser technology" });
+                values: new object[] { new Guid("bf026a3f-9e2a-4506-a411-8bda85002c36"), null, "Foreign language in the field of professional communication" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -453,17 +462,22 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("1b773c45-0a73-43f9-94d6-af576c52cf9f"), null, "Modern problems of physics of the microworld and cosmology" });
+                values: new object[] { new Guid("45842fa6-5b8b-4a31-ad6e-e5038340ab5d"), null, "Professional communication in a foreign language" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("eeccea9a-ebaa-4660-b2f2-8fad550b38bb"), null, "Linear Algebra" });
+                values: new object[] { new Guid("4f4ffe1d-b54c-45f7-9e34-a0cc26df4ddd"), null, "Analysis of complex biophysical signals" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("5687210f-0fe3-4111-b0c6-a4764c3ad27c"), null, "Waves and layers in plasma" });
+                values: new object[] { new Guid("0675ed9c-788d-4301-8b97-558992d04f20"), null, "Modern problems of the humanities and natural sciences" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("39400eb6-3c42-4527-a444-519ef1987e06"), null, "Leadership and leadership of teamwork" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -473,22 +487,22 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("45a4ac18-d257-4bbf-8c90-959c5222aecf"), null, "Military training" });
+                values: new object[] { new Guid("bc5bc711-5718-4b9c-a6cf-3d08a00f157c"), null, "Fundamentals of Atomic and Molecular Spectroscopy" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("a02c08b7-bd53-43e7-8a83-ead1185fbdd0"), null, "Information systems design" });
+                values: new object[] { new Guid("9fe893d9-19e8-4ca5-99a1-09c165918e8b"), null, "Topical issues of theory and teaching methods in physics" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("db2a6fec-1be3-4e5a-9dc2-71e0104c150d"), null, "Laboratories specializing in satellite dynamics" });
+                values: new object[] { new Guid("d80697b7-aa62-49e2-86e8-2a83e2e71004"), null, "The theory of elementary particles" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("211181c7-ef7c-4de0-b382-70e0eb9c89d3"), null, "Global Positioning Technologies" });
+                values: new object[] { new Guid("1b773c45-0a73-43f9-94d6-af576c52cf9f"), null, "Modern problems of physics of the microworld and cosmology" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -503,27 +517,17 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("d80697b7-aa62-49e2-86e8-2a83e2e71004"), null, "The theory of elementary particles" });
+                values: new object[] { new Guid("db2a6fec-1be3-4e5a-9dc2-71e0104c150d"), null, "Laboratories specializing in satellite dynamics" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("9fe893d9-19e8-4ca5-99a1-09c165918e8b"), null, "Topical issues of theory and teaching methods in physics" });
+                values: new object[] { new Guid("a02c08b7-bd53-43e7-8a83-ead1185fbdd0"), null, "Information systems design" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
                 columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("bc5bc711-5718-4b9c-a6cf-3d08a00f157c"), null, "Fundamentals of Atomic and Molecular Spectroscopy" });
-
-            migrationBuilder.InsertData(
-                table: "disciplines",
-                columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("bf026a3f-9e2a-4506-a411-8bda85002c36"), null, "Foreign language in the field of professional communication" });
-
-            migrationBuilder.InsertData(
-                table: "disciplines",
-                columns: new[] { "Id", "Literatures", "Name" },
-                values: new object[] { new Guid("4f4ffe1d-b54c-45f7-9e34-a0cc26df4ddd"), null, "Analysis of complex biophysical signals" });
+                values: new object[] { new Guid("45a4ac18-d257-4bbf-8c90-959c5222aecf"), null, "Military training" });
 
             migrationBuilder.InsertData(
                 table: "disciplines",
@@ -531,9 +535,19 @@ namespace CourseBook.WebApi.Migrations
                 values: new object[] { new Guid("bc957929-f744-4315-a4ed-08530c7f0f3e"), null, "Plasma physics problems" });
 
             migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("5687210f-0fe3-4111-b0c6-a4764c3ad27c"), null, "Waves and layers in plasma" });
+
+            migrationBuilder.InsertData(
+                table: "disciplines",
+                columns: new[] { "Id", "Literatures", "Name" },
+                values: new object[] { new Guid("211181c7-ef7c-4de0-b382-70e0eb9c89d3"), null, "Global Positioning Technologies" });
+
+            migrationBuilder.InsertData(
                 table: "faculties",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("b0d09040-c5ea-492d-936f-488b9f3115a2"), "Faculty of Radiophysics" });
+                values: new object[] { new Guid("4a823069-9673-403c-8ea0-59b225e5491c"), "Faculty of Chemistry" });
 
             migrationBuilder.InsertData(
                 table: "faculties",
@@ -548,7 +562,12 @@ namespace CourseBook.WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "faculties",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("4a823069-9673-403c-8ea0-59b225e5491c"), "Faculty of Chemistry" });
+                values: new object[] { new Guid("b0d09040-c5ea-492d-936f-488b9f3115a2"), "Faculty of Radiophysics" });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "Id", "AdmissionYear", "BirthDay", "Email", "FullName", "GroupId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "SecurityStamp", "UserName" },
+                values: new object[] { "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, "538ce8c6-1a86-4b80-9881-c5bc2c0c1189", null });
 
             migrationBuilder.InsertData(
                 table: "directions",
@@ -1544,6 +1563,46 @@ namespace CourseBook.WebApi.Migrations
                 table: "groups",
                 columns: new[] { "Id", "DirectionId", "Name" },
                 values: new object[] { new Guid("b8810aca-e66d-4055-9335-8b5560a9200b"), new Guid("70b17a41-5128-4bde-83dd-f727554ea6b0"), "90004" });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("986d7006-65c4-4246-b99a-2d390e1ae4f7"), new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"), 0, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2021 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("b0a130ae-8d09-4cec-8814-24c811028771"), new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"), 0, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2022 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("fee99c99-831c-4f29-acd0-5eb5ad0ca7e2"), new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"), 1, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2021 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("d12b6e66-e758-48ca-af31-102aa991bdc0"), new Guid("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"), 1, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2022 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("0142a5ca-e2ab-423a-a03f-d2c3092a0339"), new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"), 0, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2021 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("09da399f-d269-4333-b3a9-c7203dee1a01"), new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"), 0, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2022 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("d4e27800-46bd-48d4-b320-92380548f689"), new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"), 1, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2022 });
+
+            migrationBuilder.InsertData(
+                table: "groups_disciplines",
+                columns: new[] { "DisciplineId", "GroupId", "Semester", "TeacherId", "Year" },
+                values: new object[] { new Guid("f333c6ac-530c-4092-8160-a336bafb4d6c"), new Guid("b719e956-a46c-41b5-93bd-81bd4e12c7ed"), 1, "b19d2ff1-efe2-4fd4-a721-3444f2c9888c", 2022 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_directions_FacultyId",

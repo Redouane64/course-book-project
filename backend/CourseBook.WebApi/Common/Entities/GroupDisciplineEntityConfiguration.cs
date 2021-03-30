@@ -25,6 +25,11 @@ namespace CourseBook.WebApi.Common.Entities
             builder.Property(e => e.Semester)
                 .IsRequired();
 
+            builder.HasOne(e => e.Teacher)
+                    .WithMany(e => e.Disciplines)
+                    .HasForeignKey(e => e.TeacherId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData(
                 //group 931910
                 new GroupDisciplineEntity

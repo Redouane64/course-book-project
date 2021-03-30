@@ -1707,6 +1707,14 @@ namespace CourseBook.WebApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
+                            BirthDay = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "538ce8c6-1a86-4b80-9881-c5bc2c0c1189"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1849,8 +1857,9 @@ namespace CourseBook.WebApi.Migrations
                         .IsRequired();
 
                     b.HasOne("CourseBook.WebApi.Profiles.Entities.UserEntity", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
+                        .WithMany("Disciplines")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Discipline");
 
@@ -1885,8 +1894,7 @@ namespace CourseBook.WebApi.Migrations
                 {
                     b.HasOne("CourseBook.WebApi.Groups.Entities.GroupEntity", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
@@ -1957,6 +1965,11 @@ namespace CourseBook.WebApi.Migrations
                     b.Navigation("Disciplines");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("CourseBook.WebApi.Profiles.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Disciplines");
                 });
 #pragma warning restore 612, 618
         }

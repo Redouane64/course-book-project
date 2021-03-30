@@ -1,5 +1,6 @@
 namespace CourseBook.WebApi.Data
 {
+    using System;
     using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Disciplines.Entities;
     using CourseBook.WebApi.Groups.Entities;
@@ -45,10 +46,9 @@ namespace CourseBook.WebApi.Data
                 .HasDefaultValue(null);
 
             modelBuilder.Entity<UserEntity>()
-                .HasOne(e => e.Group)
-                .WithMany(e => e.Students)
-                .IsRequired(required: false)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasData(new UserEntity() {
+                    Id = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c"
+                });
 
             modelBuilder.Entity<IdentityRole>()
                 .ToTable("roles");

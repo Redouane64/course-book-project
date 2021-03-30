@@ -83,19 +83,17 @@ namespace CourseBook.WebApi.Extensions
                 {
                     var userManager = services.GetRequiredService<UserManager<UserEntity>>();
 
-                    var teacher = new UserEntity
-                    {
-                        Id = "b19d2ff1-efe2-4fd4-a721-3444f2c9888c",
-                        FullName = "John Doe",
-                        UserName = "john.doe",
-                        BirthDay = new DateTime(1993, 10, 23),
-                        Email = "john.doe@mail.com",
-                        PhoneNumber = "+1888999123",
-                    };
+                    var user = await userManager.FindByIdAsync("b19d2ff1-efe2-4fd4-a721-3444f2c9888c");
 
-                    await userManager.CreateAsync(teacher, "john.doe.01");
+                    await userManager.AddPasswordAsync(user, "john.doe.01");
+                    await userManager.SetEmailAsync(user, "john.doe@mail.com");
+                    await userManager.SetUserNameAsync(user, "john.doe");
+                    await userManager.SetPhoneNumberAsync(user, "+1888999123");
 
-                    await userManager.AddToRoleAsync(teacher, AccountType.Teacher.ToString());
+                    user.BirthDay = new DateTime(1993, 10, 23);
+                    await userManager.UpdateAsync(user);
+
+                    await userManager.AddToRoleAsync(user, AccountType.Teacher.ToString());
                 }
                 catch { }
 
