@@ -56,6 +56,13 @@ namespace CourseBook.WebApi.Controllers
         {
             return Ok();
         }
+
+        [HttpDelete(Name = nameof(DeleteDirection))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteDirection([FromRoute] Guid directionId, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 }
 

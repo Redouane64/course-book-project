@@ -56,5 +56,12 @@ namespace CourseBook.WebApi.Controllers
         {
             return Ok();
         }
+
+        [HttpDelete(Name = nameof(DeleteFaculty))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteFaculty([FromRoute]Guid facultyId, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 }

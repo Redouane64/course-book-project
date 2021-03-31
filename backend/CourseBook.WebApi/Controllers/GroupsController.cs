@@ -58,6 +58,14 @@ namespace CourseBook.WebApi.Controllers
         {
             return Ok();
         }
+
+
+        [HttpDelete(Name = nameof(DeleteGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteGroup([FromRoute] Guid groupId, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 
 }
