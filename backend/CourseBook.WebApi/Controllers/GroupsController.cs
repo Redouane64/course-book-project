@@ -8,7 +8,7 @@ namespace CourseBook.WebApi.Controllers
     using CourseBook.WebApi.Directions.ViewModels;
     using CourseBook.WebApi.Groups.Queries;
     using CourseBook.WebApi.Groups.ViewModels;
-
+    using CourseBook.WebApi.Model;
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
@@ -48,6 +48,15 @@ namespace CourseBook.WebApi.Controllers
             }
 
             return Ok(group);
+        }
+
+
+
+        [HttpPost(Name = nameof(CreateGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateGroup([FromRoute] Guid? directionId, [FromBody]CreateGroup payload, CancellationToken cancellationToken)
+        {
+            return Ok();
         }
     }
 

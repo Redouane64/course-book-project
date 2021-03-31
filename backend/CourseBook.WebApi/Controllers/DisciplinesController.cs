@@ -8,7 +8,7 @@ namespace CourseBook.WebApi.Controllers
     using CourseBook.WebApi.Disciplines.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Faculties.Queries;
-
+    using CourseBook.WebApi.Model;
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
@@ -50,6 +50,13 @@ namespace CourseBook.WebApi.Controllers
             return Ok(discipline);
         }
 
+
+        [HttpPost(Name = nameof(CreateDiscipline))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateDiscipline([FromBody]CreateDiscipline payload, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 }
 

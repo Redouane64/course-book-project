@@ -7,7 +7,7 @@ namespace CourseBook.WebApi.Controllers
 
     using CourseBook.WebApi.Directions.Queries;
     using CourseBook.WebApi.Directions.ViewModels;
-
+    using CourseBook.WebApi.Model;
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
@@ -49,6 +49,13 @@ namespace CourseBook.WebApi.Controllers
             return Ok(directions);
         }
 
+
+        [HttpPost(Name = nameof(CreateDirection))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateDirection([FromRoute]Guid? facultyId, [FromBody]CreateDirection payload, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 }
 

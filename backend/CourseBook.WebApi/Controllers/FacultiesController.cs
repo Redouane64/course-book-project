@@ -7,7 +7,7 @@ namespace CourseBook.WebApi.Controllers
 
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Faculties.ViewModels;
-
+    using CourseBook.WebApi.Model;
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
@@ -49,5 +49,12 @@ namespace CourseBook.WebApi.Controllers
             return Ok(faculty);
         }
 
+
+        [HttpPost(Name = nameof(CreateFaculty))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateFaculty([FromBody]CreateFaculty payload, CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
     }
 }
