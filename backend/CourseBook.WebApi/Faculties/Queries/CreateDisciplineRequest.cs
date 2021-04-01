@@ -29,9 +29,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task Handle(CreateDisciplineRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateDisciplineRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.CreateDiscipline(request.CreateDiscipline, cancellationToken);
+            await repository.CreateDiscipline(request.CreateDiscipline, cancellationToken);
+            return await Unit.Task;
         }
     }
 }

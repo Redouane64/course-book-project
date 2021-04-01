@@ -28,9 +28,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task Handle(DeleteGroupRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteGroupRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteGroup(request.Id, cancellationToken);
+            await repository.DeleteGroup(request.Id, cancellationToken);
+            return await Unit.Task;
         }
     }
 }

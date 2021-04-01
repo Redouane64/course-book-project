@@ -15,7 +15,7 @@ namespace CourseBook.WebApi.Faculties.Queries
         {
             CreateGroup = createGroup;
             DirectionId = directionId;
-             
+
         }
         public CreateGroup CreateGroup { get; }
 
@@ -32,9 +32,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task Handle(CreateGroupRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateGroupRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.CreateGroup(request.DirectionId, request.CreateGroup, cancellationToken);
+            await repository.CreateGroup(request.DirectionId, request.CreateGroup, cancellationToken);
+            return await Unit.Task;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CourseBook.WebApi.Faculties.Queries
             CreateFaculty = createFaculty;
         }
         public CreateFaculty CreateFaculty { get; }
-        
+
     }
 
     public class CreateFacultyRequestHanlder : IRequestHandler<CreateFacultyRequest>
@@ -29,9 +29,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task Handle(CreateFacultyRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateFacultyRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.CreateFaculty(request.CreateFaculty, cancellationToken);
+            await repository.CreateFaculty(request.CreateFaculty, cancellationToken);
+            return await Unit.Task;
         }
     }
 }
