@@ -39,7 +39,7 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetFaculty([FromRoute] Guid id, CancellationToken cancellationToken = default)
         {
-            var faculty = await this._mediator.Send(new DeleteFacultyRequest(id), cancellationToken);
+            var faculty = await this._mediator.Send(new GetFacultyRequest(id), cancellationToken);
 
             if (faculty is null)
             {

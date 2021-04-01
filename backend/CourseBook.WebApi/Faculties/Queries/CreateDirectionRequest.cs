@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<Unit> Handle(CreateDirectionRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateDirection(request.FacultyId, request.CreateDirection, cancellationToken);
+            await repository.CreateDirection(request.CreateDirection, cancellationToken);
             return await Unit.Task;
         }
     }

@@ -34,7 +34,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<Unit> Handle(CreateGroupRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateGroup(request.DirectionId, request.CreateGroup, cancellationToken);
+            await repository.CreateGroup(request.CreateGroup, cancellationToken);
             return await Unit.Task;
         }
     }

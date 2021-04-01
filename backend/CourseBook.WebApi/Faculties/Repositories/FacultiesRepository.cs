@@ -91,76 +91,111 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task CreateFaculty(CreateFaculty paylod, CancellationToken cancellationToken)
+        public async Task CreateFaculty(CreateFaculty payload, CancellationToken cancellationToken)
         {
             var faculty = new FacultyEntity
             {
-                Name = paylod.Name
-                
+                Name = payload.Name
+
             };
 
             this._context.Faculties.Add(faculty);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task CreateDirection(Guid facultyId, CreateDirection paylod, CancellationToken cancellationToken)
+        public async Task CreateDirection(CreateDirection payload, CancellationToken cancellationToken)
         {
             var direction = new DirectionEntity
             {
-                FacultyId = facultyId,
-                Name = paylod.Name
+                FacultyId = payload.FacultyId,
+                Name = payload.Name
             };
 
             this._context.Directions.Add(direction);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task CreateGroup(Guid directionId, CreateGroup paylod, CancellationToken cancellationToken)
+        public async Task CreateGroup(CreateGroup payload, CancellationToken cancellationToken)
         {
             var group = new GroupEntity
             {
-                DirectionId = directionId,
-                Name = paylod.Name
+                DirectionId = payload.DirectionId,
+                Name = payload.Name
             };
 
             this._context.Groups.Add(group);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task CreateDiscipline(CreateDiscipline paylod, CancellationToken cancellationToken)
+        public async Task CreateDiscipline(CreateDiscipline payload, CancellationToken cancellationToken)
         {
-            //Fix it u sun of beach
             var discipline = new DisciplineEntity
             {
-                 Name = paylod.Name
+                 Name = payload.Name
             };
 
             this._context.Disciplines.Add(discipline);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteFaculty(Guid facultyId, CancellationToken cancellationToken)
         {
-            var faculty = await this._context.Faculties.AsNoTracking()
+            var faculty = await this._context.Faculties
                 .FirstOrDefaultAsync(x => x.Id == facultyId);
+
+            if (faculty is null) {
+                return;
+            }
+
             this._context.Faculties.Remove(faculty);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteDirection(Guid directionId, CancellationToken cancellationToken)
         {
-            var direction = await this._context.Directions.AsNoTracking()
+            var direction = await this._context.Directions
                 .FirstOrDefaultAsync(x => x.Id == directionId);
+
+            if (direction is null) {
+                return;
+            }
+
             this._context.Directions.Remove(direction);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteGroup(Guid groupId, CancellationToken cancellationToken)
         {
-            var group = await this._context.Groups.AsNoTracking()
+            var group = await this._context.Groups
                 .FirstOrDefaultAsync(x => x.Id == groupId);
+
+            if (group is null) {
+                return;
+            }
+
             this._context.Groups.Remove(group);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteDiscipline(Guid disciplineId, CancellationToken cancellationToken)
         {
-            var discipline = await this._context.Disciplines.AsNoTracking()
+            var discipline = await this._context.Disciplines
                 .FirstOrDefaultAsync(x => x.Id == disciplineId);
+
+            if (discipline is null) {
+                return;
+            }
+
             this._context.Disciplines.Remove(discipline);
+
+            await this._context.SaveChangesAsync(cancellationToken);
         }
     }
 }
