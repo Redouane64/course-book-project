@@ -91,20 +91,21 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task CreateFaculty(CreateFaculty payload, CancellationToken cancellationToken)
+        public async Task<FacultyEntity> CreateFaculty(CreateFaculty payload, CancellationToken cancellationToken)
         {
             var faculty = new FacultyEntity
             {
                 Name = payload.Name
-
             };
 
             this._context.Faculties.Add(faculty);
 
             await this._context.SaveChangesAsync(cancellationToken);
+
+            return faculty;
         }
 
-        public async Task CreateDirection(CreateDirection payload, CancellationToken cancellationToken)
+        public async Task<DirectionEntity> CreateDirection(CreateDirection payload, CancellationToken cancellationToken)
         {
             var direction = new DirectionEntity
             {
@@ -115,9 +116,11 @@ namespace CourseBook.WebApi.Faculties.Repositories
             this._context.Directions.Add(direction);
 
             await this._context.SaveChangesAsync(cancellationToken);
+
+            return direction;
         }
 
-        public async Task CreateGroup(CreateGroup payload, CancellationToken cancellationToken)
+        public async Task<GroupEntity> CreateGroup(CreateGroup payload, CancellationToken cancellationToken)
         {
             var group = new GroupEntity
             {
@@ -128,9 +131,11 @@ namespace CourseBook.WebApi.Faculties.Repositories
             this._context.Groups.Add(group);
 
             await this._context.SaveChangesAsync(cancellationToken);
+
+            return group;
         }
 
-        public async Task CreateDiscipline(CreateDiscipline payload, CancellationToken cancellationToken)
+        public async Task<DisciplineEntity> CreateDiscipline(CreateDiscipline payload, CancellationToken cancellationToken)
         {
             var discipline = new DisciplineEntity
             {
@@ -140,6 +145,8 @@ namespace CourseBook.WebApi.Faculties.Repositories
             this._context.Disciplines.Add(discipline);
 
             await this._context.SaveChangesAsync(cancellationToken);
+
+            return discipline;
         }
 
         public async Task DeleteFaculty(Guid facultyId, CancellationToken cancellationToken)

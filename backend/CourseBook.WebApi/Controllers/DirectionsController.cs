@@ -7,6 +7,7 @@ namespace CourseBook.WebApi.Controllers
 
     using CourseBook.WebApi.Directions.Queries;
     using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Model;
     using MediatR;
 
@@ -51,17 +52,19 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpPost(Name = nameof(CreateDirection))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateDirection([FromRoute]Guid? facultyId, [FromBody]CreateDirection payload, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateDirection([FromRoute]Guid facultyId, [FromBody]CreateDirection payload, CancellationToken cancellationToken)
         {
-            return Ok();
+            var id = await this._mediator.Send(new CreateDirectionRequest(payload, facultyId), cancellationToken);
+            return CreatedAtAction(nameof(GetDirection), new { id });
         }
 
-        [HttpDelete(Name = nameof(DeleteDirection))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteDirection([FromRoute] Guid directionId, CancellationToken cancellationToken)
+        [HttpDelete("{id:Guid}", Name = nameof(DeleteDirection))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteDirection([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new DeleteDirectionRequest(id), cancellationToken);
+            return NoContent();
         }
     }
 }

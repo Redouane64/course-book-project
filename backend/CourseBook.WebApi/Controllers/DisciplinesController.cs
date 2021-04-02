@@ -52,17 +52,19 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpPost(Name = nameof(CreateDiscipline))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateDiscipline([FromBody]CreateDiscipline payload, CancellationToken cancellationToken)
         {
-            return Ok();
+            var id = await this._mediator.Send(new CreateDisciplineRequest(payload), cancellationToken);
+            return CreatedAtAction(nameof(GetDiscipline), new { id });
         }
 
-        [HttpDelete(Name = nameof(DeleteDiscipline))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteDiscipline([FromRoute] Guid disciplineId, CancellationToken cancellationToken)
+        [HttpDelete("{id:Guid}", Name = nameof(DeleteDiscipline))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteDiscipline([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new DeleteDisciplineRequest(id), cancellationToken);
+            return NoContent();
         }
     }
 }

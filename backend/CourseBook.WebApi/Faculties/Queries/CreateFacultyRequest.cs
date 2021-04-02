@@ -10,7 +10,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using CourseBook.WebApi.Model;
     using MediatR;
 
-    public class CreateFacultyRequest : IRequest
+    public class CreateFacultyRequest : IRequest<Guid>
     {
         public CreateFacultyRequest(CreateFaculty createFaculty)
         {
@@ -20,7 +20,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     }
 
-    public class CreateFacultyRequestHanlder : IRequestHandler<CreateFacultyRequest>
+    public class CreateFacultyRequestHanlder : IRequestHandler<CreateFacultyRequest, Guid>
     {
         private readonly IFacultiesRepository repository;
 
@@ -29,10 +29,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task<Unit> Handle(CreateFacultyRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateFacultyRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateFaculty(request.CreateFaculty, cancellationToken);
-            return await Unit.Task;
+            var entity = await repository.CreateFaculty(request.CreateFaculty, cancellationToken);
+            return entity.Id;
         }
     }
 }

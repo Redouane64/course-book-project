@@ -6,6 +6,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Groups.Queries;
     using CourseBook.WebApi.Groups.ViewModels;
     using CourseBook.WebApi.Model;
@@ -53,18 +54,19 @@ namespace CourseBook.WebApi.Controllers
 
 
         [HttpPost(Name = nameof(CreateGroup))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateGroup([FromRoute] Guid? directionId, [FromBody]CreateGroup payload, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateGroup([FromRoute] Guid directionId, [FromBody]CreateGroup payload, CancellationToken cancellationToken)
         {
-            return Ok();
+            var id = await this._mediator.Send(new CreateGroupRequest(payload, directionId), cancellationToken);
+            return CreatedAtAction(nameof(GetGroup), new { id });
         }
 
-
-        [HttpDelete(Name = nameof(DeleteGroup))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteGroup([FromRoute] Guid groupId, CancellationToken cancellationToken)
+        [HttpDelete("{id:Guid}", Name = nameof(DeleteGroup))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteGroup([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new DeleteGroupRequest(id), cancellationToken);
+            return NoContent();
         }
     }
 

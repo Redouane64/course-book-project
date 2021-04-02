@@ -9,7 +9,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using CourseBook.WebApi.Model;
     using MediatR;
 
-    public class CreateGroupRequest : IRequest
+    public class CreateGroupRequest : IRequest<Guid>
     {
         public CreateGroupRequest(CreateGroup createGroup, Guid directionId)
         {
@@ -23,7 +23,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     }
 
-    public class CreateGroupRequestHanlder : IRequestHandler<CreateGroupRequest>
+    public class CreateGroupRequestHanlder : IRequestHandler<CreateGroupRequest, Guid>
     {
         private readonly IFacultiesRepository repository;
 
@@ -32,10 +32,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task<Unit> Handle(CreateGroupRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateGroupRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateGroup(request.CreateGroup, cancellationToken);
-            return await Unit.Task;
+            var entity = await repository.CreateGroup(request.CreateGroup, cancellationToken);
+            return entity.Id;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using MediatR;
 
 
-    public class CreateDisciplineRequest : IRequest
+    public class CreateDisciplineRequest : IRequest<Guid>
     {
         public CreateDisciplineRequest(CreateDiscipline createDiscipline)
         {
@@ -20,7 +20,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     }
 
-    public class CreateDisciplineRequestHanlder : IRequestHandler<CreateDisciplineRequest>
+    public class CreateDisciplineRequestHanlder : IRequestHandler<CreateDisciplineRequest, Guid>
     {
         private readonly IFacultiesRepository repository;
 
@@ -29,10 +29,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task<Unit> Handle(CreateDisciplineRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateDisciplineRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateDiscipline(request.CreateDiscipline, cancellationToken);
-            return await Unit.Task;
+            var entity = await repository.CreateDiscipline(request.CreateDiscipline, cancellationToken);
+            return entity.Id;
         }
     }
 }
