@@ -11,14 +11,12 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class CreateGroupRequest : IRequest<Guid>
     {
-        public CreateGroupRequest(CreateGroup createGroup, Guid directionId)
+        public CreateGroupRequest(CreateGroup createGroup)
         {
             CreateGroup = createGroup;
-            DirectionId = directionId;
-
         }
-        public CreateGroup CreateGroup { get; }
 
+        public CreateGroup CreateGroup { get; }
         public Guid DirectionId { get; }
 
     }

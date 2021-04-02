@@ -5,6 +5,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Faculties.Repositories;
     using CourseBook.WebApi.Model;
     using MediatR;
@@ -12,10 +13,9 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class CreateDirectionRequest : IRequest<Guid>
     {
-        public CreateDirectionRequest(CreateDirection createDirection, Guid facultyId)
+        public CreateDirectionRequest(CreateDirection createDirection)
         {
             CreateDirection = createDirection;
-            FacultyId = facultyId;
         }
         public CreateDirection CreateDirection { get; }
 

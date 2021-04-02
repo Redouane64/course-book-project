@@ -55,10 +55,10 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpPost(Name = nameof(CreateGroup))]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateGroup([FromRoute] Guid directionId, [FromBody]CreateGroup payload, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateGroup([FromBody]CreateGroup payload, CancellationToken cancellationToken)
         {
-            var id = await this._mediator.Send(new CreateGroupRequest(payload, directionId), cancellationToken);
-            return CreatedAtAction(nameof(GetGroup), routeValues: new { id }, null);
+            var id = await this._mediator.Send(new CreateGroupRequest(payload), cancellationToken);
+            return CreatedAtAction(nameof(GetGroup), routeValues: new { id, directionId = payload.DirectionId  }, null);
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteGroup))]

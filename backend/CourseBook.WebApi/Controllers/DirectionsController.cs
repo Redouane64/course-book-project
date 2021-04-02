@@ -53,10 +53,10 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpPost(Name = nameof(CreateDirection))]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateDirection([FromRoute]Guid facultyId, [FromBody]CreateDirection payload, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateDirection([FromBody] CreateDirection payload, CancellationToken cancellationToken)
         {
-            var id = await this._mediator.Send(new CreateDirectionRequest(payload, facultyId), cancellationToken);
-            return CreatedAtAction(nameof(GetDirection), routeValues: new { id }, null);
+            var id = await this._mediator.Send(new CreateDirectionRequest(payload), cancellationToken);
+            return CreatedAtAction(nameof(GetDirection), routeValues: new { id, facultyId = payload.FacultyId }, null);
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteDirection))]
