@@ -55,7 +55,7 @@ namespace CourseBook.WebApi.Controllers
         public async Task<IActionResult> CreateFaculty([FromBody]CreateFaculty payload, CancellationToken cancellationToken)
         {
             var id = await this._mediator.Send(new CreateFacultyRequest(payload), cancellationToken);
-            return CreatedAtAction(nameof(GetFaculty), new { id });
+            return CreatedAtAction(nameof(GetFaculty), routeValues: new { id }, null);
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteFaculty))]

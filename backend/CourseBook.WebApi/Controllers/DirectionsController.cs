@@ -56,7 +56,7 @@ namespace CourseBook.WebApi.Controllers
         public async Task<IActionResult> CreateDirection([FromRoute]Guid facultyId, [FromBody]CreateDirection payload, CancellationToken cancellationToken)
         {
             var id = await this._mediator.Send(new CreateDirectionRequest(payload, facultyId), cancellationToken);
-            return CreatedAtAction(nameof(GetDirection), new { id });
+            return CreatedAtAction(nameof(GetDirection), routeValues: new { id }, null);
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteDirection))]
