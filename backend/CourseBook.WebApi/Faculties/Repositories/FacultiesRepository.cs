@@ -5,13 +5,13 @@ namespace CourseBook.WebApi.Faculties.Repositories
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Data;
     using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Disciplines.Entities;
     using CourseBook.WebApi.Faculties.Entities;
     using CourseBook.WebApi.Groups.Entities;
-
+    using CourseBook.WebApi.Model;
     using Microsoft.EntityFrameworkCore;
 
     public class FacultiesRepository : IFacultiesRepository
@@ -91,5 +91,118 @@ namespace CourseBook.WebApi.Faculties.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
+        public async Task<FacultyEntity> CreateFaculty(CreateFaculty payload, CancellationToken cancellationToken)
+        {
+            var faculty = new FacultyEntity
+            {
+                Name = payload.Name
+            };
+
+            this._context.Faculties.Add(faculty);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+
+            return faculty;
+        }
+
+        public async Task<DirectionEntity> CreateDirection(CreateDirection payload, CancellationToken cancellationToken)
+        {
+            var direction = new DirectionEntity
+            {
+                FacultyId = payload.FacultyId,
+                Name = payload.Name
+            };
+
+            this._context.Directions.Add(direction);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+
+            return direction;
+        }
+
+        public async Task<GroupEntity> CreateGroup(CreateGroup payload, CancellationToken cancellationToken)
+        {
+            var group = new GroupEntity
+            {
+                DirectionId = payload.DirectionId,
+                Name = payload.Name
+            };
+
+            this._context.Groups.Add(group);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+
+            return group;
+        }
+
+        public async Task<DisciplineEntity> CreateDiscipline(CreateDiscipline payload, CancellationToken cancellationToken)
+        {
+            var discipline = new DisciplineEntity
+            {
+                 Name = payload.Name
+            };
+
+            this._context.Disciplines.Add(discipline);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+
+            return discipline;
+        }
+
+        public async Task DeleteFaculty(Guid facultyId, CancellationToken cancellationToken)
+        {
+            var faculty = await this._context.Faculties
+                .FirstOrDefaultAsync(x => x.Id == facultyId);
+
+            if (faculty is null) {
+                return;
+            }
+
+            this._context.Faculties.Remove(faculty);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteDirection(Guid directionId, CancellationToken cancellationToken)
+        {
+            var direction = await this._context.Directions
+                .FirstOrDefaultAsync(x => x.Id == directionId);
+
+            if (direction is null) {
+                return;
+            }
+
+            this._context.Directions.Remove(direction);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteGroup(Guid groupId, CancellationToken cancellationToken)
+        {
+            var group = await this._context.Groups
+                .FirstOrDefaultAsync(x => x.Id == groupId);
+
+            if (group is null) {
+                return;
+            }
+
+            this._context.Groups.Remove(group);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteDiscipline(Guid disciplineId, CancellationToken cancellationToken)
+        {
+            var discipline = await this._context.Disciplines
+                .FirstOrDefaultAsync(x => x.Id == disciplineId);
+
+            if (discipline is null) {
+                return;
+            }
+
+            this._context.Disciplines.Remove(discipline);
+
+            await this._context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

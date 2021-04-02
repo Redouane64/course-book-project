@@ -7,7 +7,7 @@ namespace CourseBook.WebApi.Controllers
 
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Faculties.ViewModels;
-
+    using CourseBook.WebApi.Model;
     using MediatR;
 
     using Microsoft.AspNetCore.Http;
@@ -49,5 +49,21 @@ namespace CourseBook.WebApi.Controllers
             return Ok(faculty);
         }
 
+
+        [HttpPost(Name = nameof(CreateFaculty))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateFaculty([FromBody]CreateFaculty payload, CancellationToken cancellationToken)
+        {
+            var id = await this._mediator.Send(new CreateFacultyRequest(payload), cancellationToken);
+            return CreatedAtAction(nameof(GetFaculty), new { id });
+        }
+
+        [HttpDelete("{id:Guid}", Name = nameof(DeleteFaculty))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteFaculty([FromRoute]Guid id, CancellationToken cancellationToken)
+        {
+            await this._mediator.Send(new DeleteFacultyRequest(id), cancellationToken);
+            return NoContent();
+        }
     }
 }
