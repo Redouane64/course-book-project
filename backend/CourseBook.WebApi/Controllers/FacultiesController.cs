@@ -54,14 +54,16 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateFaculty([FromBody]CreateFaculty payload, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new CreateFacultyRequest(payload), cancellationToken);
+            return Created();
         }
 
         [HttpDelete(Name = nameof(DeleteFaculty))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteFaculty([FromRoute]Guid facultyId, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new DeleteFacultyRequest(facultyId), cancellationToken);
+            return NoContent();
         }
     }
 }
