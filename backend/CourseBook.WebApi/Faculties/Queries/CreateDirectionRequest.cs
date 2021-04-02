@@ -10,7 +10,7 @@ namespace CourseBook.WebApi.Faculties.Queries
     using MediatR;
 
 
-    public class CreateDirectionRequest : IRequest
+    public class CreateDirectionRequest : IRequest<Guid>
     {
         public CreateDirectionRequest(CreateDirection createDirection, Guid facultyId)
         {
@@ -23,7 +23,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     }
 
-    public class CreateDirectionRequestHanlder : IRequestHandler<CreateDirectionRequest>
+    public class CreateDirectionRequestHanlder : IRequestHandler<CreateDirectionRequest, Guid>
     {
         private readonly IFacultiesRepository repository;
 
@@ -32,10 +32,10 @@ namespace CourseBook.WebApi.Faculties.Queries
             this.repository = repository;
         }
 
-        public async Task<Unit> Handle(CreateDirectionRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateDirectionRequest request, CancellationToken cancellationToken)
         {
-            await repository.CreateDirection(request.CreateDirection, cancellationToken);
-            return await Unit.Task;
+            var entity = await repository.CreateDirection(request.CreateDirection, cancellationToken);
+            return entity.Id;
         }
     }
 }
