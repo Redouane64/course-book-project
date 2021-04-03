@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Disciplines.ViewModels
+namespace CourseBook.WebApi.Disciplines.ViewModels
 {
     using System.Collections.Generic;
 
@@ -10,5 +10,7 @@
         public ICollection<DirectionViewModel> Directions { get; set; }
 
         public ICollection<GroupViewModel> Groups { get; set; }
+
+        public ICollection<UserViewModel> Teachers { get; set; }
     }
 }

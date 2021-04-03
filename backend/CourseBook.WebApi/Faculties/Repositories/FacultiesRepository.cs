@@ -88,6 +88,7 @@ namespace CourseBook.WebApi.Faculties.Repositories
             return await _context.Disciplines.AsNoTracking()
                 .Include(x => x.Directions)
                 .Include(x => x.Groups)
+                .ThenInclude(x => x.Teacher)
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
     }

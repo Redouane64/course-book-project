@@ -156,11 +156,13 @@ namespace CourseBook.WebApi
                 options.CreateMap<DirectionEntity, DirectionViewModel>();
                 options.CreateMap<GroupEntity, GroupViewModel>();
                 options.CreateMap<DisciplineEntity, DisciplineViewModel>();
+                options.CreateMap<UserEntity, UserViewModel>();
 
                 options.CreateMap<GroupDisciplineEntity, TeacherDisciplineViewModel>();
 
                 options.CreateMap<FacultyEntity, FacultyDetailsViewModel>();
 
+                /* */
                 options.CreateMap<DirectionDisciplineEntity, DirectionViewModel>()
                         .ForMember(d => d.Id, mapper => mapper.MapFrom(s => s.DisciplineId))
                         .ForMember(d => d.Name, mapper => mapper.MapFrom(s => s.Discipline.Name));
@@ -169,12 +171,17 @@ namespace CourseBook.WebApi
                         .ForMember(d => d.Id, mapper => mapper.MapFrom(s => s.GroupId))
                         .ForMember(d => d.Name, mapper => mapper.MapFrom(s => s.Group.Name));
 
+                options.CreateMap<DisciplineEntity, DisciplineDetailsViewModel>()
+                        .ForMember(d => d.Teachers,
+                            mapper => mapper.MapFrom(s => s.Groups.Select(g => g.Teacher))
+                        );
+                /* */
+
                 options.CreateMap<DirectionEntity, DirectionDetailsViewModel>()
                         .ForMember(x => x.Disciplines, mapper => mapper.MapFrom(s => s.Disciplines))
                         .ForMember(x => x.Groups, mapper => mapper.MapFrom(s => s.Groups));
 
                 options.CreateMap<GroupEntity, GroupDetailsViewModel>();
-                options.CreateMap<DisciplineEntity, DisciplineDetailsViewModel>();
 
                 options.CreateMap<UserEntity, ProfileViewModel>()
                         .ForMember(d => d.Name, o => o.MapFrom(s => s.FullName))
