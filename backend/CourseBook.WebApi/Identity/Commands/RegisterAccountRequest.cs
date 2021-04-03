@@ -57,7 +57,7 @@ namespace CourseBook.WebApi.Identity.Commands
                 FullName = request.Form.Name,
                 Email = request.Form.Email,
                 PhoneNumber = request.Form.PhoneNumber,
-                BirthDay = request.Form.Birthday
+                BirthDay = request.Form.Birthday,
             };
 
             var isStudent = request.Form.AccountType == AccountType.Student || request.Form.AccountType == AccountType.StudentTeacher;
@@ -70,6 +70,8 @@ namespace CourseBook.WebApi.Identity.Commands
             if (isStudent && request.Form.Education is not null)
             {
                 user.AdmissionYear = request.Form.Education.AdmissionYear.Value;
+                user.GroupId = request.Form.Education.Group;
+
             }
 
             var result = await this.userManager.CreateAsync(user, request.Form.Password);
@@ -101,7 +103,10 @@ namespace CourseBook.WebApi.Identity.Commands
 
             var (Token, RefreshToken) = await this.tokensService.GenerateToken(claims, user);
 
-            return new TokenViewModel(Token, RefreshToken, user.Id) { Role = request.Form.AccountType };
+            return new TokenViewModel(Token, RefreshToken, user.Id) {
+                Role = request.Form.AccountType,
+                Group = user.GroupId
+            };
         }
     }
 }

@@ -81,6 +81,7 @@ namespace CourseBook.WebApi.Extensions
 
                 try
                 {
+                    /* teacher seed account */
                     var userManager = services.GetRequiredService<UserManager<UserEntity>>();
 
                     var user = await userManager.FindByIdAsync("b19d2ff1-efe2-4fd4-a721-3444f2c9888c");
@@ -96,8 +97,24 @@ namespace CourseBook.WebApi.Extensions
                     await userManager.UpdateAsync(user);
 
                     await userManager.AddToRoleAsync(user, AccountType.Teacher.ToString());
+
+                    /* student seed account */
+                    var student = new UserEntity() {
+                        Email = "jcosto@example.com",
+                        FullName = "Jack Costo",
+                        UserName = "jack.costo",
+                        BirthDay = new DateTime(1993, 7, 26),
+                        PhoneNumber = "+78889991111",
+                        GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                        AdmissionYear = 2020,
+                    };
+
+                    await userManager.CreateAsync(student, "qwerty@1234");
+                    await userManager.AddToRoleAsync(student, AccountType.Student.ToString());
                 }
-                catch { }
+                catch(Exception ex) {
+                    logger.LogError(ex, "Sonething went wrong when seeding test users.");
+                }
 
             }
 

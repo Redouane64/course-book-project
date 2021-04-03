@@ -1,3 +1,4 @@
+using System;
 using CourseBook.WebApi.Identity.Models;
 
 namespace CourseBook.WebApi.Identity.ViewModels
@@ -15,5 +16,6 @@ namespace CourseBook.WebApi.Identity.ViewModels
         public string RefreshToken { get; }
         public string UserId { get; }
         public AccountType Role { get; set; }
+        public Guid? Group { get; set; }
     }
 }
