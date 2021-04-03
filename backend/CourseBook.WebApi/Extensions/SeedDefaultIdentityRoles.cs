@@ -91,6 +91,8 @@ namespace CourseBook.WebApi.Extensions
                     await userManager.SetPhoneNumberAsync(user, "+1888999123");
 
                     user.BirthDay = new DateTime(1993, 10, 23);
+                    user.FullName = "John Doe";
+
                     await userManager.UpdateAsync(user);
 
                     await userManager.AddToRoleAsync(user, AccountType.Teacher.ToString());
