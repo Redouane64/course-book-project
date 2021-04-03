@@ -1,4 +1,4 @@
-﻿namespace CourseBook.WebApi.Disciplines.ViewModels
+namespace CourseBook.WebApi.Disciplines.ViewModels
 {
 
     using CourseBook.WebApi.Groups.ViewModels;
