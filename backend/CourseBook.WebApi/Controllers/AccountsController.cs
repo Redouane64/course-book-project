@@ -5,11 +5,13 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Exceptions;
+    using CourseBook.WebApi.Identity.ViewModels;
     using Identity.Commands;
     using Identity.Models;
     using MediatR;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]
@@ -26,6 +28,7 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpPost("login", Name = nameof(Login))]
+        [ProducesResponseType(typeof(TokenViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> Login([FromBody] LoginCredentials credentials, CancellationToken cancellationToken = default)
         {
             try
@@ -46,6 +49,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpPatch("refresh-token", Name = nameof(RefreshToken))]
         [Authorize]
+        [ProducesResponseType(typeof(TokenViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> RefreshToken([FromBody] TokenModel tokens, CancellationToken cancellationToken)
         {
             try
@@ -64,6 +68,7 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpPost("logout", Name = nameof(LogOut))]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> LogOut(CancellationToken cancellationToken = default)
         {
             await this._mediator.Send(new LogoutRequest(), cancellationToken);

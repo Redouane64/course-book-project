@@ -1,3 +1,5 @@
+using CourseBook.WebApi.Identity.Models;
+
 namespace CourseBook.WebApi.Identity.ViewModels
 {
     public class TokenViewModel
@@ -12,5 +14,6 @@ namespace CourseBook.WebApi.Identity.ViewModels
         public string Token { get; }
         public string RefreshToken { get; }
         public string UserId { get; }
+        public AccountType Role { get; set; }
     }
 }

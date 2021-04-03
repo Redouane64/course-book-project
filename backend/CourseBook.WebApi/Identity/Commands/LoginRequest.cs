@@ -1,5 +1,6 @@
 namespace CourseBook.WebApi.Identity.Commands
 {
+    using System;
     using System.Security.Authentication;
     using System.Security.Claims;
     using System.Threading;
@@ -60,7 +61,7 @@ namespace CourseBook.WebApi.Identity.Commands
 
             var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, user);
 
-            return new TokenViewModel(Token, RefreshToken, user.Id);
+            return new TokenViewModel(Token, RefreshToken, user.Id) { Role = Enum.Parse<AccountType>(roles[0]) };
         }
     }
 }
