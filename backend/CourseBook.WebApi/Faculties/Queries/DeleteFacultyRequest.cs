@@ -1,12 +1,11 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using CourseBook.WebApi.Faculties.Repositories;
+    using CourseBook.WebApi.Data;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
 
     public class DeleteFacultyRequest : IRequest
     {
@@ -21,16 +20,26 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class DeleteFacultyRequestHanlder : IRequestHandler<DeleteFacultyRequest>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public DeleteFacultyRequestHanlder(IFacultiesRepository repository)
+        public DeleteFacultyRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Unit> Handle(DeleteFacultyRequest request, CancellationToken cancellationToken)
         {
-            await repository.DeleteFaculty(request.Id, cancellationToken);
+            var faculty = await this.context.Faculties
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (faculty is null) {
+                return await Unit.Task;
+            }
+
+            this.context.Faculties.Remove(faculty);
+
+            await this.context.SaveChangesAsync(cancellationToken);
+
             return await Unit.Task;
         }
     }

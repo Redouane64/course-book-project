@@ -5,8 +5,10 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Data;
     using CourseBook.WebApi.Faculties.Repositories;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
 
     public class DeleteGroupRequest : IRequest
     {
@@ -21,16 +23,26 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class DeleteGroupRequestHanlder : IRequestHandler<DeleteGroupRequest>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public DeleteGroupRequestHanlder(IFacultiesRepository repository)
+        public DeleteGroupRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Unit> Handle(DeleteGroupRequest request, CancellationToken cancellationToken)
         {
-            await repository.DeleteGroup(request.Id, cancellationToken);
+            var group = await this.context.Groups
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (group is null) {
+                return await Unit.Task;
+            }
+
+            this.context.Groups.Remove(group);
+
+            await this.context.SaveChangesAsync(cancellationToken);
+
             return await Unit.Task;
         }
     }

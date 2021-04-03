@@ -9,9 +9,6 @@ namespace CourseBook.WebApi.Model
     public class CreateGroup
     {
         [Required]
-        public Guid DirectionId { get; set; }
-
-        [Required]
         public string Name { get; set; }
     }
 }

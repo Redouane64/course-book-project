@@ -1,40 +1,45 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Data;
     using CourseBook.WebApi.Directions.Entities;
-    using CourseBook.WebApi.Faculties.Repositories;
-    using CourseBook.WebApi.Model;
     using MediatR;
 
 
     public class CreateDirectionRequest : IRequest<Guid>
     {
-        public CreateDirectionRequest(CreateDirection createDirection)
+        public CreateDirectionRequest(string name, Guid facultyId)
         {
-            CreateDirection = createDirection;
+            Name = name;
+            FacultyId = facultyId;
         }
-        public CreateDirection CreateDirection { get; }
 
         public Guid FacultyId { get; }
-
+        public string Name { get; }
     }
 
     public class CreateDirectionRequestHanlder : IRequestHandler<CreateDirectionRequest, Guid>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public CreateDirectionRequestHanlder(IFacultiesRepository repository)
+        public CreateDirectionRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Guid> Handle(CreateDirectionRequest request, CancellationToken cancellationToken)
         {
-            var entity = await repository.CreateDirection(request.CreateDirection, cancellationToken);
+            var entity = new DirectionEntity() {
+                FacultyId = request.FacultyId,
+                Name = request.Name
+            };
+
+            this.context.Directions.Add(entity);
+
+            await this.context.SaveChangesAsync(cancellationToken);
+
             return entity.Id;
         }
     }

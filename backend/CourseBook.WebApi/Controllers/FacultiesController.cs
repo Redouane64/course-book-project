@@ -54,7 +54,7 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateFaculty([FromBody]CreateFaculty payload, CancellationToken cancellationToken)
         {
-            var id = await this._mediator.Send(new CreateFacultyRequest(payload), cancellationToken);
+            var id = await this._mediator.Send(new CreateFacultyRequest(payload.Name), cancellationToken);
             return CreatedAtAction(nameof(GetFaculty), routeValues: new { id }, null);
         }
 

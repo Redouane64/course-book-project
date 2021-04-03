@@ -1,39 +1,46 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using CourseBook.WebApi.Faculties.Repositories;
-    using CourseBook.WebApi.Model;
+    using CourseBook.WebApi.Data;
+    using CourseBook.WebApi.Groups.Entities;
     using MediatR;
 
     public class CreateGroupRequest : IRequest<Guid>
     {
-        public CreateGroupRequest(CreateGroup createGroup)
+        public CreateGroupRequest(string name, Guid directionId)
         {
-            CreateGroup = createGroup;
+            Name = name;
+            DirectionId = directionId;
         }
 
-        public CreateGroup CreateGroup { get; }
         public Guid DirectionId { get; }
-
+        public string Name { get; }
     }
 
     public class CreateGroupRequestHanlder : IRequestHandler<CreateGroupRequest, Guid>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public CreateGroupRequestHanlder(IFacultiesRepository repository)
+        public CreateGroupRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Guid> Handle(CreateGroupRequest request, CancellationToken cancellationToken)
         {
-            var entity = await repository.CreateGroup(request.CreateGroup, cancellationToken);
-            return entity.Id;
+            var group = new GroupEntity
+            {
+                DirectionId = request.DirectionId,
+                Name = request.Name
+            };
+
+            this.context.Groups.Add(group);
+
+            await this.context.SaveChangesAsync(cancellationToken);
+
+            return group.Id;
         }
     }
 }

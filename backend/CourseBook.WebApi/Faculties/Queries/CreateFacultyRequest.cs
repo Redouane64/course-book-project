@@ -1,38 +1,42 @@
 namespace CourseBook.WebApi.Faculties.Queries
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using CourseBook.WebApi.Faculties.Repositories;
-    using CourseBook.WebApi.Model;
+    using CourseBook.WebApi.Data;
+    using CourseBook.WebApi.Faculties.Entities;
     using MediatR;
 
     public class CreateFacultyRequest : IRequest<Guid>
     {
-        public CreateFacultyRequest(CreateFaculty createFaculty)
+        public CreateFacultyRequest(string name)
         {
-            CreateFaculty = createFaculty;
+            Name = name;
         }
-        public CreateFaculty CreateFaculty { get; }
-
+        public string Name { get; set; }
     }
 
     public class CreateFacultyRequestHanlder : IRequestHandler<CreateFacultyRequest, Guid>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public CreateFacultyRequestHanlder(IFacultiesRepository repository)
+        public CreateFacultyRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Guid> Handle(CreateFacultyRequest request, CancellationToken cancellationToken)
         {
-            var entity = await repository.CreateFaculty(request.CreateFaculty, cancellationToken);
-            return entity.Id;
+            var faculty = new FacultyEntity
+            {
+                Name = request.Name
+            };
+
+            this.context.Faculties.Add(faculty);
+
+            await this.context.SaveChangesAsync(cancellationToken);
+
+            return faculty.Id;
         }
     }
 }
