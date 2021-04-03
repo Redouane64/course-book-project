@@ -2,6 +2,7 @@ namespace CourseBook.WebApi
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Text.Json.Serialization;
 
@@ -160,10 +161,17 @@ namespace CourseBook.WebApi
 
                 options.CreateMap<FacultyEntity, FacultyDetailsViewModel>();
 
+                options.CreateMap<DirectionDisciplineEntity, DirectionViewModel>()
+                        .ForMember(d => d.Id, mapper => mapper.MapFrom(s => s.DisciplineId))
+                        .ForMember(d => d.Name, mapper => mapper.MapFrom(s => s.Discipline.Name));
+
+                options.CreateMap<GroupDisciplineEntity, GroupViewModel>()
+                        .ForMember(d => d.Id, mapper => mapper.MapFrom(s => s.GroupId))
+                        .ForMember(d => d.Name, mapper => mapper.MapFrom(s => s.Group.Name));
+
                 options.CreateMap<DirectionEntity, DirectionDetailsViewModel>()
-                        // TODO: fix
-                        .ForMember(x => x.Disciplines, mapper => mapper.Ignore())
-                        .ForMember(x => x.Groups, mapper => mapper.Ignore());
+                        .ForMember(x => x.Disciplines, mapper => mapper.MapFrom(s => s.Disciplines))
+                        .ForMember(x => x.Groups, mapper => mapper.MapFrom(s => s.Groups));
 
                 options.CreateMap<GroupEntity, GroupDetailsViewModel>();
                 options.CreateMap<DisciplineEntity, DisciplineDetailsViewModel>();
