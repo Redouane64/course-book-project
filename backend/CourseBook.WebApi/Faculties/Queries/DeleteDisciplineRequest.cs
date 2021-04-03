@@ -30,7 +30,6 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<Unit> Handle(DeleteDisciplineRequest request, CancellationToken cancellationToken)
         {
-            await repository.DeleteDiscipline(request.Id, cancellationToken);
             return await Unit.Task;
         }
     }

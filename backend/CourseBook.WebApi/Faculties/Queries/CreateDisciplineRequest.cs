@@ -31,8 +31,7 @@ namespace CourseBook.WebApi.Faculties.Queries
 
         public async Task<Guid> Handle(CreateDisciplineRequest request, CancellationToken cancellationToken)
         {
-            var entity = await repository.CreateDiscipline(request.CreateDiscipline, cancellationToken);
-            return entity.Id;
+            return default;
         }
     }
 }

@@ -24,15 +24,5 @@ namespace CourseBook.WebApi.Faculties.Repositories
         Task<GroupEntity> GetGroupAsync(Guid id, CancellationToken cancellationToken);
         Task<DisciplineEntity> GetDisciplineAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<FacultyEntity> CreateFaculty(CreateFaculty payload, CancellationToken cancellationToken);
-        Task<DirectionEntity> CreateDirection(CreateDirection payload, CancellationToken cancellationToken);
-        Task<GroupEntity> CreateGroup(CreateGroup payload, CancellationToken cancellationToken);
-        Task<DisciplineEntity> CreateDiscipline(CreateDiscipline payload, CancellationToken cancellationToken);
-
-
-        Task DeleteFaculty(Guid facultyId, CancellationToken cancellationToken);
-        Task DeleteDirection(Guid directionId, CancellationToken cancellationToken);
-        Task DeleteGroup(Guid groupId, CancellationToken cancellationToken);
-        Task DeleteDiscipline(Guid disciplineId, CancellationToken cancellationToken);
     }
 }
