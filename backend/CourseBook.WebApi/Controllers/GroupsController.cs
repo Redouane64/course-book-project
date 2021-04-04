@@ -6,6 +6,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Faculties.Commands;
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Groups.Queries;
     using CourseBook.WebApi.Groups.ViewModels;
@@ -59,6 +60,13 @@ namespace CourseBook.WebApi.Controllers
         {
             var id = await this._mediator.Send(new CreateGroupRequest(payload.Name, directionId), cancellationToken);
             return CreatedAtAction(nameof(GetGroup), routeValues: new { id, directionId }, null);
+        }
+
+        [HttpPost(Name = nameof(EditGroup))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> EditGroup([FromBody] UpdateGroupRequest paylod, CancellationToken cancellationToken)
+        {
+            return Ok(await this._mediator.Send(new UpdateGroupRequest(paylod.GroupId, paylod.Name), cancellationToken));
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteGroup))]

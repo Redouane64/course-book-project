@@ -4,7 +4,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using CourseBook.WebApi.Faculties.Commands;
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Faculties.ViewModels;
     using CourseBook.WebApi.Model;
@@ -56,6 +56,14 @@ namespace CourseBook.WebApi.Controllers
         {
             var id = await this._mediator.Send(new CreateFacultyRequest(payload.Name), cancellationToken);
             return CreatedAtAction(nameof(GetFaculty), routeValues: new { id }, null);
+        }
+
+
+        [HttpPost(Name = nameof(EditFaculty))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> EditFaculty([FromBody]UpdateFacultyRequest paylod, CancellationToken cancellationToken)
+        {
+            return Ok(await this._mediator.Send(new UpdateFacultyRequest(paylod.FacultyId,paylod.Name), cancellationToken));
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteFaculty))]

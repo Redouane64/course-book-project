@@ -7,6 +7,7 @@ namespace CourseBook.WebApi.Controllers
     using CourseBook.WebApi.Common.ViewModels;
     using CourseBook.WebApi.Disciplines.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
+    using CourseBook.WebApi.Faculties.Commands;
     using CourseBook.WebApi.Faculties.Queries;
     using CourseBook.WebApi.Model;
     using MediatR;
@@ -57,6 +58,13 @@ namespace CourseBook.WebApi.Controllers
         {
             var id = await this._mediator.Send(new CreateDisciplineRequest(payload), cancellationToken);
             return CreatedAtAction(nameof(GetDiscipline), routeValues: new { id }, null);
+        }
+
+        [HttpPost(Name = nameof(EditDiscipline))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> EditDiscipline([FromBody] UpdateDisciplineRequest paylod, CancellationToken cancellationToken)
+        {
+            return Ok(await this._mediator.Send(new UpdateDisciplineRequest(paylod.DisciplineId, paylod.Name), cancellationToken));
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteDiscipline))]
