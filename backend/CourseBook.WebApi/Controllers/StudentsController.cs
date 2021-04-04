@@ -1,5 +1,6 @@
 namespace CourseBook.WebApi.Controllers
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -23,13 +24,13 @@ namespace CourseBook.WebApi.Controllers
             this._mediator = mediator;
         }
 
-        [HttpGet("{id}/disciplines", Name = nameof(GetStudentDisciplines))]
+        [HttpGet("{groupId:Guid}/disciplines", Name = nameof(GetStudentDisciplines))]
         [ProducesResponseType(typeof(StudentDisciplinesViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetStudentDisciplines(
-             [FromRoute] string id,
+             [FromRoute] Guid groupId,
              CancellationToken cancellationToken = default)
         {
-            return Ok(await this._mediator.Send(new GetStudentDisciplinesRequest(id), cancellationToken));
+            return Ok(await this._mediator.Send(new GetStudentDisciplinesRequest(groupId), cancellationToken));
         }
     }
 }
