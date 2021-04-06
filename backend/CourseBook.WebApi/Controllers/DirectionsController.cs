@@ -61,7 +61,7 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetDirection), routeValues: new { id, facultyId }, null);
         }
          
-        [HttpPut(Name = nameof(EditDirection))]
+        [HttpPut("{directionId:Guid}", Name = nameof(EditDirection))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> EditDirection([FromRoute]Guid directionId, [FromBody]UpdateDirectionModel model, CancellationToken cancellationToken)
         {

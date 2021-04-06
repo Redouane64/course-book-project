@@ -61,7 +61,7 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetDiscipline), routeValues: new { id }, null);
         }
 
-        [HttpPut(Name = nameof(EditDiscipline))]
+        [HttpPut("{disciplineId:Guid}", Name = nameof(EditDiscipline))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> EditDiscipline([FromRoute]Guid disciplineId, [FromBody] UpdateDisciplineModel model, CancellationToken cancellationToken)
         {

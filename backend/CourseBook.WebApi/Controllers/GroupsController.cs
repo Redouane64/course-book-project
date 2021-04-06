@@ -63,7 +63,7 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetGroup), routeValues: new { id, directionId }, null);
         }
 
-        [HttpPut(Name = nameof(EditGroup))]
+        [HttpPut("{groupId:Guid}", Name = nameof(EditGroup))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> EditGroup([FromRoute]Guid groupId, [FromBody]UpdateGroupModel model, CancellationToken cancellationToken)
         {

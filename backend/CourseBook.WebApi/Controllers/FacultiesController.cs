@@ -60,7 +60,7 @@ namespace CourseBook.WebApi.Controllers
         }
 
 
-        [HttpPut(Name = nameof(EditFaculty))]
+        [HttpPut("{facultyId:Guid}", Name = nameof(EditFaculty))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> EditFaculty([FromRoute]Guid facultyId, [FromBody]UpdateFacultyModel model, CancellationToken cancellationToken)
         {
