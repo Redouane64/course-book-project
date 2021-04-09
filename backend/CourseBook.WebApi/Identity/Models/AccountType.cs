@@ -7,6 +7,7 @@ namespace CourseBook.WebApi.Identity.Models
     {
         Student,
         Teacher,
-        StudentTeacher
+        StudentTeacher,
+
     }
 }

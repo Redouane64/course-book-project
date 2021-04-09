@@ -111,6 +111,22 @@ namespace CourseBook.WebApi.Extensions
 
                     await userManager.CreateAsync(student, "qwerty@1234");
                     await userManager.AddToRoleAsync(student, AccountType.Student.ToString());
+
+                    //StudentTeacher seed account//
+                    var studentTeacher = new UserEntity() {
+                        Email = "HandsomeSun@example.com",
+                        FullName = "Handsome Sun",
+                        UserName = "handsome.sun",
+                        BirthDay = new DateTime(1999, 1, 2),
+                        PhoneNumber = "+79996193980",
+                        GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
+                        AdmissionYear = 2020,
+                    };
+
+                    await userManager.CreateAsync(studentTeacher, "Handsome@sun123");
+                    await userManager.AddToRoleAsync(studentTeacher, AccountType.Student.ToString());
+                    await userManager.AddToRoleAsync(studentTeacher, AccountType.Teacher.ToString());
+
                 }
                 catch(Exception ex) {
                     logger.LogError(ex, "Sonething went wrong when seeding test users.");
