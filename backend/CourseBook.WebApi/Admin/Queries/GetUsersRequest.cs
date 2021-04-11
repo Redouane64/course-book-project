@@ -7,15 +7,14 @@ namespace CourseBook.WebApi.Admin.Queries
     using System.Threading.Tasks;
     using AutoMapper;
     using CourseBook.WebApi.Admin.Services;
-    using CourseBook.WebApi.Admin.ViewModels;
-    using CourseBook.WebApi.Data;
+    using CourseBook.WebApi.Disciplines.ViewModels;
     using MediatR;
 
-    public class GetUsersRequest : IRequest<IEnumerable<UsersViewModel>>
+    public class GetUsersRequest : IRequest<IEnumerable<UserViewModel>>
     { }
 
 
-    public class GetUsersRequestHanlder : IRequestHandler<GetUsersRequest, IEnumerable<UsersViewModel>>
+    public class GetUsersRequestHanlder : IRequestHandler<GetUsersRequest, IEnumerable<UserViewModel>>
     {
         private readonly IAdminService adminService;
         public readonly IMapper mapper;
@@ -26,10 +25,10 @@ namespace CourseBook.WebApi.Admin.Queries
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<UsersViewModel>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserViewModel>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
             var users = await adminService.GetUsers(cancellationToken);
-            return this.mapper.Map<IEnumerable<UsersViewModel>>(users);
+            return this.mapper.Map<IEnumerable<UserViewModel>>(users);
         }
     }
 

@@ -5,7 +5,7 @@ namespace CourseBook.WebApi
     using System.Linq;
     using System.Text;
     using System.Text.Json.Serialization;
-
+    using CourseBook.WebApi.Admin.Services;
     using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Directions.Entities;
     using CourseBook.WebApi.Directions.ViewModels;
@@ -149,6 +149,7 @@ namespace CourseBook.WebApi
 
             services.AddScoped<IFacultiesRepository, FacultiesRepository>();
             services.AddScoped<ITeachersRepository, TeachersRepository>();
+            services.AddScoped<IAdminService, AdminService>();
 
             services.AddAutoMapper(options =>
             {

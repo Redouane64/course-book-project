@@ -6,7 +6,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using CourseBook.WebApi.Admin.Queries;
-    using CourseBook.WebApi.Admin.ViewModels;
+    using CourseBook.WebApi.Disciplines.ViewModels;
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace CourseBook.WebApi.Controllers
         }
 
         [HttpGet(Name = nameof(GetUsers))]
-        [ProducesResponseType(typeof(IEnumerable<UsersViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<UserViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsers(CancellationToken cancellationToken = default)
         {
             var users = await this._mediator.Send(new GetUsersRequest(), cancellationToken);
