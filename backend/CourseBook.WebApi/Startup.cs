@@ -178,9 +178,14 @@ namespace CourseBook.WebApi
                         );
                 /* */
 
+                options.CreateMap<DirectionDisciplineEntity, DisciplineViewModel>()
+                        .ForMember(d => d.Id, mapper => mapper.MapFrom(s => s.DisciplineId))
+                        .ForMember(d => d.Name, mapper => mapper.MapFrom(s => s.Discipline.Name));
+
                 options.CreateMap<DirectionEntity, DirectionDetailsViewModel>()
                         .ForMember(x => x.Disciplines, mapper => mapper.MapFrom(s => s.Disciplines))
-                        .ForMember(x => x.Groups, mapper => mapper.MapFrom(s => s.Groups));
+                        .ForMember(x => x.Groups, mapper => mapper.MapFrom(s => s.Groups))
+                        .ForMember(x => x.Faculty, mapper => mapper.MapFrom(s => s.Faculty.Name));
 
                 options.CreateMap<GroupEntity, GroupDetailsViewModel>();
 

@@ -70,6 +70,7 @@ namespace CourseBook.WebApi.Faculties.Repositories
         {
             return await _context.Directions.AsNoTracking()
                 .Include(x => x.Disciplines)
+                .ThenInclude(x => x.Discipline)
                 .Include(x => x.Groups)
                 .Include(x => x.Faculty)
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);

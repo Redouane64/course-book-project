@@ -14,6 +14,7 @@ namespace CourseBook.WebApi.Directions.ViewModels
 
     public class DirectionDetailsViewModel : DirectionViewModel
     {
+        public string Faculty { get; set; }
         public ICollection<DisciplineViewModel> Disciplines { get; set; }
         public ICollection<GroupViewModel> Groups { get; set; }
     }
