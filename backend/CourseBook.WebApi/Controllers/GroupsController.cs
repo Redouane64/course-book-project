@@ -6,7 +6,9 @@ namespace CourseBook.WebApi.Controllers
     using System.Threading.Tasks;
 
     using CourseBook.WebApi.Directions.ViewModels;
+    using CourseBook.WebApi.Faculties.Commands;
     using CourseBook.WebApi.Faculties.Queries;
+    using CourseBook.WebApi.Faculties.UpdateModels;
     using CourseBook.WebApi.Groups.Queries;
     using CourseBook.WebApi.Groups.ViewModels;
     using CourseBook.WebApi.Model;
@@ -15,7 +17,7 @@ namespace CourseBook.WebApi.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("{directionId:Guid}/[controller]")]
+    [Route("/")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class GroupsController : ControllerBase
@@ -28,7 +30,7 @@ namespace CourseBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = nameof(GetDirectionGroups))]
+        [HttpGet("{directionId:Guid}/[controller]", Name = nameof(GetDirectionGroups))]
         [ProducesResponseType(typeof(IEnumerable<DirectionViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDirectionGroups([FromRoute] Guid directionId, CancellationToken cancellationToken = default)
         {
@@ -36,7 +38,7 @@ namespace CourseBook.WebApi.Controllers
             return Ok(groups);
         }
 
-        [HttpGet("{id:Guid}")]
+        [HttpGet("[controller]/{id:Guid}")]
         [ProducesResponseType(typeof(GroupViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetGroup([FromRoute] Guid id)
@@ -53,7 +55,7 @@ namespace CourseBook.WebApi.Controllers
 
 
 
-        [HttpPost(Name = nameof(CreateGroup))]
+        [HttpPost("{directionId:Guid}/[controller]", Name = nameof(CreateGroup))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateGroup([FromRoute] Guid directionId, [FromBody]CreateGroup payload, CancellationToken cancellationToken)
         {
@@ -61,7 +63,14 @@ namespace CourseBook.WebApi.Controllers
             return CreatedAtAction(nameof(GetGroup), routeValues: new { id, directionId }, null);
         }
 
-        [HttpDelete("{id:Guid}", Name = nameof(DeleteGroup))]
+        [HttpPut("[controller]/{groupId:Guid}", Name = nameof(EditGroup))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> EditGroup([FromRoute]Guid groupId, [FromBody]UpdateGroupModel model, CancellationToken cancellationToken)
+        {
+            return Ok(await this._mediator.Send(new UpdateGroupRequest(groupId, model.Name), cancellationToken));
+        }
+
+        [HttpDelete("[controller]/{groupId:Guid}", Name = nameof(DeleteGroup))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteGroup([FromRoute] Guid id, CancellationToken cancellationToken)
         {
