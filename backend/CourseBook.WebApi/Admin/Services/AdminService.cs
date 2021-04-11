@@ -3,6 +3,7 @@ namespace CourseBook.WebApi.Admin.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
     using CourseBook.WebApi.Data;
@@ -26,20 +27,20 @@ namespace CourseBook.WebApi.Admin.Services
 
         public async Task DeleteUser(string Id, CancellationToken cancellationToken)
         {
-            var currentUser = this._userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
             var user = await _userManager.FindByIdAsync(Id);
-            if(currentUser != user.Id)
-            {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-            }
-
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<UserEntity>> GetUsers(CancellationToken cancellationToken)
         {
-            var currentUser = this._userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
-            return await _context.Users.AsNoTracking().Where(x => x.Id != currentUser).ToListAsync(cancellationToken);
+            var currentUser = this._userManager.GetUserId(
+                this.httpContextAccessor.HttpContext.User
+            );
+
+            return await _context.Users.AsNoTracking()
+                .Where(x => x.Id != currentUser)
+                .ToListAsync(cancellationToken);
         }
     }
 }

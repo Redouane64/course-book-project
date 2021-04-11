@@ -3,6 +3,7 @@ namespace CourseBook.WebApi.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
     using CourseBook.WebApi.Admin.Queries;
@@ -33,9 +34,17 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpDelete("{userId:Guid}", Name = nameof(DeleteUser))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteUser([FromRoute] string userId, CancellationToken cancellationToken)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentUser is not null && currentUser == userId) {
+                return BadRequest();
+            }
+
             await this._mediator.Send(new DeleteUserRequest(userId), cancellationToken);
+
             return NoContent();
         }
     }
