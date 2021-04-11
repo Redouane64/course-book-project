@@ -33,9 +33,9 @@ namespace CourseBook.WebApi.Controllers
 
         [HttpDelete("{userId:Guid}", Name = nameof(DeleteUser))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteUser([FromRoute] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteUser([FromRoute] string userId, CancellationToken cancellationToken)
         {
-            await this._mediator.Send(new DeleteUserRequest(id), cancellationToken);
+            await this._mediator.Send(new DeleteUserRequest(userId), cancellationToken);
             return NoContent();
         }
     }
