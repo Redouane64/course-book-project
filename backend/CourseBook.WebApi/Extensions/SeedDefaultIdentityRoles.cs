@@ -50,11 +50,11 @@ namespace CourseBook.WebApi.Extensions
                         logger.LogInformation("Created `Teacher` role successfully.");
                     }
 
-                    // seed Admin role:
-                    var admin = AccountType.StudentTeacher.ToString();
-                    if ((await roleManager.FindByNameAsync(admin)) is null)
+                    // seed StudentTeacher role:
+                    var administrator = AccountType.StudentTeacher.ToString();
+                    if ((await roleManager.FindByNameAsync("administrator")) is null)
                     {
-                        var result = await roleManager.CreateAsync(new IdentityRole(admin));
+                        var result = await roleManager.CreateAsync(new IdentityRole("administrator"));
                         if (result.Errors.Any())
                         {
                             throw new Exception($"Failed to create `Administrator` role: {result.Errors.First().Description}");
@@ -112,20 +112,33 @@ namespace CourseBook.WebApi.Extensions
                     await userManager.CreateAsync(student, "qwerty@1234");
                     await userManager.AddToRoleAsync(student, AccountType.Student.ToString());
 
-                    //StudentTeacher seed account//
+                    /* StudentTeacher seed account */
                     var studentTeacher = new UserEntity() {
-                        Email = "HandsomeSun@example.com",
-                        FullName = "Handsome Sun",
-                        UserName = "handsome.sun",
+                        Email = "don.calis@example.com",
+                        FullName = "Don Calis",
+                        UserName = "don.calis",
                         BirthDay = new DateTime(1999, 1, 2),
                         PhoneNumber = "+79996193980",
                         GroupId = Guid.Parse("bbf4d1b7-5dd6-4737-b78c-e865cbe4adc0"),
                         AdmissionYear = 2020,
                     };
 
-                    await userManager.CreateAsync(studentTeacher, "Handsome@sun123");
+                    await userManager.CreateAsync(studentTeacher, "qwerty@1234");
                     await userManager.AddToRoleAsync(studentTeacher, AccountType.Student.ToString());
                     await userManager.AddToRoleAsync(studentTeacher, AccountType.Teacher.ToString());
+
+
+                    // seed account administrator account
+                    var administrator = new UserEntity() {
+                        Email = "admin@example.com",
+                        FullName = "Jack Daniels",
+                        UserName = "jack.daniels",
+                        BirthDay = new DateTime(1999, 1, 2),
+                        PhoneNumber = "+789456123",
+                    };
+
+                    await userManager.CreateAsync(administrator, "qwerty@1234");
+                    await userManager.AddToRoleAsync(administrator, "administrator");
 
                 }
                 catch(Exception ex) {
