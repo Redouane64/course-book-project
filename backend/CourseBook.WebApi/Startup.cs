@@ -191,7 +191,6 @@ namespace CourseBook.WebApi
 
                 options.CreateMap<UserEntity, ProfileViewModel>()
                         .ForMember(d => d.Name, o => o.MapFrom(s => s.FullName))
-                        .ForMember(d => d.AccountType, o => o.MapFrom<AccountTypeValueResolver>())
                         .ForMember(d => d.Avatar, o => o.MapFrom<AvatarUrlResolver, string>(s => s.Id));
             }, typeof(Startup).Assembly);
 

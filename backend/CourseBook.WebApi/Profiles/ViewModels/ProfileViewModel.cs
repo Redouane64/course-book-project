@@ -8,7 +8,7 @@ namespace CourseBook.WebApi.Profiles.ViewModels
     {
         public string Id { get; set; }
 
-        public AccountType AccountType { get; set; }
+        public string[] Roles { get; set; }
 
         public string Name { get; set; }
 
