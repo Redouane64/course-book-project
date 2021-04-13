@@ -1,6 +1,8 @@
 namespace CourseBook.WebApi.Identity.Commands
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
@@ -81,7 +83,16 @@ namespace CourseBook.WebApi.Identity.Commands
                 throw new Exception("Unable to create user.");
             }
 
-            var roleResult = await this.userManager.AddToRoleAsync(user, request.Form.AccountType.ToString());
+            var roles = new List<string>();
+
+            if (request.Form.AccountType == AccountType.StudentTeacher) {
+                roles.AddRange(new[] { AccountType.Student.ToString(), AccountType.Teacher.ToString() });
+            }
+            else {
+                roles.Add(request.Form.AccountType.ToString());
+            }
+
+            var roleResult = await this.userManager.AddToRolesAsync(user, roles);
 
             if (!roleResult.Succeeded)
             {
@@ -95,16 +106,13 @@ namespace CourseBook.WebApi.Identity.Commands
                 await this.mediator.Publish(new StudentAccountCreated(user.Id, request.Form.Education.Group), cancellationToken);
             }
 
-            var claims = new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, request.Form.AccountType.ToString()),
-            };
+            var claims = new List<Claim>(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             var (Token, RefreshToken) = await this.tokensService.GenerateToken(claims, user);
 
             return new TokenViewModel(Token, RefreshToken, user.Id) {
-                Role = request.Form.AccountType,
+                Roles = roles.ToArray(),
                 Group = user.GroupId
             };
         }

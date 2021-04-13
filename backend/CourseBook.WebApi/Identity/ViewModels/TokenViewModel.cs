@@ -15,7 +15,7 @@ namespace CourseBook.WebApi.Identity.ViewModels
         public string Token { get; }
         public string RefreshToken { get; }
         public string UserId { get; }
-        public AccountType Role { get; set; }
+        public string[] Roles { get; set; }
         public Guid? Group { get; set; }
     }
 }

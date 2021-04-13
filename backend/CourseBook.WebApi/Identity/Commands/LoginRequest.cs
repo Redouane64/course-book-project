@@ -1,6 +1,8 @@
 namespace CourseBook.WebApi.Identity.Commands
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Authentication;
     using System.Security.Claims;
     using System.Threading;
@@ -52,17 +54,13 @@ namespace CourseBook.WebApi.Identity.Commands
             }
 
             var roles = await this._userManager.GetRolesAsync(user);
-
-            var claims = new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, roles[0])
-            };
+            var claims = new List<Claim>(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             var (Token, RefreshToken) = await this._tokensService.GenerateToken(claims, user);
 
             return new TokenViewModel(Token, RefreshToken, user.Id) {
-                Role = Enum.Parse<AccountType>(roles[0]),
+                Roles = roles.ToArray(),
                 Group = user.GroupId
             };
         }
