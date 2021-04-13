@@ -65,7 +65,7 @@ namespace CourseBook.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> EditDiscipline([FromRoute]Guid disciplineId, [FromBody] UpdateDisciplineModel model, CancellationToken cancellationToken)
         {
-            return Ok(await this._mediator.Send(new UpdateDisciplineRequest(disciplineId, model.Name), cancellationToken));
+            return Ok(await this._mediator.Send(new UpdateDisciplineRequest(disciplineId, model.Name, model.Literatures), cancellationToken));
         }
 
         [HttpDelete("{id:Guid}", Name = nameof(DeleteDiscipline))]

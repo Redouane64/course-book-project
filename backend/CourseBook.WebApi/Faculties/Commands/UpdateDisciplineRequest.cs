@@ -10,15 +10,16 @@ namespace CourseBook.WebApi.Faculties.Commands
 
     public class UpdateDisciplineRequest : IRequest
     {
-        public UpdateDisciplineRequest(Guid disciplineId, string name)
+        public UpdateDisciplineRequest(Guid disciplineId, string name, string literatures)
         {
             DisciplineId = disciplineId;
             Name = name;
+            Literatures = literatures;
         }
 
         public Guid DisciplineId { get; }
         public string Name { get; }
-        public string Literature { get; set; }
+        public string Literatures { get; set; }
     }
 
     public class UpdateDisciplineRequestHandler : IRequestHandler<UpdateDisciplineRequest>
@@ -37,7 +38,7 @@ namespace CourseBook.WebApi.Faculties.Commands
             if (discipline is not null)
             {
                 discipline.Name = request.Name;
-                discipline.Literatures = request.Literature;
+                discipline.Literatures = request.Literatures;
                 await this.context.SaveChangesAsync();
             }
 

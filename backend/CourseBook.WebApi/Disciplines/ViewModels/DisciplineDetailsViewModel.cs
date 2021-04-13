@@ -12,5 +12,7 @@ namespace CourseBook.WebApi.Disciplines.ViewModels
         public ICollection<GroupViewModel> Groups { get; set; }
 
         public ICollection<UserViewModel> Teachers { get; set; }
+
+        public string Literatures { get; set; }
     }
 }
