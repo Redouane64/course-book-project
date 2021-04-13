@@ -10,5 +10,7 @@ namespace CourseBook.WebApi.Faculties.UpdateModels
     {
         [Required]
         public string Name { get; set; }
+
+        public string Literature { get; set; }
     }
 }

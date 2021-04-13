@@ -5,8 +5,10 @@ namespace CourseBook.WebApi.Faculties.Queries
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Data;
     using CourseBook.WebApi.Faculties.Repositories;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
 
     public class DeleteDisciplineRequest : IRequest
     {
@@ -21,15 +23,21 @@ namespace CourseBook.WebApi.Faculties.Queries
 
     public class DeleteDisciplineRequestHanlder : IRequestHandler<DeleteDisciplineRequest>
     {
-        private readonly IFacultiesRepository repository;
+        private readonly DataContext context;
 
-        public DeleteDisciplineRequestHanlder(IFacultiesRepository repository)
+        public DeleteDisciplineRequestHanlder(DataContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public async Task<Unit> Handle(DeleteDisciplineRequest request, CancellationToken cancellationToken)
         {
+            var discipline = await this.context.Disciplines.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            if(discipline is not null)
+            {
+                this.context.Remove(discipline);
+                await this.context.SaveChangesAsync(cancellationToken);
+            }
             return await Unit.Task;
         }
     }
