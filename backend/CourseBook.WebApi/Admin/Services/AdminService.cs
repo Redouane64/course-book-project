@@ -15,14 +15,16 @@ namespace CourseBook.WebApi.Admin.Services
     public class AdminService : IAdminService
     {
         private readonly UserManager<UserEntity> _userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly DataContext _context;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AdminService(UserManager<UserEntity> userManager, DataContext context, IHttpContextAccessor httpContextAccessor)
+        public AdminService(UserManager<UserEntity> userManager, DataContext context, IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _context = context;
             this.httpContextAccessor = httpContextAccessor;
+            this.roleManager = roleManager;
         }
 
         public async Task DeleteUser(string Id, CancellationToken cancellationToken)
@@ -41,6 +43,16 @@ namespace CourseBook.WebApi.Admin.Services
             return await _context.Users.AsNoTracking()
                 .Where(x => x.Id != currentUser)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task SetRoles(string Id, CancellationToken cancellationToken)
+        {
+            var user = await this._userManager.FindByIdAsync(Id);
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+
+            
         }
     }
 }

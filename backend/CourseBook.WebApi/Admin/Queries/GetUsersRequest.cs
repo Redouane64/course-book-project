@@ -8,7 +8,9 @@ namespace CourseBook.WebApi.Admin.Queries
     using AutoMapper;
     using CourseBook.WebApi.Admin.Services;
     using CourseBook.WebApi.Disciplines.ViewModels;
+    using CourseBook.WebApi.Profiles.Entities;
     using MediatR;
+    using Microsoft.AspNetCore.Identity;
 
     public class GetUsersRequest : IRequest<IEnumerable<UserViewModel>>
     { }
@@ -19,7 +21,7 @@ namespace CourseBook.WebApi.Admin.Queries
         private readonly IAdminService adminService;
         public readonly IMapper mapper;
 
-        public GetUsersRequestHanlder(IAdminService adminService, IMapper mapper)
+        public GetUsersRequestHanlder(IAdminService adminService, IMapper mapper, UserManager<UserEntity> userManager)
         {
             this.adminService = adminService;
             this.mapper = mapper;

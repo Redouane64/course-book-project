@@ -6,6 +6,7 @@ namespace CourseBook.WebApi.Controllers
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
+    using CourseBook.WebApi.Admin.Models;
     using CourseBook.WebApi.Admin.Queries;
     using CourseBook.WebApi.Disciplines.ViewModels;
     using MediatR;
@@ -46,6 +47,13 @@ namespace CourseBook.WebApi.Controllers
             await this._mediator.Send(new DeleteUserRequest(userId), cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpPut(Name =nameof(SetRoles))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SetRoles([FromBody]SetRoleModel model, CancellationToken cancellationToken)
+        {
+            return Ok();
         }
     }
 }
