@@ -49,11 +49,12 @@ namespace CourseBook.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut(Name =nameof(SetRoles))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPut("roles", Name =nameof(SetRoles))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> SetRoles([FromBody]SetRoleModel model, CancellationToken cancellationToken)
         {
-            return Ok();
+            await this._mediator.Send(new SetRoleRequest(model));
+            return NoContent();
         }
     }
 }

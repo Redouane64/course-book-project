@@ -10,6 +10,7 @@ namespace CourseBook.WebApi.Admin.Models
     {
         [Required]
         public string UserId { get; set; }
+
         [Required]
         public string[] Roles { get; set; }
     }

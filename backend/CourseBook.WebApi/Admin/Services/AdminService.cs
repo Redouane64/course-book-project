@@ -44,15 +44,5 @@ namespace CourseBook.WebApi.Admin.Services
                 .Where(x => x.Id != currentUser)
                 .ToListAsync(cancellationToken);
         }
-
-        public async Task SetRoles(string Id, CancellationToken cancellationToken)
-        {
-            var user = await this._userManager.FindByIdAsync(Id);
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-
-            
-        }
     }
 }

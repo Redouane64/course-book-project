@@ -12,8 +12,5 @@ namespace CourseBook.WebApi.Admin.Services
         Task<IEnumerable<UserEntity>> GetUsers(CancellationToken cancellationToken);
 
         Task DeleteUser(string Id, CancellationToken cancellationToken);
-
-        Task SetRoles(string Id, CancellationToken cancellationToken);
-
     }
 }
