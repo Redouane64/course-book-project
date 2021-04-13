@@ -10,6 +10,7 @@ namespace CourseBook.WebApi.Disciplines.Queries
 
     using CourseBook.WebApi.Common.Entities;
     using CourseBook.WebApi.Data;
+    using CourseBook.WebApi.Disciplines.Entities;
     using CourseBook.WebApi.Disciplines.ViewModels;
     using CourseBook.WebApi.Profiles.Entities;
     using MediatR;
@@ -52,9 +53,17 @@ namespace CourseBook.WebApi.Disciplines.Queries
                     })
                     .ToArray();
 
+                IEnumerable<DisciplineEntity> spring = null;
+                IEnumerable<DisciplineEntity> autumn = null;
+
+                if (groupedDiscipline.Length > 0) {
+                    spring = groupedDiscipline[0]?.Disciplines;
+                    autumn = groupedDiscipline[1]?.Disciplines;
+                }
+
                 return new StudentDisciplinesViewModel() {
-                    Spring = mapper.Map<DisciplineViewModel[]>(groupedDiscipline[0].Disciplines),
-                    Autumn = mapper.Map<DisciplineViewModel[]>(groupedDiscipline[1].Disciplines)
+                    Spring = mapper.Map<DisciplineViewModel[]>(spring),
+                    Autumn = mapper.Map<DisciplineViewModel[]>(autumn)
                 };
             }
         }
