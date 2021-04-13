@@ -8,7 +8,9 @@ namespace CourseBook.WebApi.Disciplines.ViewModels
 
         public string FullName { get; set; }
 
-        public AccountType AccountType { get; set; }
+        public string[] Roles { get; set; }
+
+        public string Email { get; set; }
 
     }
 }

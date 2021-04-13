@@ -20,17 +20,28 @@ namespace CourseBook.WebApi.Admin.Queries
     {
         private readonly IAdminService adminService;
         public readonly IMapper mapper;
+        private readonly UserManager<UserEntity> userManager;
 
         public GetUsersRequestHanlder(IAdminService adminService, IMapper mapper, UserManager<UserEntity> userManager)
         {
             this.adminService = adminService;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         public async Task<IEnumerable<UserViewModel>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
             var users = await adminService.GetUsers(cancellationToken);
-            return this.mapper.Map<IEnumerable<UserViewModel>>(users);
+            var vms = this.mapper.Map<IEnumerable<UserViewModel>>(users);
+
+            // HACK: fast solution
+            foreach (var item in vms)
+            {
+                var roles = await this.userManager.GetRolesAsync(new UserEntity { Id = item.Id });
+                item.Roles = roles.ToArray();
+            }
+
+            return vms;
         }
     }
 
