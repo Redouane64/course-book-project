@@ -44,14 +44,16 @@ namespace CourseBook.WebApi.Profiles.Queries
             var user = await this._profileService.GetProfile(request.Id, cancellationToken);
             var vm = this.mapper.Map<ProfileViewModel>(user);
 
-            var group = await this.contact.Groups.AsNoTracking()
-                .Include(e => e.Direction)
-                .ThenInclude(e => e.Faculty)
-                .FirstOrDefaultAsync(e => e.Id == user.GroupId);
+            if (await userManager.IsInRoleAsync(user, "Student")) {
+                var group = await this.contact.Groups.AsNoTracking()
+                    .Include(e => e.Direction)
+                    .ThenInclude(e => e.Faculty)
+                    .FirstOrDefaultAsync(e => e.Id == user.GroupId);
 
-            vm.Group = group.Name;
-            vm.Direction = group.Direction.Name;
-            vm.Faculty = group.Direction.Faculty.Name;
+                vm.Group = group.Name;
+                vm.Direction = group.Direction.Name;
+                vm.Faculty = group.Direction.Faculty.Name;
+            }
 
             var roles = await this.userManager.GetRolesAsync(user);
             vm.Roles = roles.ToArray();
